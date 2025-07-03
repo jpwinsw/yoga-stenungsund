@@ -1,0 +1,16 @@
+{
+  "title": "Schema",
+  "metaTitle": "Schema - Yoga Stenungsund",
+  "metaDescription": "Se vårt aktuella schema och boka din yogaklass hos Yoga Stenungsund",
+  "previousWeek": "Föregående vecka",
+  "nextWeek": "Nästa vecka",
+  "week": "Vecka",
+  "today": "Idag",
+  "loading": "Laddar schema...",
+  "error": "Kunde inte ladda schemat. Försök igen senare.",
+  "noClasses": "Inga klasser",
+  "cancelled": "Inställd",
+  "fullyBooked": "Fullbokad",
+  "bookClass": "Boka",
+  "spotsAvailable": "platser kvar"
+}

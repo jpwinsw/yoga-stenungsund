@@ -1,0 +1,19 @@
+{
+  "navigation": {
+    "home": "Home",
+    "classes": "Classes",
+    "schedule": "Schedule",
+    "prices": "Prices",
+    "about": "About",
+    "contact": "Contact",
+    "book_class": "Book class"
+  },
+  "hero": {
+    "title": "Welcome to Yoga Stenungsund",
+    "subtitle": "Your place for calm, strength and balance",
+    "cta": "Book your first class"
+  },
+  "footer": {
+    "copyright": "© 2024 Yoga Stenungsund. All rights reserved."
+  }
+}

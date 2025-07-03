@@ -1,0 +1,140 @@
+{
+  "metadata": {
+    "title": "Yoga Stenungsund - Din lokala yogastudio",
+    "description": "Välkommen till Yoga Stenungsund. Vi erbjuder yogaklasser för alla nivåer i hjärtat av Stenungsund. Hitta balans, styrka och lugn hos oss."
+  },
+  "navigation": {
+    "home": "Hem",
+    "classes": "Klasser",
+    "schedule": "Schema",
+    "prices": "Priser",
+    "about": "Om oss",
+    "contact": "Kontakt",
+    "happenings": "Happenings",
+    "viewAllHappenings": "Se alla happenings",
+    "book_class": "Boka klass"
+  },
+  "hero": {
+    "title": "Välkommen till Yoga Stenungsund",
+    "subtitle": "Din plats för lugn, styrka och balans",
+    "cta": "Boka din första klass"
+  },
+  "footer": {
+    "copyright": "© 2024 Yoga Stenungsund. Alla rättigheter förbehållna."
+  },
+  "home": {
+    "hero": {
+      "title": "Välkommen till Yoga Stenungsund",
+      "subtitle": "Din lokala yogastudio i hjärtat av Stenungsund",
+      "description": "Upptäck kraften i yoga med våra erfarna lärare. Vi erbjuder klasser för alla nivåer i en varm och välkomnande miljö.",
+      "tagline": "Alla kan finna lugnet på havet, kan du finna det i din vardag?",
+      "cta": "Utforska våra klasser"
+    },
+    "intro": {
+      "title": "Varför välja Yoga Stenungsund?",
+      "description": "Vi tror på yoga som en väg till fysisk styrka, mental klarhet och inre lugn. Vårt mål är att göra yoga tillgängligt för alla.",
+      "features": {
+        "experienced": {
+          "title": "Erfarna lärare",
+          "description": "Våra certifierade instruktörer guidar dig säkert genom din yogaresa"
+        },
+        "allLevels": {
+          "title": "Alla nivåer välkomna",
+          "description": "Från nybörjare till avancerade utövare - vi har klasser för dig"
+        },
+        "community": {
+          "title": "Gemenskap",
+          "description": "Bli del av vår varma och stöttande yogacommunity"
+        },
+        "flexible": {
+          "title": "Flexibla tider",
+          "description": "Morgon-, lunch- och kvällsklasser som passar din livsstil"
+        }
+      }
+    },
+    "cta": {
+      "title": "Redo att börja din yogaresa?",
+      "description": "Ta första steget mot ett mer balanserat liv. Prova din första klass hos oss!",
+      "button": "Se schema",
+      "trial": "Boka provklass"
+    }
+  },
+  "classes": {
+    "title": "Våra yogaklasser",
+    "description": "Vi erbjuder ett brett utbud av yogaklasser för alla nivåer och behov. Hitta den perfekta klassen för dig!",
+    "viewSchedule": "Se schema",
+    "levels": {
+      "beginner": "Nybörjare",
+      "intermediate": "Medel",
+      "advanced": "Avancerad",
+      "all": "Alla nivåer",
+      "special": "Specialklass"
+    },
+    "types": {
+      "hatha": {
+        "name": "Hatha Yoga",
+        "description": "En lugn och meditativ form av yoga med fokus på andning och grundläggande positioner. Perfekt för nybörjare."
+      },
+      "vinyasa": {
+        "name": "Vinyasa Flow",
+        "description": "Dynamisk yoga där rörelser flyter samman med andningen. Bygger styrka, flexibilitet och uthållighet."
+      },
+      "yin": {
+        "name": "Yin Yoga",
+        "description": "Långsam och meditativ yoga med positioner som hålls i 3-5 minuter. Ökar flexibilitet och inre lugn."
+      },
+      "ashtanga": {
+        "name": "Ashtanga Yoga",
+        "description": "En kraftfull och disciplinerad yogaform med fasta serier av positioner. För erfarna utövare."
+      },
+      "prenatal": {
+        "name": "Gravidyoga",
+        "description": "Anpassad yoga för gravida. Förbereder kropp och sinne för förlossning och föräldraskap."
+      },
+      "restorative": {
+        "name": "Restorative Yoga",
+        "description": "Återhämtande yoga med stöd av kuddar och filtar. Perfekt för stresshantering och djup avslappning."
+      }
+    }
+  },
+  "happenings": {
+    "title": "Happenings",
+    "description": "Upptäck våra speciella evenemang, retreater och workshops. Fördjupa din yogapraktik och skapa nya minnen tillsammans med vår community.",
+    "featured": "Utvald",
+    "readMore": "Läs mer",
+    "backToHappenings": "Tillbaka till Happenings",
+    "sections": {
+      "retreats": "Retreater",
+      "workshops": "Workshops & Kurser",
+      "regular": "Återkommande evenemang"
+    },
+    "types": {
+      "retreat": "Retreat",
+      "workshop": "Workshop",
+      "course": "Kurs",
+      "regular": "Återkommande"
+    },
+    "details": {
+      "title": "Detaljer",
+      "dates": "Datum",
+      "time": "Tid",
+      "location": "Plats",
+      "price": "Pris",
+      "instructor": "Lärare",
+      "description": "Om eventet",
+      "includes": "Vad ingår"
+    },
+    "booking": {
+      "title": "Intresserad?",
+      "description": "Anmäl dig eller kontakta oss för mer information.",
+      "emailButton": "Skicka e-post",
+      "phoneButton": "Ring",
+      "onlineButton": "Boka online"
+    },
+    "cta": {
+      "title": "Vill du vara med?",
+      "description": "Alla våra happenings är öppna för både medlemmar och drop-in deltagare. Kontakta oss för mer information och anmälan.",
+      "button": "Kontakta oss"
+    }
+  }
+}

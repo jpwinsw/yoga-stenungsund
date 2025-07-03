@@ -1,0 +1,140 @@
+{
+  "metadata": {
+    "title": "Yoga Stenungsund - Your local yoga studio",
+    "description": "Welcome to Yoga Stenungsund. We offer yoga classes for all levels in the heart of Stenungsund. Find balance, strength and calm with us."
+  },
+  "navigation": {
+    "home": "Home",
+    "classes": "Classes",
+    "schedule": "Schedule",
+    "prices": "Prices",
+    "about": "About",
+    "contact": "Contact",
+    "happenings": "Happenings",
+    "viewAllHappenings": "View all happenings",
+    "book_class": "Book class"
+  },
+  "hero": {
+    "title": "Welcome to Yoga Stenungsund",
+    "subtitle": "Your place for calm, strength and balance",
+    "cta": "Book your first class"
+  },
+  "footer": {
+    "copyright": "© 2024 Yoga Stenungsund. All rights reserved."
+  },
+  "home": {
+    "hero": {
+      "title": "Welcome to Yoga Stenungsund",
+      "subtitle": "Your local yoga studio in the heart of Stenungsund",
+      "description": "Discover the power of yoga with our experienced teachers. We offer classes for all levels in a warm and welcoming environment.",
+      "tagline": "Everyone can find peace at sea, can you find it in your everyday life?",
+      "cta": "Explore our classes"
+    },
+    "intro": {
+      "title": "Why choose Yoga Stenungsund?",
+      "description": "We believe in yoga as a path to physical strength, mental clarity and inner peace. Our goal is to make yoga accessible to everyone.",
+      "features": {
+        "experienced": {
+          "title": "Experienced teachers",
+          "description": "Our certified instructors guide you safely through your yoga journey"
+        },
+        "allLevels": {
+          "title": "All levels welcome",
+          "description": "From beginners to advanced practitioners - we have classes for you"
+        },
+        "community": {
+          "title": "Community",
+          "description": "Become part of our warm and supportive yoga community"
+        },
+        "flexible": {
+          "title": "Flexible schedule",
+          "description": "Morning, lunch and evening classes that fit your lifestyle"
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to start your yoga journey?",
+      "description": "Take the first step towards a more balanced life. Try your first class with us!",
+      "button": "View schedule",
+      "trial": "Book trial class"
+    }
+  },
+  "classes": {
+    "title": "Our yoga classes",
+    "description": "We offer a wide range of yoga classes for all levels and needs. Find the perfect class for you!",
+    "viewSchedule": "View schedule",
+    "levels": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "all": "All levels",
+      "special": "Special class"
+    },
+    "types": {
+      "hatha": {
+        "name": "Hatha Yoga",
+        "description": "A calm and meditative form of yoga focusing on breathing and basic postures. Perfect for beginners."
+      },
+      "vinyasa": {
+        "name": "Vinyasa Flow",
+        "description": "Dynamic yoga where movements flow together with the breath. Builds strength, flexibility and endurance."
+      },
+      "yin": {
+        "name": "Yin Yoga",
+        "description": "Slow and meditative yoga with positions held for 3-5 minutes. Increases flexibility and inner calm."
+      },
+      "ashtanga": {
+        "name": "Ashtanga Yoga",
+        "description": "A powerful and disciplined form of yoga with fixed series of postures. For experienced practitioners."
+      },
+      "prenatal": {
+        "name": "Prenatal Yoga",
+        "description": "Adapted yoga for pregnant women. Prepares body and mind for childbirth and parenthood."
+      },
+      "restorative": {
+        "name": "Restorative Yoga",
+        "description": "Restorative yoga supported by pillows and blankets. Perfect for stress management and deep relaxation."
+      }
+    }
+  },
+  "happenings": {
+    "title": "Happenings",
+    "description": "Discover our special events, retreats and workshops. Deepen your yoga practice and create new memories with our community.",
+    "featured": "Featured",
+    "readMore": "Read more",
+    "backToHappenings": "Back to Happenings",
+    "sections": {
+      "retreats": "Retreats",
+      "workshops": "Workshops & Courses",
+      "regular": "Regular Events"
+    },
+    "types": {
+      "retreat": "Retreat",
+      "workshop": "Workshop",
+      "course": "Course",
+      "regular": "Regular"
+    },
+    "details": {
+      "title": "Details",
+      "dates": "Dates",
+      "time": "Time",
+      "location": "Location",
+      "price": "Price",
+      "instructor": "Instructor",
+      "description": "About this event",
+      "includes": "What's included"
+    },
+    "booking": {
+      "title": "Interested?",
+      "description": "Sign up or contact us for more information.",
+      "emailButton": "Send email",
+      "phoneButton": "Call",
+      "onlineButton": "Book online"
+    },
+    "cta": {
+      "title": "Want to join?",
+      "description": "All our happenings are open to both members and drop-in participants. Contact us for more information and registration.",
+      "button": "Contact us"
+    }
+  }
+}

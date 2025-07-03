@@ -1,0 +1,16 @@
+{
+  "title": "Schedule",
+  "metaTitle": "Schedule - Yoga Stenungsund",
+  "metaDescription": "View our current schedule and book your yoga class at Yoga Stenungsund",
+  "previousWeek": "Previous week",
+  "nextWeek": "Next week",
+  "week": "Week",
+  "today": "Today",
+  "loading": "Loading schedule...",
+  "error": "Could not load schedule. Please try again later.",
+  "noClasses": "No classes",
+  "cancelled": "Cancelled",
+  "fullyBooked": "Fully booked",
+  "bookClass": "Book",
+  "spotsAvailable": "spots available"
+}

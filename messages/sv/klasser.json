@@ -1,0 +1,38 @@
+{
+  "title": "Våra yogaklasser",
+  "description": "Vi erbjuder ett brett utbud av yogaklasser för alla nivåer och behov. Hitta den perfekta klassen för dig!",
+  "viewSchedule": "Se schema",
+  "levels": {
+    "beginner": "Nybörjare",
+    "intermediate": "Medel",
+    "advanced": "Avancerad",
+    "all": "Alla nivåer",
+    "special": "Specialklass"
+  },
+  "types": {
+    "hatha": {
+      "name": "Hatha Yoga",
+      "description": "En lugn och meditativ form av yoga med fokus på andning och grundläggande positioner. Perfekt för nybörjare."
+    },
+    "vinyasa": {
+      "name": "Vinyasa Flow",
+      "description": "Dynamisk yoga där rörelser flyter samman med andningen. Bygger styrka, flexibilitet och uthållighet."
+    },
+    "yin": {
+      "name": "Yin Yoga",
+      "description": "Långsam och meditativ yoga med positioner som hålls i 3-5 minuter. Ökar flexibilitet och inre lugn."
+    },
+    "ashtanga": {
+      "name": "Ashtanga Yoga",
+      "description": "En kraftfull och disciplinerad yogaform med fasta serier av positioner. För erfarna utövare."
+    },
+    "prenatal": {
+      "name": "Gravidyoga",
+      "description": "Anpassad yoga för gravida. Förbereder kropp och sinne för förlossning och föräldraskap."
+    },
+    "restorative": {
+      "name": "Restorative Yoga",
+      "description": "Återhämtande yoga med stöd av kuddar och filtar. Perfekt för stresshantering och djup avslappning."
+    }
+  }
+}

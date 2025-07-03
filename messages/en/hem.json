@@ -1,0 +1,37 @@
+{
+  "hero": {
+    "title": "Welcome to Yoga Stenungsund",
+    "subtitle": "Your local yoga studio in the heart of Stenungsund",
+    "description": "Discover the power of yoga with our experienced teachers. We offer classes for all levels in a warm and welcoming environment.",
+    "tagline": "Everyone can find peace at sea, can you find it in your everyday life?",
+    "cta": "Explore our classes"
+  },
+  "intro": {
+    "title": "Why choose Yoga Stenungsund?",
+    "description": "We believe in yoga as a path to physical strength, mental clarity and inner peace. Our goal is to make yoga accessible to everyone.",
+    "features": {
+      "experienced": {
+        "title": "Experienced teachers",
+        "description": "Our certified instructors guide you safely through your yoga journey"
+      },
+      "allLevels": {
+        "title": "All levels welcome",
+        "description": "From beginners to advanced practitioners - we have classes for you"
+      },
+      "community": {
+        "title": "Community",
+        "description": "Become part of our warm and supportive yoga community"
+      },
+      "flexible": {
+        "title": "Flexible schedule",
+        "description": "Morning, lunch and evening classes that fit your lifestyle"
+      }
+    }
+  },
+  "cta": {
+    "title": "Ready to start your yoga journey?",
+    "description": "Take the first step towards a more balanced life. Try your first class with us!",
+    "button": "View schedule",
+    "trial": "Book trial class"
+  }
+}

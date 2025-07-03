@@ -1,0 +1,33 @@
+{
+  "title": "Om Yoga Stenungsund",
+  "subtitle": "Vår historia",
+  "mission": {
+    "title": "Vårt uppdrag",
+    "description": "Att skapa ett välkomnande utrymme där människor från alla bakgrunder kan upptäcka yogans transformerande kraft, bygga styrka, flexibilitet och inre frid."
+  },
+  "values": {
+    "title": "Våra värderingar",
+    "items": {
+      "inclusivity": {
+        "title": "Inkludering",
+        "description": "Yoga är för alla, oavsett ålder, förmåga eller erfarenhet"
+      },
+      "authenticity": {
+        "title": "Äkthet",
+        "description": "Vi hedrar yogans traditionella rötter samtidigt som vi anpassar oss till moderna behov"
+      },
+      "community": {
+        "title": "Gemenskap",
+        "description": "Bygga kontakter och stödja varandra på vår yogaresa"
+      },
+      "growth": {
+        "title": "Tillväxt",
+        "description": "Kontinuerligt lärande och personlig utveckling för både elever och lärare"
+      }
+    }
+  },
+  "studio": {
+    "title": "Vår studio",
+    "description": "Vår vackra studio är utformad för att främja lugn och fokus, med naturligt ljus, miljövänliga material och alla tillbehör du behöver för en bekväm praktik."
+  }
+}

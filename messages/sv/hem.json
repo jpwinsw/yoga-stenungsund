@@ -1,0 +1,37 @@
+{
+  "hero": {
+    "title": "Välkommen till Yoga Stenungsund",
+    "subtitle": "Din lokala yogastudio i hjärtat av Stenungsund",
+    "description": "Upptäck kraften i yoga med våra erfarna lärare. Vi erbjuder klasser för alla nivåer i en varm och välkomnande miljö.",
+    "tagline": "Alla kan finna lugnet på havet, kan du finna det i din vardag?",
+    "cta": "Utforska våra klasser"
+  },
+  "intro": {
+    "title": "Varför välja Yoga Stenungsund?",
+    "description": "Vi tror på yoga som en väg till fysisk styrka, mental klarhet och inre lugn. Vårt mål är att göra yoga tillgängligt för alla.",
+    "features": {
+      "experienced": {
+        "title": "Erfarna lärare",
+        "description": "Våra certifierade instruktörer guidar dig säkert genom din yogaresa"
+      },
+      "allLevels": {
+        "title": "Alla nivåer välkomna",
+        "description": "Från nybörjare till avancerade utövare - vi har klasser för dig"
+      },
+      "community": {
+        "title": "Gemenskap",
+        "description": "Bli del av vår varma och stöttande yogacommunity"
+      },
+      "flexible": {
+        "title": "Flexibla tider",
+        "description": "Morgon-, lunch- och kvällsklasser som passar din livsstil"
+      }
+    }
+  },
+  "cta": {
+    "title": "Redo att börja din yogaresa?",
+    "description": "Ta första steget mot ett mer balanserat liv. Prova din första klass hos oss!",
+    "button": "Se schema",
+    "trial": "Boka provklass"
+  }
+}

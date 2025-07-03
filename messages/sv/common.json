@@ -1,0 +1,19 @@
+{
+  "navigation": {
+    "home": "Hem",
+    "classes": "Klasser",
+    "schedule": "Schema",
+    "prices": "Priser",
+    "about": "Om oss",
+    "contact": "Kontakt",
+    "book_class": "Boka klass"
+  },
+  "hero": {
+    "title": "Välkommen till Yoga Stenungsund",
+    "subtitle": "Din plats för lugn, styrka och balans",
+    "cta": "Boka din första klass"
+  },
+  "footer": {
+    "copyright": "© 2024 Yoga Stenungsund. Alla rättigheter förbehållna."
+  }
+}
