@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { useTranslations, useLocale } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { Link } from '@/lib/i18n/navigation';
 import { happeningsEvents } from '@/lib/data/happenings';
 
@@ -9,16 +9,14 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function HappeningDetailPage({
+export default async function HappeningDetailPage({
   params
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }) {
-  const t = useTranslations('happenings');
-  const locale = useLocale() as 'sv' | 'en';
-  
-  // Since we're in a server component, we need to await params
-  const { slug } = params as any; // Type assertion for now
+  const { slug, locale } = await params;
+  const t = await getTranslations('happenings');
+  const typedLocale = locale as 'sv' | 'en';
   
   const event = happeningsEvents.find(e => e.slug === slug);
   
@@ -43,11 +41,11 @@ export default function HappeningDetailPage({
         </div>
 
         {/* Title */}
-        <h1 className="text-4xl font-bold mb-4">{event.title[locale]}</h1>
+        <h1 className="text-4xl font-bold mb-4">{event.title[typedLocale]}</h1>
 
         {/* Short description */}
         <p className="text-xl text-gray-700 mb-8">
-          {event.shortDescription[locale]}
+          {event.shortDescription[typedLocale]}
         </p>
 
         {/* Event details */}
@@ -92,7 +90,7 @@ export default function HappeningDetailPage({
           <div className="prose prose-lg max-w-none mb-8">
             <h2 className="text-2xl font-semibold mb-4">{t('details.description')}</h2>
             <p className="text-gray-700 whitespace-pre-line">
-              {event.fullDescription[locale]}
+              {event.fullDescription[typedLocale]}
             </p>
           </div>
         )}
@@ -122,7 +120,7 @@ export default function HappeningDetailPage({
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {event.booking?.email && (
               <a 
-                href={`mailto:${event.booking.email}?subject=${event.title[locale]}`}
+                href={`mailto:${event.booking.email}?subject=${event.title[typedLocale]}`}
                 className="inline-block bg-purple-600 text-white px-8 py-3 rounded-full font-medium hover:bg-purple-700 transition-colors"
               >
                 {t('booking.emailButton')}

@@ -10,8 +10,7 @@ import type {
   LoginRequest,
   LoginResponse,
   SignupRequest,
-  Member,
-  ApiError
+  Member
 } from '@/lib/types/braincore'
 
 const BRAINCORE_API = process.env.NEXT_PUBLIC_BRAINCORE_API || 'https://api.brain-core.ai'

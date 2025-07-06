@@ -1,4 +1,4 @@
-import { locales, defaultLocale } from '@/i18n';
+import { defaultLocale } from '@/i18n';
 
 export const pathnames = {
   '/': '/',

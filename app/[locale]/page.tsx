@@ -1,9 +1,8 @@
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/index';
+import { Link } from '@/lib/i18n/navigation';
 
 export default function Home() {
   const t = useTranslations('home');
-  const tCommon = useTranslations();
 
   return (
     <div className="min-h-screen">
@@ -42,11 +41,11 @@ export default function Home() {
           </p>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {Object.entries(t.raw('intro.features')).map(([key, feature]: [string, any]) => (
+            {Object.entries(t.raw('intro.features')).map(([key, feature]) => (
               <div key={key} className="text-center">
                 <div className="w-16 h-16 bg-purple-100 rounded-full mx-auto mb-4"></div>
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <h3 className="text-xl font-semibold mb-2">{(feature as { title: string; description: string }).title}</h3>
+                <p className="text-gray-600">{(feature as { title: string; description: string }).description}</p>
               </div>
             ))}
           </div>

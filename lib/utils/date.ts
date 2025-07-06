@@ -35,7 +35,7 @@ export function isSameDay(date1: Date | string, date2: Date | string) {
   return format(d1, 'yyyy-MM-dd') === format(d2, 'yyyy-MM-dd')
 }
 
-export function formatTime(dateString: string, locale: string = 'sv') {
+export function formatTime(dateString: string) {
   const date = parseISO(dateString)
   return format(date, 'HH:mm')
 }
