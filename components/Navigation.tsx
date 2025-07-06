@@ -50,7 +50,7 @@ export default function Navigation() {
                   {happeningsEvents.map((event) => (
                     <Link 
                       key={event.id}
-                      href={`/happenings/${event.slug}`} 
+                      href={{ pathname: '/happenings/[slug]', params: { slug: event.slug } }}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-700"
                     >
                       {event.title[locale]}

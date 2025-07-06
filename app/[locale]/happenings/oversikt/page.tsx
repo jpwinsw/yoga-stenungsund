@@ -22,7 +22,7 @@ export default function HappeningsPage() {
         {/* Featured Event */}
         {featuredEvent && (
           <div className="mb-16">
-            <Link href={`/happenings/${featuredEvent.slug}`}>
+            <Link href={{ pathname: '/happenings/[slug]', params: { slug: featuredEvent.slug } }}>
               <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow cursor-pointer">
                 <div className="flex flex-col md:flex-row gap-6">
                   <div className="flex-1">
@@ -64,7 +64,7 @@ export default function HappeningsPage() {
             <h2 className="text-2xl font-bold mb-6">{t('sections.retreats')}</h2>
             <div className="grid md:grid-cols-2 gap-6">
               {retreats.map((event) => (
-                <Link key={event.id} href={`/happenings/${event.slug}`}>
+                <Link key={event.id} href={{ pathname: '/happenings/[slug]', params: { slug: event.slug } }}>
                   <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer h-full">
                     <h3 className="text-xl font-semibold mb-3">{event.title[locale]}</h3>
                     <p className="text-gray-600 mb-4">{event.shortDescription[locale]}</p>
@@ -84,7 +84,7 @@ export default function HappeningsPage() {
             <h2 className="text-2xl font-bold mb-6">{t('sections.workshops')}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {workshops.map((event) => (
-                <Link key={event.id} href={`/happenings/${event.slug}`}>
+                <Link key={event.id} href={{ pathname: '/happenings/[slug]', params: { slug: event.slug } }}>
                   <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer h-full">
                     <h3 className="text-lg font-semibold mb-2">{event.title[locale]}</h3>
                     <p className="text-gray-600 text-sm">{event.shortDescription[locale]}</p>
@@ -101,7 +101,7 @@ export default function HappeningsPage() {
             <h2 className="text-2xl font-bold mb-6">{t('sections.regular')}</h2>
             <div className="grid md:grid-cols-2 gap-6">
               {regularEvents.map((event) => (
-                <Link key={event.id} href={`/happenings/${event.slug}`}>
+                <Link key={event.id} href={{ pathname: '/happenings/[slug]', params: { slug: event.slug } }}>
                   <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer h-full">
                     <h3 className="text-xl font-semibold mb-3">{event.title[locale]}</h3>
                     <p className="text-gray-600 mb-4">{event.shortDescription[locale]}</p>
