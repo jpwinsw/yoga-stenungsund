@@ -1,33 +1,60 @@
 {
+  "metaTitle": "About us | Yoga Stenungsund",
+  "metaDescription": "Get to know Yoga Stenungsund - your local yoga studio. We offer yoga for all levels in a warm and welcoming environment.",
   "title": "About Yoga Stenungsund",
-  "subtitle": "Our Story",
-  "mission": {
-    "title": "Our Mission",
-    "description": "To create a welcoming space where people of all backgrounds can discover the transformative power of yoga, building strength, flexibility, and inner peace."
+  "subtitle": "A place for calm, strength and community",
+  "intro": {
+    "title": "Our vision",
+    "description": "At Yoga Stenungsund, we believe in yoga's power to transform both body and mind. Our studio was founded with the vision of creating a sanctuary from everyday stress - a place where you can find balance, build strength and discover inner peace."
   },
   "values": {
-    "title": "Our Values",
-    "items": {
-      "inclusivity": {
-        "title": "Inclusivity",
-        "description": "Yoga is for everyone, regardless of age, ability, or experience"
-      },
-      "authenticity": {
-        "title": "Authenticity",
-        "description": "We honor the traditional roots of yoga while adapting to modern needs"
-      },
-      "community": {
-        "title": "Community",
-        "description": "Building connections and supporting each other on our yoga journey"
-      },
-      "growth": {
-        "title": "Growth",
-        "description": "Continuous learning and personal development for students and teachers alike"
-      }
+    "title": "Our values",
+    "community": {
+      "title": "Community",
+      "description": "We create an inclusive environment where everyone feels welcome and seen"
+    },
+    "authenticity": {
+      "title": "Authenticity",
+      "description": "Authentic teaching focused on traditional yoga adapted for modern life"
+    },
+    "growth": {
+      "title": "Growth",
+      "description": "We support your personal journey, wherever you are in your practice"
+    },
+    "mindfulness": {
+      "title": "Presence",
+      "description": "Mindful presence in every breath, every movement and every encounter"
     }
   },
   "studio": {
-    "title": "Our Studio",
-    "description": "Our beautiful studio space is designed to promote tranquility and focus, with natural light, eco-friendly materials, and all the props you need for a comfortable practice."
+    "title": "Our studio",
+    "description": "Located in the heart of Stenungsund, our studio is designed to be an oasis of calm. With natural light, warm colors and carefully selected details, we create an environment that supports your practice.",
+    "features": [
+      "Spacious yoga room with natural light",
+      "Changing rooms with showers and storage",
+      "Lounge area for relaxation and community",
+      "Fully equipped with yoga mats and props",
+      "Airy and well-ventilated environment"
+    ]
+  },
+  "journey": {
+    "title": "Our journey",
+    "description": "Yoga Stenungsund opened its doors in 2019 with a simple vision: to make yoga accessible to everyone in our community. Since then, we have grown into a thriving community of yoga practitioners from all backgrounds and levels.",
+    "milestones": [
+      "2019 - Studio opens with 5 classes per week",
+      "2020 - Launch online classes during the pandemic",
+      "2021 - Expand to 15+ classes per week",
+      "2022 - Introduce workshops and retreats",
+      "2023 - Celebrate 1000+ members in our community"
+    ]
+  },
+  "cta": {
+    "title": "Become part of our yoga family",
+    "description": "Whether you're a beginner or experienced practitioner, there's a place for you with us.",
+    "buttons": {
+      "teachers": "Meet our teachers",
+      "schedule": "View schedule",
+      "contact": "Contact us"
+    }
   }
 }

@@ -1,1 +1,96 @@
-{"title": "Sidtitel"}
+{
+  "metaTitle": "Nybörjare | Yoga Stenungsund",
+  "metaDescription": "Börja din yogaresa hos oss. Allt du behöver veta för att komma igång med yoga - från vad du ska ha på dig till vilka klasser som passar nybörjare.",
+  "title": "Välkommen som nybörjare",
+  "subtitle": "Din yogaresa börjar här - vi guidar dig hela vägen",
+  "intro": {
+    "title": "Yoga är för alla",
+    "description": "Oavsett ålder, kondition eller tidigare erfarenhet - yoga anpassar sig efter dig. Hos oss möts du av erfarna lärare som guidar dig tryggt genom varje steg av din yogaresa."
+  },
+  "whatToExpect": {
+    "title": "Vad du kan förvänta dig",
+    "firstClass": {
+      "title": "Din första klass",
+      "description": "Kom 15 minuter innan för att registrera dig och bekanta dig med studion. Läraren kommer att hälsa dig välkommen och fråga om eventuella skador eller begränsningar."
+    },
+    "during": {
+      "title": "Under klassen",
+      "description": "Läraren guidar dig genom varje position och erbjuder alternativ som passar din nivå. Lyssna på din kropp och ta pauser när du behöver."
+    },
+    "after": {
+      "title": "Efter klassen",
+      "description": "Ta dig tid att känna efter hur det känns. Drick vatten och njut av känslan av lugn och närvaro."
+    }
+  },
+  "preparation": {
+    "title": "Förberedelser",
+    "whatToBring": {
+      "title": "Vad du behöver",
+      "items": [
+        "Bekväma kläder som du kan röra dig fritt i",
+        "Vattenflaska",
+        "Liten handduk (om du lätt blir varm)",
+        "Egen yogamatta (vi har att låna)"
+      ]
+    },
+    "tips": {
+      "title": "Tips för nybörjare",
+      "items": [
+        "Ät inte en stor måltid 2 timmar innan klassen",
+        "Kom med öppet sinne och utan förväntningar",
+        "Berätta för läraren att det är din första gång",
+        "Det är okej att inte kunna alla positioner direkt"
+      ]
+    }
+  },
+  "recommendedClasses": {
+    "title": "Rekommenderade klasser för nybörjare",
+    "description": "Dessa klasser är särskilt lämpliga om du är ny inom yoga:",
+    "hatha": {
+      "title": "Hatha Yoga",
+      "description": "Lugnt tempo med fokus på grundläggande positioner och andning. Perfekt för att lära sig grunderna."
+    },
+    "yinYoga": {
+      "title": "Yin Yoga",
+      "description": "Mjuk och avslappnande yoga där positioner hålls längre. Ökar flexibilitet och inre lugn."
+    },
+    "beginnerFlow": {
+      "title": "Nybörjar Flow",
+      "description": "En mjuk introduktion till dynamisk yoga med enkla flöden och mycket vägledning."
+    }
+  },
+  "faq": {
+    "title": "Vanliga frågor från nybörjare",
+    "flexibility": {
+      "question": "Måste jag vara flexibel för att yoga?",
+      "answer": "Absolut inte! Yoga handlar om att möta din kropp där den är idag. Flexibilitet kommer med tiden."
+    },
+    "comparison": {
+      "question": "Kommer andra att döma mig?",
+      "answer": "Alla är fokuserade på sin egen praktik. Vårt community är varmt och välkomnande - vi har alla varit nybörjare."
+    },
+    "frequency": {
+      "question": "Hur ofta bör jag yoga som nybörjare?",
+      "answer": "Börja med 1-2 gånger i veckan och öka gradvis. Lyssna på din kropp och hitta din egen rytm."
+    }
+  },
+  "testimonial": {
+    "text": "Jag var nervös inför min första klass, men läraren var så välkomnande och hjälpsam. Nu, ett år senare, kan jag inte tänka mig mitt liv utan yoga.",
+    "author": "Maria, medlem sedan 2022"
+  },
+  "cta": {
+    "title": "Redo att börja?",
+    "description": "Ta det första steget på din yogaresa idag. Vi finns här för att stötta dig hela vägen.",
+    "buttons": {
+      "schedule": "Se schema",
+      "trial": "Boka provklass",
+      "contact": "Kontakta oss"
+    }
+  },
+  "trialOffer": {
+    "title": "Specialerbjudande för nya yogis",
+    "description": "Prova 3 klasser för endast 199 kr",
+    "details": "Gäller i 2 veckor från första klassen",
+    "cta": "Aktivera erbjudande"
+  }
+}

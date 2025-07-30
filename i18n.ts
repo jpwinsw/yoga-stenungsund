@@ -21,7 +21,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   
   // Load namespace messages with Swedish file names
   const namespaces = {
-    schedule: (await import(`./messages/${locale}/schema.json`)).default,
+    schema: (await import(`./messages/${locale}/schema.json`)).default,
     classes: (await import(`./messages/${locale}/klasser.json`)).default,
     prices: (await import(`./messages/${locale}/priser.json`)).default,
     about: (await import(`./messages/${locale}/om-oss.json`)).default,
@@ -37,6 +37,13 @@ export default getRequestConfig(async ({ requestLocale }) => {
     happenings: rootMessages.happenings || {}, // Currently in root file
     metadata: (await import(`./messages/${locale}/metadata.json`)).default,
     common: (await import(`./messages/${locale}/common.json`)).default,
+    member: (await import(`./messages/${locale}/member.json`)).default,
+    membership: (await import(`./messages/${locale}/membership.json`)).default,
+    'my-bookings': (await import(`./messages/${locale}/mina-bokningar.json`)).default,
+    'my-profile': (await import(`./messages/${locale}/min-profil.json`)).default,
+    bookingSuccess: (await import(`./messages/${locale}/bookingSuccess.json`)).default,
+    faq: (await import(`./messages/${locale}/faq.json`)).default,
+    community: (await import(`./messages/${locale}/community.json`)).default,
   };
 
   return {

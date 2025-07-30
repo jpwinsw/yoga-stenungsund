@@ -1,0 +1,55 @@
+{
+  "title": "My Profile",
+  "subtitle": "Manage your profile and membership information",
+  "loading": "Loading profile...",
+  "retry": "Try again",
+  "personalInfo": {
+    "title": "Personal Information",
+    "name": "Name",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email Address",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "country": "Country",
+    "memberSince": "Member since"
+  },
+  "membership": {
+    "title": "Membership",
+    "plan": "Plan",
+    "status": "Status",
+    "statusTypes": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "expired": "Expired",
+      "pending": "Pending",
+      "cancelled": "Cancelled"
+    },
+    "credits": "Credits remaining",
+    "creditsUsed": "used",
+    "nextBilling": "Next billing",
+    "manage": "Manage membership",
+    "noActive": "You don't have an active membership currently.",
+    "explore": "Explore memberships"
+  },
+  "quickActions": {
+    "title": "Quick Actions",
+    "bookClass": "Book class",
+    "viewBookings": "View my bookings",
+    "changeMembership": "Change membership"
+  },
+  "actions": {
+    "edit": "Edit",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel"
+  },
+  "success": {
+    "profileUpdated": "Profile updated!"
+  },
+  "error": {
+    "loading": "Could not load profile",
+    "updating": "Could not update profile"
+  }
+}

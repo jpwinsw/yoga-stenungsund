@@ -29,6 +29,10 @@ export const pathnames = {
     sv: '/larare',
     en: '/teachers'
   },
+  '/faq': {
+    sv: '/faq',
+    en: '/faq'
+  },
   '/nyborjare': {
     sv: '/nyborjare',
     en: '/beginners'
@@ -48,6 +52,30 @@ export const pathnames = {
   '/retreater': {
     sv: '/retreater',
     en: '/retreats'
+  },
+  '/mina-bokningar': {
+    sv: '/mina-bokningar',
+    en: '/my-bookings'
+  },
+  '/medlemskap': {
+    sv: '/medlemskap',
+    en: '/memberships'
+  },
+  '/medlemskap/tack': {
+    sv: '/medlemskap/tack',
+    en: '/memberships/thank-you'
+  },
+  '/min-profil': {
+    sv: '/min-profil',
+    en: '/my-profile'
+  },
+  '/community': {
+    sv: '/community',
+    en: '/community'
+  },
+  '/booking-success': {
+    sv: '/booking-success',
+    en: '/booking-success'
   }
 } as const;
 

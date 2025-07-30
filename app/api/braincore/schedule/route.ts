@@ -7,6 +7,7 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const startDate = searchParams.get('start_date')
   const endDate = searchParams.get('end_date')
+  const contactId = searchParams.get('contact_id')
   
   if (!startDate || !endDate) {
     return NextResponse.json(
@@ -16,14 +17,13 @@ export async function GET(request: NextRequest) {
   }
   
   try {
-    const response = await fetch(
-      `${BRAINCORE_API}/public/urbe/schedule/${COMPANY_ID}?start_date=${startDate}&end_date=${endDate}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
+    const url = `${BRAINCORE_API}/public/urbe/schedule/${COMPANY_ID}?start_date=${startDate}&end_date=${endDate}${contactId ? `&contact_id=${contactId}` : ''}`
+    
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     
     if (!response.ok) {
       throw new Error(`Brain-core API error: ${response.statusText}`)

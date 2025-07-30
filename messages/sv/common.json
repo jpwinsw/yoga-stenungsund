@@ -6,7 +6,10 @@
     "prices": "Priser",
     "about": "Om oss",
     "contact": "Kontakt",
-    "book_class": "Boka klass"
+    "book_class": "Boka klass",
+    "happenings": "Händelser",
+    "viewAllHappenings": "Se alla händelser",
+    "beginners": "Nybörjare"
   },
   "hero": {
     "title": "Välkommen till Yoga Stenungsund",
@@ -15,5 +18,52 @@
   },
   "footer": {
     "copyright": "© 2024 Yoga Stenungsund. Alla rättigheter förbehållna."
+  },
+  "member": {
+    "login": "Logga in",
+    "signup": "Bli medlem",
+    "logout": "Logga ut",
+    "myBookings": "Mina bokningar",
+    "myProfile": "Min profil",
+    "auth": {
+      "login": {
+        "title": "Logga in",
+        "close": "Stäng",
+        "email": "E-postadress",
+        "password": "Lösenord",
+        "forgotPassword": "Glömt lösenord?",
+        "login": "Logga in",
+        "loggingIn": "Loggar in...",
+        "noAccount": "Har du inget konto?",
+        "signUp": "Registrera dig",
+        "loginError": "Inloggning misslyckades",
+        "invalidCredentials": "Felaktig e-postadress eller lösenord",
+        "networkError": "Nätverksfel. Försök igen senare."
+      },
+      "signup": {
+        "title": "Skapa konto",
+        "close": "Stäng",
+        "firstName": "Förnamn",
+        "lastName": "Efternamn",
+        "email": "E-postadress",
+        "phone": "Telefon (valfritt)",
+        "phonePlaceholder": "+46 70 123 45 67",
+        "password": "Lösenord",
+        "confirmPassword": "Bekräfta lösenord",
+        "passwordRequirements": "Lösenordskrav:",
+        "minLength": "Minst 8 tecken",
+        "signUp": "Skapa konto",
+        "signingUp": "Skapar konto...",
+        "haveAccount": "Har du redan ett konto?",
+        "login": "Logga in",
+        "signupError": "Registrering misslyckades",
+        "emailExists": "E-postadressen används redan",
+        "passwordMismatch": "Lösenorden matchar inte",
+        "networkError": "Nätverksfel. Försök igen senare.",
+        "termsAgreement": "Jag godkänner",
+        "privacyPolicy": "integritetspolicyn",
+        "and": "och"
+      }
+    }
   }
 }

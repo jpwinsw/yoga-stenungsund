@@ -1,0 +1,55 @@
+{
+  "title": "Min profil",
+  "subtitle": "Hantera din profil och medlemskapsinformation",
+  "loading": "Laddar profil...",
+  "retry": "Försök igen",
+  "personalInfo": {
+    "title": "Personuppgifter",
+    "name": "Namn",
+    "firstName": "Förnamn",
+    "lastName": "Efternamn",
+    "email": "E-postadress",
+    "phone": "Telefon",
+    "address": "Adress",
+    "city": "Stad",
+    "country": "Land",
+    "memberSince": "Medlem sedan"
+  },
+  "membership": {
+    "title": "Medlemskap",
+    "plan": "Plan",
+    "status": "Status",
+    "statusTypes": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "expired": "Utgången",
+      "pending": "Väntande",
+      "cancelled": "Avbruten"
+    },
+    "credits": "Krediter kvar",
+    "creditsUsed": "använt",
+    "nextBilling": "Nästa fakturering",
+    "manage": "Hantera medlemskap",
+    "noActive": "Du har inget aktivt medlemskap för närvarande.",
+    "explore": "Utforska medlemskap"
+  },
+  "quickActions": {
+    "title": "Snabblänkar",
+    "bookClass": "Boka klass",
+    "viewBookings": "Visa mina bokningar",
+    "changeMembership": "Ändra medlemskap"
+  },
+  "actions": {
+    "edit": "Redigera",
+    "save": "Spara",
+    "saving": "Sparar...",
+    "cancel": "Avbryt"
+  },
+  "success": {
+    "profileUpdated": "Profil uppdaterad!"
+  },
+  "error": {
+    "loading": "Kunde inte ladda profil",
+    "updating": "Kunde inte uppdatera profil"
+  }
+}

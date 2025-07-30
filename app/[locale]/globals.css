@@ -3,6 +3,111 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* Yoga Studio Brand Colors - inspired by logo */
+  --yoga-cyan: #00B4D8;
+  --yoga-blue: #0077B6;
+  --yoga-purple: #7209B7;
+  --yoga-pink: #F72585;
+  --yoga-light-purple: #A855F7;
+  
+  /* Calming neutrals for yoga atmosphere */
+  --yoga-cream: #FFF8F0;
+  --yoga-sage: #B794F4; /* Soft lavender - was #87A96B (green) */
+  --yoga-sand: #F5E6D3;
+  --yoga-stone: #6B7280;
+  --yoga-earth: #8B7355;
+  
+  /* Shadcn UI variables - updated to match brand */
+  --radius: 0.75rem;
+  --border: #E5E7EB;
+  --input: #F3F4F6;
+  --ring: var(--yoga-cyan);
+  --primary: var(--yoga-cyan);
+  --primary-foreground: #ffffff;
+  --secondary: var(--yoga-cream);
+  --secondary-foreground: #1F2937;
+  --destructive: #EF4444;
+  --destructive-foreground: #ffffff;
+  --muted: #F9FAFB;
+  --muted-foreground: #6B7280;
+  --accent: var(--yoga-light-purple);
+  --accent-foreground: #ffffff;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  
+  /* Typography scale */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+  
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  
+  /* Hover colors - consistent interaction states */
+  --hover-primary: var(--yoga-blue);
+  --hover-secondary: var(--yoga-sand);
+  --hover-accent: var(--yoga-purple);
+  --hover-muted: rgba(0, 180, 216, 0.1);
+  --hover-overlay: rgba(0, 0, 0, 0.05);
+  
+  /* Shadow system - cohesive depth */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.06), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --shadow-colored: 0 10px 25px -5px rgba(0, 180, 216, 0.25);
+  
+  /* Transition durations - matching animation library */
+  --transition-fast: 200ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+  
+  /* Border radius - organic, flowing shapes */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+  
+  /* Organic gradients inspired by nature */
+  --gradient-sunrise: linear-gradient(135deg, #FFF8F0 0%, #FFE4CC 50%, #FFB6A3 100%);
+  --gradient-ocean: linear-gradient(135deg, #E6F7FB 0%, #B8E8F5 50%, #00B4D8 100%);
+  --gradient-forest: linear-gradient(135deg, #F0F8F0 0%, #D4E8D4 50%, #87A96B 100%);
+  --gradient-twilight: linear-gradient(135deg, #F0E6FA 0%, #E6D4F5 50%, #A855F7 100%);
+  
+  /* Mindful spacing ratios - golden ratio inspired */
+  --space-golden-xs: 0.382rem;
+  --space-golden-sm: 0.618rem;
+  --space-golden-md: 1rem;
+  --space-golden-lg: 1.618rem;
+  --space-golden-xl: 2.618rem;
+  --space-golden-2xl: 4.236rem;
 }
 
 @theme inline {
@@ -16,11 +121,308 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    
+    /* Shadcn UI dark mode variables */
+    --border: #262626;
+    --input: #262626;
+    --primary-foreground: #171717;
+    --secondary: #262626;
+    --secondary-foreground: #fafafa;
+    --destructive: #991b1b;
+    --muted: #262626;
+    --muted-foreground: #a3a3a3;
+    --accent: #262626;
+    --accent-foreground: #fafafa;
+    --popover: #171717;
+    --popover-foreground: #fafafa;
+    --card: #171717;
+    --card-foreground: #fafafa;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography utilities */
+.font-mono {
+  font-family: var(--font-geist-mono), 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+}
+
+/* Gradient utilities matching logo */
+.gradient-yoga {
+  background: linear-gradient(135deg, var(--yoga-cyan) 0%, var(--yoga-blue) 25%, var(--yoga-purple) 50%, var(--yoga-pink) 100%);
+}
+
+.gradient-yoga-subtle {
+  background: linear-gradient(135deg, rgba(0, 180, 216, 0.1) 0%, rgba(114, 9, 183, 0.1) 50%, rgba(247, 37, 133, 0.1) 100%);
+}
+
+.gradient-yoga-text {
+  background: linear-gradient(135deg, var(--yoga-cyan) 0%, var(--yoga-purple) 50%, var(--yoga-pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Smooth animations */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Shimmer animation for skeletons */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-200%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+/* Shadow utilities */
+.shadow-xs { box-shadow: var(--shadow-xs); }
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+.shadow-2xl { box-shadow: var(--shadow-2xl); }
+.shadow-inner { box-shadow: var(--shadow-inner); }
+.shadow-colored { box-shadow: var(--shadow-colored); }
+
+/* Hover shadow transitions */
+.hover-shadow-sm { transition: box-shadow var(--transition-fast) ease; }
+.hover-shadow-sm:hover { box-shadow: var(--shadow-sm); }
+.hover-shadow-md { transition: box-shadow var(--transition-fast) ease; }
+.hover-shadow-md:hover { box-shadow: var(--shadow-md); }
+.hover-shadow-lg { transition: box-shadow var(--transition-normal) ease; }
+.hover-shadow-lg:hover { box-shadow: var(--shadow-lg); }
+.hover-shadow-xl { transition: box-shadow var(--transition-normal) ease; }
+.hover-shadow-xl:hover { box-shadow: var(--shadow-xl); }
+.hover-shadow-colored { transition: box-shadow var(--transition-normal) ease; }
+.hover-shadow-colored:hover { box-shadow: var(--shadow-colored); }
+
+/* Hover lift effect */
+.hover-lift {
+  transition: transform var(--transition-normal) ease, box-shadow var(--transition-normal) ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Active states */
+.active-scale {
+  transition: transform var(--transition-fast) ease;
+}
+.active-scale:active {
+  transform: scale(0.98);
+}
+
+/* Mindful breathing animation - for loading states */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+.breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+/* Gentle pulse for CTAs */
+@keyframes gentle-pulse {
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: 0 0 0 0 rgba(0, 180, 216, 0.4);
+  }
+  50% { 
+    transform: scale(1.02); 
+    box-shadow: 0 0 0 10px rgba(0, 180, 216, 0);
+  }
+}
+
+.pulse-gentle {
+  animation: gentle-pulse 3s ease-in-out infinite;
+}
+
+/* Organic blob shapes for backgrounds */
+.blob-1 {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  transition: border-radius var(--transition-slow) ease;
+}
+
+.blob-2 {
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  transition: border-radius var(--transition-slow) ease;
+}
+
+.blob-3 {
+  border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%;
+  transition: border-radius var(--transition-slow) ease;
+}
+
+/* Morphing blob animation */
+@keyframes morph {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  25% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  50% {
+    border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%;
+  }
+  75% {
+    border-radius: 40% 60% 60% 40% / 70% 30% 70% 30%;
+  }
+}
+
+.blob-morph {
+  animation: morph 15s ease-in-out infinite;
+}
+
+/* Soft glow effects */
+.glow-soft {
+  box-shadow: 0 0 20px rgba(0, 180, 216, 0.2);
+}
+
+.glow-medium {
+  box-shadow: 0 0 40px rgba(0, 180, 216, 0.3);
+}
+
+.glow-strong {
+  box-shadow: 0 0 60px rgba(0, 180, 216, 0.4);
+}
+
+/* Text shadows for depth */
+.text-shadow-subtle {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-shadow-yoga {
+  text-shadow: 0 4px 8px rgba(114, 9, 183, 0.2);
+}
+
+/* Hover transformations */
+.hover-float {
+  transition: transform var(--transition-normal) ease;
+}
+.hover-float:hover {
+  transform: translateY(-2px);
+}
+
+.hover-grow {
+  transition: transform var(--transition-normal) ease;
+}
+.hover-grow:hover {
+  transform: scale(1.05);
+}
+
+/* Subtle grain texture overlay */
+.grain {
+  position: relative;
+}
+.grain::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.5'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Watercolor effect borders */
+.border-watercolor {
+  position: relative;
+  border: none;
+}
+.border-watercolor::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: var(--gradient-yoga);
+  filter: blur(8px);
+  opacity: 0.3;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+/* Zen circle decoration */
+.zen-circle {
+  width: 200px;
+  height: 200px;
+  border: 2px solid var(--yoga-stone);
+  border-radius: 50%;
+  position: relative;
+}
+.zen-circle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background: var(--yoga-cyan);
+  border-radius: 50%;
+}
+
+/* Lotus pattern background */
+.lotus-pattern {
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(247, 37, 133, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(114, 9, 183, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 30%, rgba(0, 180, 216, 0.1) 0%, transparent 50%);
+  background-size: 200px 200px;
+  background-position: 0 0, 100px 0, 50px 100px;
+}
+
+/* Custom scrollbar styles */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thumb-gray-300::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thumb-gray-300::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thumb-gray-300::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 3px;
+}
+
+.scrollbar-thumb-gray-300::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af;
 }

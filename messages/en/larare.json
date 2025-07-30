@@ -1,1 +1,17 @@
-{"title": "Page Title"}
+{
+  "metaTitle": "Our Teachers | Yoga Stenungsund",
+  "metaDescription": "Meet our experienced and passionate yoga teachers. Each instructor brings their unique knowledge and style.",
+  "title": "Our Teachers",
+  "subtitle": "Passionate instructors with deep knowledge and love for yoga",
+  "experience": "years of experience",
+  "specialties": "Specialties",
+  "education": "Education",
+  "philosophy": "Yoga Philosophy",
+  "bookClass": "Book class",
+  "viewSchedule": "View schedule",
+  "cta": {
+    "title": "Want to meet our teachers?",
+    "description": "Book your first class and experience our instructors' unique teaching styles.",
+    "button": "Book trial class"
+  }
+}

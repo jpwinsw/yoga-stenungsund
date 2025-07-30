@@ -1,0 +1,89 @@
+{
+  "metaTitle": "Vanliga frågor | Yoga Stenungsund",
+  "metaDescription": "Svar på vanliga frågor om Yoga Stenungsund. Allt du behöver veta om klasser, priser, schema och mer.",
+  "title": "Vanliga frågor",
+  "subtitle": "Här hittar du svar på de vanligaste frågorna om vår studio",
+  "categories": {
+    "general": {
+      "title": "Allmänt",
+      "questions": [
+        {
+          "question": "Vad behöver jag ha med mig till min första klass?",
+          "answer": "Kom i bekväma kläder som du kan röra dig fritt i. Vi har yogamattor att låna, men du får gärna ta med din egen. Ta också med en vattenflaska och en liten handduk om du vill."
+        },
+        {
+          "question": "Hur tidigt ska jag komma före klassen?",
+          "answer": "Vi rekommenderar att du kommer 10-15 minuter före din första klass för att hinna registrera dig och bekanta dig med studion. Till ordinarie klasser räcker det att komma 5-10 minuter innan."
+        },
+        {
+          "question": "Kan jag delta om jag är nybörjare?",
+          "answer": "Absolut! Hos oss kan du alltid börja yoga, precis som du är. Vi har klasser för alla nivåer, och våra lärare är duktiga på att ge alternativ så att alla kan delta utifrån sin egen förmåga."
+        },
+        {
+          "question": "Vad är er filosofi?",
+          "answer": "Alla kan finna lugnet på havet, kan du finna det i din vardag? Vi tror på yoga som en väg till inre lugn och balans i vardagen."
+        }
+      ]
+    },
+    "booking": {
+      "title": "Bokning & Avbokning",
+      "questions": [
+        {
+          "question": "Hur bokar jag en klass?",
+          "answer": "Du kan boka klasser via vår hemsida genom att gå till schemat och klicka på den klass du vill delta i. Du kan också ringa oss direkt."
+        },
+        {
+          "question": "Vad gäller för avbokning?",
+          "answer": "Avbokning måste ske senast 2 timmar före klassens start. Vid sen avbokning eller utebliven närvaro dras klassen från ditt kort eller debiteras som drop-in."
+        },
+        {
+          "question": "Vad händer om en klass blir fullbokad?",
+          "answer": "Du kan sätta upp dig på väntelistan. Om någon avbokar får du automatiskt en plats och blir meddelad via e-post eller SMS."
+        }
+      ]
+    },
+    "pricing": {
+      "title": "Priser & Medlemskap",
+      "questions": [
+        {
+          "question": "Vilka betalningsalternativ finns?",
+          "answer": "Vi erbjuder drop-in, klippkort med 10 klasser, månadskort och årskort. Vi har också studentrabatt och seniorpriser. Se vår prissida för aktuella priser."
+        },
+        {
+          "question": "Gäller mitt kort på alla klasser?",
+          "answer": "Ja, alla våra kort gäller på samtliga ordinarie klasser. Workshops och special-event kan ha separat prissättning."
+        },
+        {
+          "question": "Kan jag pausa mitt medlemskap?",
+          "answer": "Ja, du kan pausa ditt månads- eller årskort vid sjukdom eller semester. Kontakta oss för mer information om villkoren."
+        }
+      ]
+    },
+    "studio": {
+      "title": "Om studion",
+      "questions": [
+        {
+          "question": "Var ligger studion?",
+          "answer": "Vi ligger på Selinsväg 5 i Stora Höga, nära tåg och buss med stor parkeringsplats. Se vår kontaktsida för vägbeskrivning."
+        },
+        {
+          "question": "Har ni yogautrustning att låna?",
+          "answer": "Ja, vi har yogamattor och övrig utrustning som du kan låna kostnadsfritt. Du är också välkommen att ta med din egen matta om du föredrar det."
+        },
+        {
+          "question": "Erbjuder ni online-klasser?",
+          "answer": "Ja, vi har online yoga-klasser för dig som föredrar att yoga hemma eller inte kan ta dig till studion."
+        },
+        {
+          "question": "Sedan när finns studion?",
+          "answer": "Vår studio etablerades 2005 och har sedan dess varit en plats för yoga och välbefinnande i Stenungsund."
+        }
+      ]
+    }
+  },
+  "contact": {
+    "title": "Har du fler frågor?",
+    "description": "Tveka inte att kontakta oss om du har andra frågor eller funderingar.",
+    "button": "Kontakta oss"
+  }
+}

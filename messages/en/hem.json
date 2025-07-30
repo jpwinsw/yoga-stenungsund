@@ -4,7 +4,8 @@
     "subtitle": "Your local yoga studio in the heart of Stenungsund",
     "description": "Discover the power of yoga with our experienced teachers. We offer classes for all levels in a warm and welcoming environment.",
     "tagline": "Everyone can find peace at sea, can you find it in your everyday life?",
-    "cta": "Explore our classes"
+    "cta": "Explore our classes",
+    "trial": "Try free class"
   },
   "intro": {
     "title": "Why choose Yoga Stenungsund?",
@@ -33,5 +34,9 @@
     "description": "Take the first step towards a more balanced life. Try your first class with us!",
     "button": "View schedule",
     "trial": "Book trial class"
+  },
+  "quote": {
+    "text": "Yoga is not about touching your toes. It is about what you learn on the way down.",
+    "author": "Jigar Gor"
   }
 }

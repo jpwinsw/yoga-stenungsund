@@ -1,1 +1,96 @@
-{"title": "Page Title"}
+{
+  "metaTitle": "Beginners | Yoga Stenungsund",
+  "metaDescription": "Start your yoga journey with us. Everything you need to know to get started with yoga - from what to wear to which classes suit beginners.",
+  "title": "Welcome Beginners",
+  "subtitle": "Your yoga journey begins here - we'll guide you every step of the way",
+  "intro": {
+    "title": "Yoga is for everyone",
+    "description": "Regardless of age, fitness level or previous experience - yoga adapts to you. With us, you'll meet experienced teachers who safely guide you through every step of your yoga journey."
+  },
+  "whatToExpect": {
+    "title": "What to expect",
+    "firstClass": {
+      "title": "Your first class",
+      "description": "Arrive 15 minutes early to register and familiarize yourself with the studio. The teacher will welcome you and ask about any injuries or limitations."
+    },
+    "during": {
+      "title": "During class",
+      "description": "The teacher guides you through each position and offers alternatives that suit your level. Listen to your body and take breaks when needed."
+    },
+    "after": {
+      "title": "After class",
+      "description": "Take time to notice how you feel. Drink water and enjoy the feeling of calm and presence."
+    }
+  },
+  "preparation": {
+    "title": "Preparation",
+    "whatToBring": {
+      "title": "What you need",
+      "items": [
+        "Comfortable clothes you can move freely in",
+        "Water bottle",
+        "Small towel (if you get warm easily)",
+        "Your own yoga mat (we have mats to borrow)"
+      ]
+    },
+    "tips": {
+      "title": "Tips for beginners",
+      "items": [
+        "Don't eat a large meal 2 hours before class",
+        "Come with an open mind and no expectations",
+        "Tell the teacher it's your first time",
+        "It's okay not to master all positions right away"
+      ]
+    }
+  },
+  "recommendedClasses": {
+    "title": "Recommended classes for beginners",
+    "description": "These classes are particularly suitable if you're new to yoga:",
+    "hatha": {
+      "title": "Hatha Yoga",
+      "description": "Slow pace focusing on basic positions and breathing. Perfect for learning the fundamentals."
+    },
+    "yinYoga": {
+      "title": "Yin Yoga",
+      "description": "Gentle and relaxing yoga where positions are held longer. Increases flexibility and inner calm."
+    },
+    "beginnerFlow": {
+      "title": "Beginner Flow",
+      "description": "A gentle introduction to dynamic yoga with simple flows and lots of guidance."
+    }
+  },
+  "faq": {
+    "title": "Common questions from beginners",
+    "flexibility": {
+      "question": "Do I need to be flexible to do yoga?",
+      "answer": "Absolutely not! Yoga is about meeting your body where it is today. Flexibility comes with time."
+    },
+    "comparison": {
+      "question": "Will others judge me?",
+      "answer": "Everyone is focused on their own practice. Our community is warm and welcoming - we've all been beginners."
+    },
+    "frequency": {
+      "question": "How often should I practice yoga as a beginner?",
+      "answer": "Start with 1-2 times per week and gradually increase. Listen to your body and find your own rhythm."
+    }
+  },
+  "testimonial": {
+    "text": "I was nervous before my first class, but the teacher was so welcoming and helpful. Now, a year later, I can't imagine my life without yoga.",
+    "author": "Maria, member since 2022"
+  },
+  "cta": {
+    "title": "Ready to start?",
+    "description": "Take the first step on your yoga journey today. We're here to support you all the way.",
+    "buttons": {
+      "schedule": "View schedule",
+      "trial": "Book trial class",
+      "contact": "Contact us"
+    }
+  },
+  "trialOffer": {
+    "title": "Special offer for new yogis",
+    "description": "Try 3 classes for only 199 SEK",
+    "details": "Valid for 2 weeks from first class",
+    "cta": "Activate offer"
+  }
+}

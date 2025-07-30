@@ -1,0 +1,64 @@
+{
+  "metaTitle": "Memberships | Yoga Stenungsund",
+  "metaDescription": "Choose the membership that suits you best. Unlimited yoga, workshops and exclusive member benefits.",
+  "title": "Memberships",
+  "description": "Choose the membership that suits you best and start your yoga journey with us",
+  "purchase": "Choose membership",
+  "purchasing": "Processing...",
+  "periods": {
+    "monthly": "per month",
+    "quarterly": "per quarter",
+    "yearly": "per year",
+    "oneTime": "one-time"
+  },
+  "popular": "Popular",
+  "recommended": "Recommended",
+  "bestValue": "Best Value",
+  "errors": {
+    "purchaseFailed": "Purchase failed",
+    "tryAgain": "Please try again later"
+  },
+  "success": {
+    "purchaseComplete": "Thank you for your purchase!",
+    "welcomeMessage": "Welcome as a member",
+    "confirmationEmail": "You will soon receive a confirmation email with information about your membership.",
+    "bookClass": "Book your first class",
+    "viewBookings": "View my bookings"
+  },
+  "billingPeriod": {
+    "monthly": "Monthly",
+    "yearly": "Yearly"
+  },
+  "benefits": {
+    "title": "Benefits for all members",
+    "unlimitedYoga": {
+      "title": "Unlimited yoga",
+      "description": "Attend all regular classes as often as you like"
+    },
+    "freeWorkshops": {
+      "title": "Free workshops",
+      "description": "Access selected workshops and special classes"
+    },
+    "priorityBooking": {
+      "title": "Priority booking",
+      "description": "Book classes earlier than drop-in participants"
+    },
+    "memberEvents": {
+      "title": "Member events",
+      "description": "Exclusive events and gatherings for members"
+    },
+    "guestPasses": {
+      "title": "Guest passes",
+      "description": "Bring a friend for free a few times per year"
+    },
+    "studioDiscounts": {
+      "title": "Studio discounts",
+      "description": "10% off retreats and retail in the studio"
+    }
+  },
+  "faq": {
+    "title": "Common questions about memberships",
+    "description": "Have questions about our memberships? We've collected answers to the most common questions.",
+    "link": "See all questions and answers"
+  }
+}

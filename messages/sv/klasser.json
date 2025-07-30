@@ -1,13 +1,23 @@
 {
+  "metaTitle": "Klasser | Yoga Stenungsund",
+  "metaDescription": "Utforska vårt utbud av yogaklasser. Från dynamisk Vinyasa till avslappnande Yin - hitta den perfekta klassen för dig.",
   "title": "Våra yogaklasser",
   "description": "Vi erbjuder ett brett utbud av yogaklasser för alla nivåer och behov. Hitta den perfekta klassen för dig!",
+  "overline": "Vårt utbud",
   "viewSchedule": "Se schema",
+  "intensity": "Intensitet",
+  "instructors": "Instruktörer",
   "levels": {
     "beginner": "Nybörjare",
     "intermediate": "Medel",
     "advanced": "Avancerad",
     "all": "Alla nivåer",
     "special": "Specialklass"
+  },
+  "cta": {
+    "title": "Redo att börja?",
+    "description": "Hitta den perfekta klassen för dig i vårt schema.",
+    "button": "Se schema"
   },
   "types": {
     "hatha": {

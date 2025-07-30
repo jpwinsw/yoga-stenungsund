@@ -1,33 +1,60 @@
 {
+  "metaTitle": "Om oss | Yoga Stenungsund",
+  "metaDescription": "Lär känna Yoga Stenungsund - din lokala yogastudio. Vi erbjuder yoga för alla nivåer i en varm och välkomnande miljö.",
   "title": "Om Yoga Stenungsund",
-  "subtitle": "Vår historia",
-  "mission": {
-    "title": "Vårt uppdrag",
-    "description": "Att skapa ett välkomnande utrymme där människor från alla bakgrunder kan upptäcka yogans transformerande kraft, bygga styrka, flexibilitet och inre frid."
+  "subtitle": "En plats för lugn, styrka och gemenskap",
+  "intro": {
+    "title": "Vår vision",
+    "description": "På Yoga Stenungsund tror vi på yogans kraft att transformera både kropp och sinne. Vår studio grundades med visionen att skapa en tillflyktsort från vardagens stress - en plats där du kan hitta balans, bygga styrka och upptäcka inre lugn."
   },
   "values": {
     "title": "Våra värderingar",
-    "items": {
-      "inclusivity": {
-        "title": "Inkludering",
-        "description": "Yoga är för alla, oavsett ålder, förmåga eller erfarenhet"
-      },
-      "authenticity": {
-        "title": "Äkthet",
-        "description": "Vi hedrar yogans traditionella rötter samtidigt som vi anpassar oss till moderna behov"
-      },
-      "community": {
-        "title": "Gemenskap",
-        "description": "Bygga kontakter och stödja varandra på vår yogaresa"
-      },
-      "growth": {
-        "title": "Tillväxt",
-        "description": "Kontinuerligt lärande och personlig utveckling för både elever och lärare"
-      }
+    "community": {
+      "title": "Gemenskap",
+      "description": "Vi skapar en inkluderande miljö där alla känner sig välkomna och sedda"
+    },
+    "authenticity": {
+      "title": "Äkthet",
+      "description": "Autentisk undervisning med fokus på traditionell yoga anpassad för moderna livet"
+    },
+    "growth": {
+      "title": "Utveckling",
+      "description": "Vi stödjer din personliga resa, oavsett var du befinner dig i din praktik"
+    },
+    "mindfulness": {
+      "title": "Närvaro",
+      "description": "Medveten närvaro i varje andetag, varje rörelse och varje möte"
     }
   },
   "studio": {
     "title": "Vår studio",
-    "description": "Vår vackra studio är utformad för att främja lugn och fokus, med naturligt ljus, miljövänliga material och alla tillbehör du behöver för en bekväm praktik."
+    "description": "Belägen i hjärtat av Stenungsund, är vår studio designad för att vara en oas av lugn. Med naturligt ljus, varma färger och omsorgsfullt utvalda detaljer skapar vi en miljö som stödjer din praktik.",
+    "features": [
+      "Rymlig yogasal med naturligt ljus",
+      "Omklädningsrum med duschar och förvaring",
+      "Loungeområde för avkoppling och gemenskap",
+      "Fullt utrustad med yogamattor och rekvisita",
+      "Luftig och välventilerad miljö"
+    ]
+  },
+  "journey": {
+    "title": "Vår resa",
+    "description": "Yoga Stenungsund öppnade sina dörrar 2019 med en enkel vision: att göra yoga tillgängligt för alla i vårt samhälle. Sedan dess har vi vuxit till en blomstrande gemenskap av yogautövare från alla bakgrunder och nivåer.",
+    "milestones": [
+      "2019 - Studion öppnar med 5 klasser per vecka",
+      "2020 - Lanserar online-klasser under pandemin",
+      "2021 - Expanderar till 15+ klasser per vecka",
+      "2022 - Introducerar workshops och retreater",
+      "2023 - Firar 1000+ medlemmar i vår community"
+    ]
+  },
+  "cta": {
+    "title": "Bli en del av vår yogafamilj",
+    "description": "Oavsett om du är nybörjare eller erfaren utövare, finns det en plats för dig hos oss.",
+    "buttons": {
+      "teachers": "Möt våra lärare",
+      "schedule": "Se schema",
+      "contact": "Kontakta oss"
+    }
   }
 }

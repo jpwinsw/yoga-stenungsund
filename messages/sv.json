@@ -8,11 +8,17 @@
     "classes": "Klasser",
     "schedule": "Schema",
     "prices": "Priser",
+    "memberships": "Medlemskap",
     "about": "Om oss",
+    "aboutUs": "Om oss",
+    "beginners": "Nybörjare",
+    "teachers": "Våra lärare",
+    "faq": "Vanliga frågor",
     "contact": "Kontakt",
     "happenings": "Happenings",
     "viewAllHappenings": "Se alla happenings",
-    "book_class": "Boka klass"
+    "book_class": "Boka klass",
+    "community": "Community"
   },
   "hero": {
     "title": "Välkommen till Yoga Stenungsund",
@@ -60,9 +66,14 @@
     }
   },
   "classes": {
+    "metaTitle": "Klasser | Yoga Stenungsund",
+    "metaDescription": "Utforska vårt utbud av yogaklasser. Från dynamisk Vinyasa till avslappnande Yin - hitta den perfekta klassen för dig.",
     "title": "Våra yogaklasser",
     "description": "Vi erbjuder ett brett utbud av yogaklasser för alla nivåer och behov. Hitta den perfekta klassen för dig!",
+    "overline": "Vårt utbud",
     "viewSchedule": "Se schema",
+    "intensity": "Intensitet",
+    "instructors": "Instruktörer",
     "levels": {
       "beginner": "Nybörjare",
       "intermediate": "Medel",
@@ -70,31 +81,10 @@
       "all": "Alla nivåer",
       "special": "Specialklass"
     },
-    "types": {
-      "hatha": {
-        "name": "Hatha Yoga",
-        "description": "En lugn och meditativ form av yoga med fokus på andning och grundläggande positioner. Perfekt för nybörjare."
-      },
-      "vinyasa": {
-        "name": "Vinyasa Flow",
-        "description": "Dynamisk yoga där rörelser flyter samman med andningen. Bygger styrka, flexibilitet och uthållighet."
-      },
-      "yin": {
-        "name": "Yin Yoga",
-        "description": "Långsam och meditativ yoga med positioner som hålls i 3-5 minuter. Ökar flexibilitet och inre lugn."
-      },
-      "ashtanga": {
-        "name": "Ashtanga Yoga",
-        "description": "En kraftfull och disciplinerad yogaform med fasta serier av positioner. För erfarna utövare."
-      },
-      "prenatal": {
-        "name": "Gravidyoga",
-        "description": "Anpassad yoga för gravida. Förbereder kropp och sinne för förlossning och föräldraskap."
-      },
-      "restorative": {
-        "name": "Restorative Yoga",
-        "description": "Återhämtande yoga med stöd av kuddar och filtar. Perfekt för stresshantering och djup avslappning."
-      }
+    "cta": {
+      "title": "Redo att börja?",
+      "description": "Hitta den perfekta klassen för dig i vårt schema.",
+      "button": "Se schema"
     }
   },
   "happenings": {

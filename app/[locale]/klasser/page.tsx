@@ -1,45 +1,51 @@
-import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/index';
+import { getTranslations } from 'next-intl/server'
+import { getServices, getSchedule } from '@/lib/api/braincore-server'
+import type { Service } from '@/lib/types/braincore'
+import ClassesClient from './ClassesClient'
 
-export default function ClassesPage() {
-  const t = useTranslations('classes');
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'classes' })
+  
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+  }
+}
 
-  const classTypes = [
-    { id: 'hatha', level: 'beginner' },
-    { id: 'vinyasa', level: 'intermediate' },
-    { id: 'yin', level: 'all' },
-    { id: 'ashtanga', level: 'advanced' },
-    { id: 'prenatal', level: 'special' },
-    { id: 'restorative', level: 'all' },
-  ];
-
-  return (
-    <div className="min-h-screen pt-20 pb-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold text-center mb-4">{t('title')}</h1>
-        <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
-          {t('description')}
-        </p>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {classTypes.map((classType) => (
-            <div key={classType.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="h-48 bg-gradient-to-br from-purple-400 to-purple-600"></div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">{t(`types.${classType.id}.name`)}</h3>
-                <p className="text-sm text-purple-600 mb-3">{t(`levels.${classType.level}`)}</p>
-                <p className="text-gray-600 mb-4">{t(`types.${classType.id}.description`)}</p>
-                <Link 
-                  href="/schema" 
-                  className="text-purple-600 font-medium hover:text-purple-700"
-                >
-                  {t('viewSchedule')}
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+export default async function ClassesPage() {
+  let services: Service[] = []
+  const classInstructors: Record<string, string[]> = {}
+  
+  try {
+    services = await getServices()
+    
+    // Fetch schedule from today to one year ahead to get all instructors
+    const today = new Date()
+    const oneYearLater = new Date(today)
+    oneYearLater.setFullYear(oneYearLater.getFullYear() + 1)
+    
+    const schedule = await getSchedule(
+      today.toISOString().split('T')[0],
+      oneYearLater.toISOString().split('T')[0]
+    )
+    
+    // Aggregate instructors by service/class name
+    schedule.forEach(session => {
+      if (session.instructor_name && session.service_template_name) {
+        const serviceName = session.service_template_name
+        
+        if (!classInstructors[serviceName]) {
+          classInstructors[serviceName] = []
+        }
+        if (!classInstructors[serviceName].includes(session.instructor_name)) {
+          classInstructors[serviceName].push(session.instructor_name)
+        }
+      }
+    })
+  } catch (error) {
+    console.error('Failed to fetch data:', error)
+  }
+  
+  return <ClassesClient initialServices={services} classInstructors={classInstructors} />
 }

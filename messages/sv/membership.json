@@ -1,0 +1,64 @@
+{
+  "metaTitle": "Medlemskap | Yoga Stenungsund",
+  "metaDescription": "Välj det medlemskap som passar dig bäst. Obegränsad yoga, workshops och exklusiva medlemsförmåner.",
+  "title": "Medlemskap",
+  "description": "Välj det medlemskap som passar dig bäst och börja din yogaresa med oss",
+  "purchase": "Välj medlemskap",
+  "purchasing": "Behandlar...",
+  "periods": {
+    "monthly": "per månad",
+    "quarterly": "per kvartal",
+    "yearly": "per år",
+    "oneTime": "engångsbelopp"
+  },
+  "popular": "Populär",
+  "recommended": "Rekommenderad",
+  "bestValue": "Bästa värde",
+  "errors": {
+    "purchaseFailed": "Köpet misslyckades",
+    "tryAgain": "Försök igen senare"
+  },
+  "success": {
+    "purchaseComplete": "Tack för ditt köp!",
+    "welcomeMessage": "Välkommen som medlem",
+    "confirmationEmail": "Du kommer snart att få en bekräftelse via e-post med information om ditt medlemskap.",
+    "bookClass": "Boka din första klass",
+    "viewBookings": "Se mina bokningar"
+  },
+  "billingPeriod": {
+    "monthly": "Månadsvis",
+    "yearly": "Årsvis"
+  },
+  "benefits": {
+    "title": "Förmåner för alla medlemmar",
+    "unlimitedYoga": {
+      "title": "Obegränsad yoga",
+      "description": "Delta i alla ordinarie klasser så ofta du vill"
+    },
+    "freeWorkshops": {
+      "title": "Gratis workshops",
+      "description": "Få tillgång till utvalda workshops och specialklasser"
+    },
+    "priorityBooking": {
+      "title": "Prioriterad bokning",
+      "description": "Boka klasser tidigare än drop-in deltagare"
+    },
+    "memberEvents": {
+      "title": "Medlemsevent",
+      "description": "Exklusiva evenemang och sammankomster för medlemmar"
+    },
+    "guestPasses": {
+      "title": "Gästpass",
+      "description": "Ta med en vän gratis några gånger per år"
+    },
+    "studioDiscounts": {
+      "title": "Rabatter i studion",
+      "description": "10% rabatt på retreater och försäljning i studion"
+    }
+  },
+  "faq": {
+    "title": "Vanliga frågor om medlemskap",
+    "description": "Har du frågor om våra medlemskap? Vi har samlat svaren på de vanligaste frågorna.",
+    "link": "Se alla frågor och svar"
+  }
+}

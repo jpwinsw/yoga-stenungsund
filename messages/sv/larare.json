@@ -1,1 +1,17 @@
-{"title": "Sidtitel"}
+{
+  "metaTitle": "Våra lärare | Yoga Stenungsund",
+  "metaDescription": "Möt våra erfarna och passionerade yogalärare. Varje instruktör bidrar med sin unika kunskap och stil.",
+  "title": "Våra lärare",
+  "subtitle": "Passionerade instruktörer med djup kunskap och kärlek för yoga",
+  "experience": "års erfarenhet",
+  "specialties": "Specialiteter",
+  "education": "Utbildning",
+  "philosophy": "Yogafilosofi",
+  "bookClass": "Boka klass",
+  "viewSchedule": "Se schema",
+  "cta": {
+    "title": "Vill du träffa våra lärare?",
+    "description": "Boka din första klass och upplev våra instruktörers unika undervisningsstilar.",
+    "button": "Boka provklass"
+  }
+}

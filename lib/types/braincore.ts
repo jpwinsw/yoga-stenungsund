@@ -28,6 +28,7 @@ export interface ScheduleSession {
   member_price: number | null
   tags: string[]
   status?: 'active' | 'cancelled' | 'full'
+  user_booked?: boolean
 }
 
 export interface Service {
@@ -64,21 +65,32 @@ export interface MembershipPlan {
 
 export interface BookingRequest {
   session_id: number
-  member_id: number
+  contact_id: number
   payment_method?: string
+  join_waitlist?: boolean
+  payment_intent_id?: string
 }
 
 export interface BookingResponse {
-  id: number
-  booking_reference: string
-  session_id: number
-  member_id: number
-  status: 'confirmed' | 'pending' | 'cancelled'
-  created_at: string
+  booking_id: number
+  confirmation_code: string
+  status: 'confirmed' | 'pending' | 'cancelled' | 'waitlisted'
+  payment_required?: boolean
+  payment_amount?: number
+  session_details: {
+    title: string
+    start_time: string
+    end_time: string
+    instructor_name: string | null
+    location: string | null
+    waitlist_position?: number
+    already_on_waitlist?: boolean
+  }
 }
 
 export interface Member {
   id: number
+  contact_id: number
   email: string
   first_name: string
   last_name: string
@@ -93,9 +105,13 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  token: string
-  member: Member
-  expires_at: string
+  session_token: string
+  member_id: number
+  contact_id: number
+  email: string
+  first_name: string
+  last_name: string
+  is_verified: boolean
 }
 
 export interface SignupRequest {
@@ -110,4 +126,201 @@ export interface ApiError {
   error: string
   message: string
   status_code: number
+}
+
+export interface BookingOptions {
+  availability: {
+    available_spots: number
+  }
+  booking_options: Array<{
+    title: string
+    description: string
+    action: string
+    type?: string
+    credits_required?: number
+    price?: number
+    currency?: string
+    available?: boolean
+  }>
+  user_info?: {
+    available_credits?: number
+  }
+}
+
+export interface MemberProfile {
+  id: number
+  member_id: number
+  email: string
+  first_name: string
+  last_name: string
+  phone?: string
+  date_of_birth?: string
+  address?: string
+  city?: string
+  country?: string
+  created_at: string
+  is_verified: boolean
+}
+
+export interface MemberBooking {
+  booking_id: number
+  session_id: number
+  session_title: string
+  session_start: string
+  session_end: string
+  instructor_name: string | null
+  location: string | null
+  status: 'confirmed' | 'pending' | 'cancelled' | 'checked_in' | 'no_show'
+  booking_date: string
+  confirmation_code: string
+  checked_in_at: string | null
+  amount_paid: number
+  special_requests: string | null
+}
+
+export interface MemberSubscription {
+  subscription_id: number
+  plan_name: string
+  plan_type: string
+  status: string
+  start_date: string
+  end_date?: string
+  next_billing_date?: string
+  current_credits?: number
+  credits_used_this_period?: number
+  price: number
+  benefits?: string[]
+}
+
+export interface MemberWaitlistEntry {
+  id: number
+  position: number
+  session?: {
+    id: number
+    service_template?: {
+      name: string
+    }
+    start_time: string
+    end_time: string
+    instructor?: {
+      name: string
+    }
+    resource?: {
+      name: string
+    }
+  }
+  created_at: string
+}
+
+export interface GuestBookingRequest {
+  session_id: number
+  guest_info: {
+    first_name: string
+    last_name: string
+    email: string
+    phone?: string
+  }
+  payment_intent_id?: string
+}
+
+export interface CreatePaymentIntentRequest {
+  session_id: number
+  amount: number
+  contact_id?: number
+  guest_info?: {
+    first_name: string
+    last_name: string
+    email: string
+    phone?: string
+  }
+}
+
+export interface CreatePaymentIntentResponse {
+  client_secret: string
+  publishable_key: string
+  amount: number
+}
+
+export interface CommunitySpace {
+  id: number
+  name: string
+  slug: string
+  description: string
+  space_type: 'public' | 'team' | 'partner' | 'vip'
+  member_count: number
+  post_count: number
+  is_active: boolean
+  welcome_message?: string
+  rules?: string
+}
+
+export interface CommunityProfile {
+  id: number
+  display_name: string
+  email?: string
+  avatar_url?: string
+  bio?: string
+  total_points: number
+  current_level: number
+  current_tier?: {
+    id: number
+    name: string
+    level: number
+    description?: string
+    badge_url?: string
+    perks?: string[]
+  }
+}
+
+export interface CommunityPostResponse {
+  posts: Array<{
+    id: number
+    space_id: number
+    author_id: number
+    author: {
+      display_name: string
+      avatar_url?: string
+      tier?: {
+        id: number
+        name: string
+        level: number
+        description?: string
+        badge_url?: string
+        perks?: string[]
+      }
+    }
+    title?: string
+    content: string
+    post_type: 'standard' | 'announcement' | 'question' | 'achievement' | 'event'
+    is_pinned: boolean
+    is_locked: boolean
+    like_count: number
+    comment_count: number
+    user_has_liked?: boolean
+    created_at: string
+    updated_at: string
+  }>
+}
+
+export interface CommunityComment {
+  id: number
+  post_id: number
+  author_id: number
+  author: {
+    display_name: string
+    avatar_url?: string
+    tier?: {
+      id: number
+      name: string
+      level: number
+      description?: string
+      badge_url?: string
+      perks?: string[]
+    }
+  }
+  content: string
+  like_count: number
+  user_has_liked?: boolean
+  created_at: string
+  updated_at: string
 }

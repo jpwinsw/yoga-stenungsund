@@ -6,7 +6,10 @@
     "prices": "Prices",
     "about": "About",
     "contact": "Contact",
-    "book_class": "Book class"
+    "book_class": "Book class",
+    "happenings": "Happenings",
+    "viewAllHappenings": "View all happenings",
+    "beginners": "Beginners"
   },
   "hero": {
     "title": "Welcome to Yoga Stenungsund",
@@ -15,5 +18,52 @@
   },
   "footer": {
     "copyright": "© 2024 Yoga Stenungsund. All rights reserved."
+  },
+  "member": {
+    "login": "Log In",
+    "signup": "Sign Up",
+    "logout": "Log Out",
+    "myBookings": "My Bookings",
+    "myProfile": "My Profile",
+    "auth": {
+      "login": {
+        "title": "Log In",
+        "close": "Close",
+        "email": "Email",
+        "password": "Password",
+        "forgotPassword": "Forgot password?",
+        "login": "Log In",
+        "loggingIn": "Logging in...",
+        "noAccount": "Don't have an account?",
+        "signUp": "Sign Up",
+        "loginError": "Login failed",
+        "invalidCredentials": "Invalid email or password",
+        "networkError": "Network error. Please try again later."
+      },
+      "signup": {
+        "title": "Create Account",
+        "close": "Close",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "phone": "Phone (optional)",
+        "phonePlaceholder": "+46 70 123 45 67",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "passwordRequirements": "Password requirements:",
+        "minLength": "At least 8 characters",
+        "signUp": "Sign Up",
+        "signingUp": "Creating account...",
+        "haveAccount": "Already have an account?",
+        "login": "Log In",
+        "signupError": "Signup failed",
+        "emailExists": "Email already exists",
+        "passwordMismatch": "Passwords don't match",
+        "networkError": "Network error. Please try again later.",
+        "termsAgreement": "I agree to the",
+        "privacyPolicy": "Privacy Policy",
+        "and": "and"
+      }
+    }
   }
 }

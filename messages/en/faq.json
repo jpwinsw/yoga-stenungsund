@@ -1,0 +1,89 @@
+{
+  "metaTitle": "FAQ | Yoga Stenungsund",
+  "metaDescription": "Frequently asked questions about Yoga Stenungsund. Everything you need to know about classes, prices, schedule and more.",
+  "title": "Frequently Asked Questions",
+  "subtitle": "Here you'll find answers to the most common questions about our studio",
+  "categories": {
+    "general": {
+      "title": "General",
+      "questions": [
+        {
+          "question": "What do I need to bring to my first class?",
+          "answer": "Come in comfortable clothes that you can move freely in. We have yoga mats to borrow, but you're welcome to bring your own. Also bring a water bottle and a small towel if you'd like."
+        },
+        {
+          "question": "How early should I arrive before class?",
+          "answer": "We recommend arriving 10-15 minutes before your first class to register and get familiar with the studio. For regular classes, arriving 5-10 minutes early is sufficient."
+        },
+        {
+          "question": "Can I participate if I'm a beginner?",
+          "answer": "Absolutely! You can always start yoga with us, just as you are. We have classes for all levels, and our teachers are skilled at providing alternatives so everyone can participate according to their own ability."
+        },
+        {
+          "question": "What is your philosophy?",
+          "answer": "Everyone can find calm at sea, can you find it in your everyday life? We believe in yoga as a path to inner peace and balance in daily life."
+        }
+      ]
+    },
+    "booking": {
+      "title": "Booking & Cancellation",
+      "questions": [
+        {
+          "question": "How do I book a class?",
+          "answer": "You can book classes via our website by going to the schedule and clicking on the class you want to attend. You can also call us directly."
+        },
+        {
+          "question": "What's the cancellation policy?",
+          "answer": "Cancellations must be made at least 2 hours before class start. For late cancellations or no-shows, the class will be deducted from your card or charged as drop-in."
+        },
+        {
+          "question": "What happens if a class is fully booked?",
+          "answer": "You can join the waiting list. If someone cancels, you'll automatically get a spot and be notified via email or SMS."
+        }
+      ]
+    },
+    "pricing": {
+      "title": "Prices & Membership",
+      "questions": [
+        {
+          "question": "What payment options are available?",
+          "answer": "We offer drop-in, 10-class cards, monthly cards, and annual cards. We also have student discounts and senior prices. See our pricing page for current rates."
+        },
+        {
+          "question": "Does my card work for all classes?",
+          "answer": "Yes, all our cards are valid for all regular classes. Workshops and special events may have separate pricing."
+        },
+        {
+          "question": "Can I pause my membership?",
+          "answer": "Yes, you can pause your monthly or annual card for illness or vacation. Contact us for more information about the terms."
+        }
+      ]
+    },
+    "studio": {
+      "title": "About the Studio",
+      "questions": [
+        {
+          "question": "Where is the studio located?",
+          "answer": "We're located at Selinsväg 5 in Stora Höga, near train and bus with a large parking area. See our contact page for directions."
+        },
+        {
+          "question": "Do you have yoga equipment to borrow?",
+          "answer": "Yes, we have yoga mats and other equipment you can borrow free of charge. You're also welcome to bring your own mat if you prefer."
+        },
+        {
+          "question": "Do you offer online classes?",
+          "answer": "Yes, we have online yoga classes for those who prefer to practice at home or can't make it to the studio."
+        },
+        {
+          "question": "How long has the studio been around?",
+          "answer": "Our studio was established in 2005 and has since been a place for yoga and wellbeing in Stenungsund."
+        }
+      ]
+    }
+  },
+  "contact": {
+    "title": "Have more questions?",
+    "description": "Don't hesitate to contact us if you have other questions or concerns.",
+    "button": "Contact us"
+  }
+}

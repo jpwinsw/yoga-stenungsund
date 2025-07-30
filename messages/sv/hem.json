@@ -4,7 +4,8 @@
     "subtitle": "Din lokala yogastudio i hjärtat av Stenungsund",
     "description": "Upptäck kraften i yoga med våra erfarna lärare. Vi erbjuder klasser för alla nivåer i en varm och välkomnande miljö.",
     "tagline": "Alla kan finna lugnet på havet, kan du finna det i din vardag?",
-    "cta": "Utforska våra klasser"
+    "cta": "Utforska våra klasser",
+    "trial": "Prova gratis klass"
   },
   "intro": {
     "title": "Varför välja Yoga Stenungsund?",
@@ -33,5 +34,9 @@
     "description": "Ta första steget mot ett mer balanserat liv. Prova din första klass hos oss!",
     "button": "Se schema",
     "trial": "Boka provklass"
+  },
+  "quote": {
+    "text": "Yoga är inte om att röra tårna. Det handlar om vad du lär dig på vägen ner.",
+    "author": "Jigar Gor"
   }
 }

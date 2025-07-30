@@ -8,11 +8,17 @@
     "classes": "Classes",
     "schedule": "Schedule",
     "prices": "Prices",
+    "memberships": "Memberships",
     "about": "About",
+    "aboutUs": "About us",
+    "beginners": "Beginners",
+    "teachers": "Our teachers",
+    "faq": "FAQ",
     "contact": "Contact",
     "happenings": "Happenings",
     "viewAllHappenings": "View all happenings",
-    "book_class": "Book class"
+    "book_class": "Book class",
+    "community": "Community"
   },
   "hero": {
     "title": "Welcome to Yoga Stenungsund",
@@ -60,9 +66,14 @@
     }
   },
   "classes": {
+    "metaTitle": "Classes | Yoga Stenungsund",
+    "metaDescription": "Explore our range of yoga classes. From dynamic Vinyasa to relaxing Yin - find the perfect class for you.",
     "title": "Our yoga classes",
     "description": "We offer a wide range of yoga classes for all levels and needs. Find the perfect class for you!",
+    "overline": "Our offerings",
     "viewSchedule": "View schedule",
+    "intensity": "Intensity",
+    "instructors": "Instructors",
     "levels": {
       "beginner": "Beginner",
       "intermediate": "Intermediate",
@@ -70,31 +81,10 @@
       "all": "All levels",
       "special": "Special class"
     },
-    "types": {
-      "hatha": {
-        "name": "Hatha Yoga",
-        "description": "A calm and meditative form of yoga focusing on breathing and basic postures. Perfect for beginners."
-      },
-      "vinyasa": {
-        "name": "Vinyasa Flow",
-        "description": "Dynamic yoga where movements flow together with the breath. Builds strength, flexibility and endurance."
-      },
-      "yin": {
-        "name": "Yin Yoga",
-        "description": "Slow and meditative yoga with positions held for 3-5 minutes. Increases flexibility and inner calm."
-      },
-      "ashtanga": {
-        "name": "Ashtanga Yoga",
-        "description": "A powerful and disciplined form of yoga with fixed series of postures. For experienced practitioners."
-      },
-      "prenatal": {
-        "name": "Prenatal Yoga",
-        "description": "Adapted yoga for pregnant women. Prepares body and mind for childbirth and parenthood."
-      },
-      "restorative": {
-        "name": "Restorative Yoga",
-        "description": "Restorative yoga supported by pillows and blankets. Perfect for stress management and deep relaxation."
-      }
+    "cta": {
+      "title": "Ready to start?",
+      "description": "Find the perfect class for you in our schedule.",
+      "button": "View schedule"
     }
   },
   "happenings": {

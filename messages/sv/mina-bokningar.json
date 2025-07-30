@@ -1,0 +1,56 @@
+{
+  "title": "Mina bokningar",
+  "description": "Här kan du se alla dina bokade klasser och hantera dina bokningar",
+  "noBookings": "Du har inga bokningar ännu",
+  "noBookingsDescription": "När du bokar en klass kommer den att visas här",
+  "bookClass": "Boka en klass",
+  "upcoming": "Kommande",
+  "past": "Tidigare",
+  "cancelled": "Avbokade",
+  "waitlist": "Väntelista",
+  "noWaitlistEntries": "Du står inte på någon väntelista",
+  "noWaitlistDescription": "När du ställer dig på väntelistan för en fullbokad klass kommer den att visas här",
+  "status": {
+    "confirmed": "Bekräftad",
+    "pending": "Väntar",
+    "cancelled": "Avbokad",
+    "checked_in": "Incheckad",
+    "no_show": "Ej närvarande",
+    "waitlisted": "På väntelistan"
+  },
+  "actions": {
+    "cancel": "Avboka",
+    "cancelBooking": "Avboka bokning",
+    "confirmCancel": "Är du säker på att du vill avboka denna klass?",
+    "yes": "Ja, avboka",
+    "no": "Nej, behåll",
+    "cancelling": "Avbokar...",
+    "cancelSuccess": "Bokningen har avbokats",
+    "cancelError": "Kunde inte avboka. Försök igen.",
+    "leaveWaitlist": "Lämna väntelistan",
+    "leaving": "Lämnar...",
+    "confirmLeaveWaitlist": "Är du säker på att du vill lämna denna väntelista?",
+    "leaveWaitlistSuccess": "Du har lämnat väntelistan",
+    "leaveWaitlistError": "Kunde inte lämna väntelistan. Försök igen."
+  },
+  "details": {
+    "bookingReference": "Bokningsreferens",
+    "bookedOn": "Bokad",
+    "class": "Klass",
+    "date": "Datum",
+    "time": "Tid",
+    "instructor": "Instruktör",
+    "location": "Plats",
+    "duration": "Längd",
+    "price": "Pris",
+    "waitlistPosition": "Plats på väntelistan"
+  },
+  "membership": {
+    "activeStatus": "Aktivt medlemskap",
+    "creditsRemaining": "krediter kvar",
+    "manage": "Hantera medlemskap"
+  },
+  "loading": "Laddar bokningar...",
+  "error": "Kunde inte ladda bokningar. Försök igen.",
+  "retry": "Försök igen"
+}

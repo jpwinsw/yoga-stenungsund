@@ -1,0 +1,56 @@
+{
+  "title": "My Bookings",
+  "description": "View all your booked classes and manage your bookings",
+  "noBookings": "You have no bookings yet",
+  "noBookingsDescription": "When you book a class, it will appear here",
+  "bookClass": "Book a class",
+  "upcoming": "Upcoming",
+  "past": "Past",
+  "cancelled": "Cancelled",
+  "waitlist": "Waitlist",
+  "noWaitlistEntries": "You're not on any waitlists",
+  "noWaitlistDescription": "When you join a waitlist for a full class, it will appear here",
+  "status": {
+    "confirmed": "Confirmed",
+    "pending": "Pending",
+    "cancelled": "Cancelled",
+    "checked_in": "Checked in",
+    "no_show": "No show",
+    "waitlisted": "On waitlist"
+  },
+  "actions": {
+    "cancel": "Cancel",
+    "cancelBooking": "Cancel Booking",
+    "confirmCancel": "Are you sure you want to cancel this class?",
+    "yes": "Yes, cancel",
+    "no": "No, keep it",
+    "cancelling": "Cancelling...",
+    "cancelSuccess": "Booking cancelled successfully",
+    "cancelError": "Failed to cancel booking. Please try again.",
+    "leaveWaitlist": "Leave waitlist",
+    "leaving": "Leaving...",
+    "confirmLeaveWaitlist": "Are you sure you want to leave this waitlist?",
+    "leaveWaitlistSuccess": "Successfully left waitlist",
+    "leaveWaitlistError": "Failed to leave waitlist. Please try again."
+  },
+  "details": {
+    "bookingReference": "Booking reference",
+    "bookedOn": "Booked on",
+    "class": "Class",
+    "date": "Date",
+    "time": "Time",
+    "instructor": "Instructor",
+    "location": "Location",
+    "duration": "Duration",
+    "price": "Price",
+    "waitlistPosition": "Waitlist position"
+  },
+  "loading": "Loading bookings...",
+  "error": "Failed to load bookings. Please try again.",
+  "retry": "Try again",
+  "membership": {
+    "activeStatus": "Active membership",
+    "creditsRemaining": "credits remaining",
+    "manage": "Manage membership"
+  }
+}
