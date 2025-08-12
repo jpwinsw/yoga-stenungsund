@@ -33,7 +33,28 @@
     "title": "Ready to start your yoga journey?",
     "description": "Take the first step towards a more balanced life. Try your first class with us!",
     "button": "View schedule",
-    "trial": "Book trial class"
+    "trial": "Book trial class",
+    "schedule": "View Schedule"
+  },
+  "features": {
+    "title": "Transform Your Practice",
+    "description": "Experience the benefits of a regular yoga practice with our supportive community and expert guidance.",
+    "feature1": {
+      "title": "Breath & Movement",
+      "description": "Connect breath with movement in our dynamic flow classes"
+    },
+    "feature2": {
+      "title": "Strength & Flexibility",
+      "description": "Build physical strength while improving flexibility"
+    },
+    "feature3": {
+      "title": "Rest & Recovery",
+      "description": "Find deep relaxation in our restorative classes"
+    },
+    "feature4": {
+      "title": "Community & Connection",
+      "description": "Join a welcoming community of yoga practitioners"
+    }
   },
   "quote": {
     "text": "Yoga is not about touching your toes. It is about what you learn on the way down.",

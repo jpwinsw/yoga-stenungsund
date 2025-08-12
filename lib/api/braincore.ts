@@ -20,7 +20,11 @@ import type {
   CommunitySpace,
   CommunityProfile,
   CommunityPostResponse,
-  CommunityComment
+  CommunityComment,
+  TermAvailability,
+  RecoveryCredit,
+  CreditHistoryEntry,
+  SubscriptionActionResponse
 } from '@/lib/types/braincore'
 
 const BRAINCORE_API = process.env.NEXT_PUBLIC_BRAINCORE_API || 'https://api.brain-core.ai'
@@ -110,12 +114,13 @@ class BraincoreClient {
     return response.data
   }
 
-  async getServices(): Promise<Service[]> {
+  async getServices(ids?: number[]): Promise<Service[]> {
     // Use our API route to avoid CORS issues
-    const response = await axios.get(
-      `/api/braincore/services`,
-      { headers: this.getHeaders() }
-    )
+    let url = `/api/braincore/services`
+    if (ids && ids.length > 0) {
+      url += `?ids=${ids.join(',')}`
+    }
+    const response = await axios.get(url, { headers: this.getHeaders() })
     return response.data
   }
 
@@ -137,13 +142,18 @@ class BraincoreClient {
     return response.data
   }
 
-  async getBookingOptions(sessionId: number): Promise<BookingOptions> {
+  async getBookingOptions(sessionId: number, locale: string = 'en'): Promise<BookingOptions> {
     const member = this.getMember()
     const contactId = member?.contact_id
     
+    // Build query params
+    const params = new URLSearchParams()
+    if (contactId) params.append('contact_id', contactId.toString())
+    params.append('locale', locale)
+    
     // Use our API route to avoid CORS issues
     const response = await axios.get(
-      `/api/braincore/urbe/session/${sessionId}/booking-options${contactId ? `?contact_id=${contactId}` : ''}`,
+      `/api/braincore/urbe/session/${sessionId}/booking-options?${params.toString()}`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -253,6 +263,7 @@ class BraincoreClient {
     entity_id: number
     customer_email?: string
     customer_name?: string
+    is_guest?: boolean
   }): Promise<{
     payment_intent_id: string
     client_secret: string
@@ -261,10 +272,15 @@ class BraincoreClient {
     status: string
     publishable_key: string
   }> {
+    // For guest payments, don't send auth headers
+    const headers = data.is_guest 
+      ? { 'Content-Type': 'application/json' }
+      : this.getHeaders()
+    
     const response = await axios.post(
       `/api/braincore/payments/create-intent`,
       data,
-      { headers: this.getHeaders() }
+      { headers }
     )
     return response.data
   }
@@ -347,7 +363,7 @@ class BraincoreClient {
   // Community Methods
   async getCommunitySpaces(): Promise<CommunitySpace[]> {
     const response = await axios.get(
-      `/api/braincore/community/spaces`,
+      `/api/braincore/community/spaces/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -355,7 +371,7 @@ class BraincoreClient {
 
   async getCommunityProfile(): Promise<CommunityProfile> {
     const response = await axios.get(
-      `/api/braincore/community/profile`,
+      `/api/braincore/community/profile/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -437,6 +453,109 @@ class BraincoreClient {
         cancel_url: cancelUrl
       },
       { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async getTermAvailability(
+    planId: number, 
+    serviceTemplateId: number, 
+    startDate: string
+  ): Promise<TermAvailability> {
+    // Use our API route to avoid CORS issues
+    const response = await axios.get(
+      `/api/braincore/term-availability/${planId}/${serviceTemplateId}?start_date=${encodeURIComponent(startDate)}`,
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async createTermMembershipCheckout(data: {
+    plan_id: number
+    selected_service_template_id: number
+    term_start_date: string
+    pre_booked_sessions: Array<{
+      session_id: number
+      date: Date
+      time: string
+    }>
+    success_url: string
+    cancel_url: string
+  }): Promise<{
+    checkout_session_id: string
+    checkout_url: string
+    publishable_key: string
+  }> {
+    // Use our API route to avoid CORS issues
+    const response = await axios.post(
+      `/api/braincore/term-checkout`,
+      data,
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async getRecoveryCredits(): Promise<RecoveryCredit[]> {
+    const response = await axios.get(
+      `${this.baseURL}/api/urbe/member-portal/recovery-credits`,
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async cancelTermBooking(bookingId: number): Promise<{ success: boolean; message: string }> {
+    const response = await axios.post(
+      `${this.baseURL}/api/urbe/term-membership/cancel-term-booking/${bookingId}`,
+      {},
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async getCreditHistory(): Promise<CreditHistoryEntry[]> {
+    // Use our API route to avoid CORS issues
+    const response = await axios.get(
+      `/api/braincore/member/credits/history`,
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async pauseSubscription(subscriptionId: number): Promise<SubscriptionActionResponse> {
+    // Use our API route to avoid CORS issues
+    const response = await axios.post(
+      `/api/braincore/member/subscriptions/${subscriptionId}/pause`,
+      {},
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async resumeSubscription(subscriptionId: number): Promise<SubscriptionActionResponse> {
+    // Use our API route to avoid CORS issues
+    const response = await axios.post(
+      `/api/braincore/member/subscriptions/${subscriptionId}/resume`,
+      {},
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async cancelSubscription(subscriptionId: number): Promise<SubscriptionActionResponse> {
+    // Use our API route to avoid CORS issues
+    const response = await axios.post(
+      `/api/braincore/member/subscriptions/${subscriptionId}/cancel`,
+      {},
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async confirmBookingPayment(bookingId: number, paymentIntentId: string): Promise<BookingResponse> {
+    // Public endpoint for confirming guest booking payment
+    const response = await axios.post(
+      `/api/braincore/bookings-confirm/${bookingId}/`,
+      { payment_intent_id: paymentIntentId }
     )
     return response.data
   }

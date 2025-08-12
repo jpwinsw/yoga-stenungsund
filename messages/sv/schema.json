@@ -64,12 +64,15 @@
     "waitlistPosition": "Din plats på väntelistan",
     "waitlistError": "Kunde inte lägga till på väntelistan",
     "alreadyOnWaitlist": "Du är redan på väntelistan för denna klass",
+    "confirmationEmailSent": "En bekräftelse har skickats till {email}",
     "confirmCreditUsage": "Bekräfta kreditanvändning",
     "creditUsageMessage": "Denna bokning kommer att använda {credits} krediter. Du har {remaining} krediter kvar efter bokningen.",
     "useCredits": "Använd krediter",
     "cancel": "Avbryt",
     "creditsRequired": "Krediter krävs",
     "bookingOptions": "Bokningsalternativ",
+    "loginNow": "Logga in nu",
+    "selectOption": "Välj alternativ",
     "errors": {
       "sessionFull": "Klassen är fullbokad",
       "sessionNotFound": "Klassen kunde inte hittas",
@@ -90,7 +93,21 @@
     "selectPaymentMethod": "Välj betalningsmetod",
     "proceedToPayment": "Fortsätt till betalning",
     "paymentSuccessful": "Betalning genomförd!",
-    "preparingPayment": "Förbereder betalning..."
+    "preparingPayment": "Förbereder betalning...",
+    "alreadyBooked": "Redan bokad",
+    "alreadyBookedMessage": "Du har redan bokat denna klass.",
+    "close": "Stäng",
+    "loading": "Laddar...",
+    "alreadyBookedReference": "BEFINTLIG",
+    "createAccountPrompt": {
+      "title": "Skapa ett konto för att få mer!",
+      "benefit1": "Hantera dina bokningar enkelt",
+      "benefit2": "Tillgång till Yoga Stenungsunds community",
+      "benefit3": "Exklusiva tips och yogaövningar",
+      "benefit4": "Köp medlemskap och spara pengar",
+      "createAccount": "Skapa konto",
+      "continueLater": "Kanske senare"
+    }
   },
   "auth": {
     "login": {

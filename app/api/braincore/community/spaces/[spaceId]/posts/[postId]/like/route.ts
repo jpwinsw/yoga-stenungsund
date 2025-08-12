@@ -18,13 +18,14 @@ export async function POST(
     }
     
     const response = await fetch(
-      `${BRAINCORE_API}/commune/spaces/${spaceId}/posts/${postId}/like`,
+      `${BRAINCORE_API}/commune/member/spaces/${spaceId}/posts/${postId}/react`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': token
         },
+        body: JSON.stringify({ reaction_type: 'like' })
       }
     )
     

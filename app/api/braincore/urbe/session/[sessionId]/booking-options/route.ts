@@ -9,9 +9,15 @@ export async function GET(
   const { sessionId } = await params
   const searchParams = request.nextUrl.searchParams
   const contactId = searchParams.get('contact_id')
+  const locale = searchParams.get('locale') || 'en'
   
   try {
-    const url = `${BRAINCORE_API}/public/urbe/session/${sessionId}/booking-options${contactId ? `?contact_id=${contactId}` : ''}`
+    // Build query params
+    const queryParams = new URLSearchParams()
+    if (contactId) queryParams.append('contact_id', contactId)
+    queryParams.append('locale', locale)
+    
+    const url = `${BRAINCORE_API}/public/urbe/session/${sessionId}/booking-options?${queryParams.toString()}`
     
     const response = await fetch(url, {
       headers: {

@@ -18,7 +18,9 @@
     "happenings": "Happenings",
     "viewAllHappenings": "View all happenings",
     "book_class": "Book class",
-    "community": "Community"
+    "community": "Community",
+    "wellbeing": "Wellbeing",
+    "viewAllWellbeing": "View all treatments"
   },
   "hero": {
     "title": "Welcome to Yoga Stenungsund",
@@ -34,7 +36,8 @@
       "subtitle": "Your local yoga studio in the heart of Stenungsund",
       "description": "Discover the power of yoga with our experienced teachers. We offer classes for all levels in a warm and welcoming environment.",
       "tagline": "Everyone can find peace at sea, can you find it in your everyday life?",
-      "cta": "Explore our classes"
+      "cta": "Explore our classes",
+      "trial": "Try your first class"
     },
     "intro": {
       "title": "Why choose Yoga Stenungsund?",
@@ -62,7 +65,32 @@
       "title": "Ready to start your yoga journey?",
       "description": "Take the first step towards a more balanced life. Try your first class with us!",
       "button": "View schedule",
-      "trial": "Book trial class"
+      "trial": "Book trial class",
+      "schedule": "View Schedule"
+    },
+    "features": {
+      "title": "Transform Your Practice",
+      "description": "Experience the benefits of a regular yoga practice with our supportive community and expert guidance.",
+      "feature1": {
+        "title": "Breath & Movement",
+        "description": "Connect breath with movement in our dynamic flow classes"
+      },
+      "feature2": {
+        "title": "Strength & Flexibility",
+        "description": "Build physical strength while improving flexibility"
+      },
+      "feature3": {
+        "title": "Rest & Recovery",
+        "description": "Find deep relaxation in our restorative classes"
+      },
+      "feature4": {
+        "title": "Community & Connection",
+        "description": "Join a welcoming community of yoga practitioners"
+      }
+    },
+    "quote": {
+      "text": "Yoga is the journey of the self, through the self, to the self.",
+      "author": "The Bhagavad Gita"
     }
   },
   "classes": {
@@ -90,6 +118,8 @@
   "happenings": {
     "title": "Happenings",
     "description": "Discover our special events, retreats and workshops. Deepen your yoga practice and create new memories with our community.",
+    "metaTitle": "Happenings - Events, Retreats & Workshops | Yoga Stenungsund",
+    "metaDescription": "Discover our special events, retreats and workshops. Deepen your yoga practice and create new memories with our community.",
     "featured": "Featured",
     "readMore": "Read more",
     "backToHappenings": "Back to Happenings",

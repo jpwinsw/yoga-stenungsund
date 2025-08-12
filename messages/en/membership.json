@@ -11,6 +11,129 @@
     "yearly": "per year",
     "oneTime": "one-time"
   },
+  "termMembership": "Term Pass",
+  "termDuration": "{weeks} weeks",
+  "sessionsPerWeek": "{count} classes/week",
+  "selectAndBook": "Select & book classes",
+  "loading": "Loading...",
+  "termFeatures": {
+    "title": "How term passes work",
+    "chooseClassType": "Choose your favorite class (e.g. Hatha)",
+    "preBookAllSessions": "Pre-book all classes for the term",
+    "recoveryCredits": "Cancelled classes become credits for any class"
+  },
+  "management": {
+    "title": "Manage Membership",
+    "tabs": {
+      "overview": "Overview",
+      "credits": "Credit History",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "paused": "Paused",
+      "cancelled": "Cancelled",
+      "expired": "Expired"
+    },
+    "planType": {
+      "unlimited": "Unlimited",
+      "class_pack": "Class Pack",
+      "term": "Term Pass"
+    },
+    "fields": {
+      "type": "Type",
+      "price": "Price",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "nextBilling": "Next Billing",
+      "creditsRemaining": "Credits Remaining",
+      "creditsUsed": "Credits Used",
+      "benefits": "Included Benefits"
+    },
+    "actions": {
+      "warning": "Important Notice",
+      "warningDescription": "Changes to your membership are permanent and cannot be undone.",
+      "pause": "Pause Membership",
+      "pauseDescription": "Temporarily pause your membership and resume later",
+      "pauseButton": "Pause",
+      "resume": "Resume Membership",
+      "resumeDescription": "Resume your paused membership",
+      "resumeButton": "Resume",
+      "cancel": "Cancel Membership",
+      "cancelDescription": "Permanently cancel your membership",
+      "cancelButton": "Cancel",
+      "notAvailableForTerm": "This action is not available for term passes",
+      "alreadyCancelled": "This membership has already been cancelled"
+    },
+    "confirmPause": "Are you sure you want to pause your membership?",
+    "confirmResume": "Are you sure you want to resume your membership?",
+    "confirmCancel": "Are you sure you want to cancel your membership? This action cannot be undone.",
+    "noCreditHistory": "No credit history available",
+    "balance": "Balance",
+    "error": "Error",
+    "success": "Success",
+    "failedToLoadCredits": "Failed to load credit history",
+    "pauseSuccess": "Membership paused successfully",
+    "pauseError": "Failed to pause membership",
+    "resumeSuccess": "Membership resumed successfully",
+    "resumeError": "Failed to resume membership",
+    "cancelSuccess": "Membership cancelled successfully",
+    "cancelError": "Failed to cancel membership"
+  },
+  "recoveryCredits": {
+    "title": "Recovery Credits",
+    "available": "available",
+    "noCredits": "No recovery credits",
+    "howToGet": "Cancel a booked class to receive recovery credits",
+    "recoveryCreditsAvailable": "recovery credits available",
+    "expiringSoon": "{count} credit(s) expiring soon",
+    "fromClass": "From {className} on {date}",
+    "expiresOn": "Expires: {date}",
+    "credit": "credit",
+    "info": {
+      "title": "About Recovery Credits",
+      "description": "Use these credits to book any available class"
+    },
+    "useCredits": "Use Credits",
+    "error": "Failed to load recovery credits"
+  },
+  "termBooking": {
+    "stepTitles": {
+      "classType": "Select Class Type",
+      "termStart": "Select Start Date",
+      "bookSessions": "Book Your Classes",
+      "confirm": "Confirm and Pay"
+    },
+    "selectClassType": "Choose which type of yoga class you want to attend during the term:",
+    "selectTermStart": "Select which date the term should start (Mondays):",
+    "termDates": "Term: {start} - {end}",
+    "selectSessions": "Select {required} classes for the term ({selected} selected)",
+    "week": "Week",
+    "spotsAvailable": "spots available",
+    "confirmBooking": "Review your booking",
+    "membershipType": "Membership",
+    "classType": "Class Type",
+    "termPeriod": "Term Period",
+    "totalSessions": "Total Classes",
+    "totalPrice": "Total Price",
+    "paymentNote": "You will be redirected to secure payment",
+    "back": "Back",
+    "next": "Next",
+    "proceedToPayment": "Proceed to Payment",
+    "processing": "Processing...",
+    "error": "Error",
+    "failedToLoadTemplates": "Failed to load class types",
+    "failedToLoadAvailability": "Failed to load available times",
+    "failedToCreateCheckout": "Failed to create payment session",
+    "selectAllSessions": "Select all classes",
+    "selectAllSessionsDescription": "You have selected {selected} of {required} classes",
+    "minutes": "{count} min",
+    "maxParticipants": "Max {count} participants",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "allLevels": "All levels"
+  },
   "popular": "Popular",
   "recommended": "Recommended",
   "bestValue": "Best Value",
@@ -60,5 +183,17 @@
     "title": "Common questions about memberships",
     "description": "Have questions about our memberships? We've collected answers to the most common questions.",
     "link": "See all questions and answers"
+  },
+  "termSuccess": {
+    "metaTitle": "Thank You for Your Purchase - Term Pass | Yoga Stenungsund",
+    "metaDescription": "Your term pass is now active and all your selected classes are booked.",
+    "title": "Thank you for your purchase!",
+    "subtitle": "Your term pass is now active",
+    "whatHappensNext": "What happens next?",
+    "allSessionsBooked": "All your selected classes for the term are now automatically booked",
+    "emailConfirmation": "You will receive an email confirmation with all your bookings",
+    "manageBookings": "You can cancel individual classes and receive recovery credits",
+    "viewMyBookings": "View my bookings",
+    "viewSchedule": "View schedule"
   }
 }

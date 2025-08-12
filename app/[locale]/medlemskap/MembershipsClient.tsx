@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Link } from '@/lib/i18n/navigation'
 import { MembershipPlan } from '@/lib/types/braincore'
 import MembershipCard from '@/components/membership/MembershipCard'
+import TermMembershipCard from '@/components/membership/TermMembershipCard'
 import { Check, Sparkles } from 'lucide-react'
 
 interface MembershipsClientProps {
@@ -57,7 +58,11 @@ export default function MembershipsClient({ plans }: MembershipsClientProps) {
                 )}
                 
                 <div className={`h-full ${index === 1 ? 'ring-2 ring-[var(--yoga-cyan)] ring-opacity-50' : ''}`}>
-                  <MembershipCard plan={plan} featured={index === 1} />
+                  {plan.is_term_based ? (
+                    <TermMembershipCard plan={plan} featured={index === 1} />
+                  ) : (
+                    <MembershipCard plan={plan} featured={index === 1} />
+                  )}
                 </div>
               </motion.div>
             ))}

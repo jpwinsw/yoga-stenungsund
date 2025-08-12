@@ -41,7 +41,8 @@
       "networkError": "Network error. Please try again later.",
       "termsAgreement": "I agree to the",
       "privacyPolicy": "Privacy Policy",
-      "and": "and"
+      "and": "and",
+      "existingBookingsFound": "Welcome! We found {count} existing booking(s) linked to your account."
     }
   }
 }

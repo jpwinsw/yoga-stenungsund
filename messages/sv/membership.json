@@ -11,6 +11,55 @@
     "yearly": "per år",
     "oneTime": "engångsbelopp"
   },
+  "termMembership": "Terminskort",
+  "termDuration": "{weeks} veckor",
+  "sessionsPerWeek": "{count} pass/vecka",
+  "selectAndBook": "Välj & boka pass",
+  "loading": "Laddar...",
+  "termFeatures": {
+    "title": "Så fungerar terminskort",
+    "chooseClassType": "Välj din favoritklass (t.ex. Hatha)",
+    "preBookAllSessions": "Förboka alla pass för terminen",
+    "recoveryCredits": "Avbokade pass blir krediter för valfri klass"
+  },
+  "termBooking": {
+    "stepTitles": {
+      "classType": "Välj klasstyp",
+      "reviewSessions": "Granska dina pass",
+      "bookSessions": "Boka dina pass",
+      "termStart": "Välj startdatum",
+      "confirm": "Bekräfta och betala"
+    },
+    "selectClassType": "Välj vilken typ av yogaklass du vill gå på under terminen:",
+    "selectTermStart": "Välj vilket datum terminen ska börja (måndagar):",
+    "termDates": "Termin: {start} - {end}",
+    "reviewSessions": "Du kommer automatiskt att bokas på {total} pass. Avmarkera pass du inte kan delta på:",
+    "week": "Vecka",
+    "spotsAvailable": "platser kvar",
+    "confirmBooking": "Granska din bokning",
+    "membershipType": "Medlemskap",
+    "classType": "Klasstyp",
+    "termPeriod": "Terminsperiod",
+    "totalSessions": "Antal pass",
+    "totalPrice": "Totalpris",
+    "paymentNote": "Du kommer att omdirigeras till säker betalning",
+    "back": "Tillbaka",
+    "next": "Nästa",
+    "proceedToPayment": "Gå till betalning",
+    "processing": "Behandlar...",
+    "error": "Fel",
+    "failedToLoadTemplates": "Kunde inte ladda klasstyper",
+    "failedToLoadAvailability": "Kunde inte ladda tillgängliga tider",
+    "failedToCreateCheckout": "Kunde inte skapa betalningssession",
+    "selectAllSessions": "Välj alla pass",
+    "selectAllSessionsDescription": "Du har valt {selected} av {required} pass",
+    "minutes": "{count} min",
+    "maxParticipants": "Max {count} deltagare",
+    "beginner": "Nybörjare",
+    "intermediate": "Medel",
+    "advanced": "Avancerad",
+    "allLevels": "Alla nivåer"
+  },
   "popular": "Populär",
   "recommended": "Rekommenderad",
   "bestValue": "Bästa värde",
@@ -60,5 +109,17 @@
     "title": "Vanliga frågor om medlemskap",
     "description": "Har du frågor om våra medlemskap? Vi har samlat svaren på de vanligaste frågorna.",
     "link": "Se alla frågor och svar"
+  },
+  "termSuccess": {
+    "metaTitle": "Tack för ditt köp - Terminskort | Yoga Stenungsund",
+    "metaDescription": "Ditt terminskort är nu aktivt och alla dina valda pass är bokade.",
+    "title": "Tack för ditt köp!",
+    "subtitle": "Ditt terminskort är nu aktivt",
+    "whatHappensNext": "Vad händer nu?",
+    "allSessionsBooked": "Alla dina valda pass för terminen är nu automatiskt bokade",
+    "emailConfirmation": "Du får en bekräftelse via e-post med alla dina bokningar",
+    "manageBookings": "Du kan avboka enskilda pass och få återhämtningskrediter",
+    "viewMyBookings": "Se mina bokningar",
+    "viewSchedule": "Visa schema"
   }
 }

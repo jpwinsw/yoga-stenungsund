@@ -84,165 +84,180 @@ export default function CommunityClient() {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-32 pb-12">
+    <div className="min-h-screen bg-gradient-to-b from-[var(--yoga-light-sage)] to-white pt-32 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">{t('title')}</h1>
-          <p className="mt-2 text-gray-600">
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-light text-gray-900">{t('title')}</h1>
+          <p className="mt-2 text-xl text-gray-600">
             {t('subtitle')}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Sidebar */}
-          <div className="lg:col-span-1 space-y-4">
-            {/* Profile Card */}
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <Avatar>
-                    <AvatarImage src={profile?.avatar_url} />
-                    <AvatarFallback>
-                      {profile?.display_name?.charAt(0) || 'M'}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h3 className="font-semibold">{profile?.display_name || 'Member'}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {t('level', { level: profile?.current_level || 1 })}
-                    </p>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">{t('points')}</span>
-                    <span className="font-medium">{profile?.total_points || 0}</span>
-                  </div>
-                  {profile?.current_tier && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">{t('tier')}</span>
-                      <Badge variant="secondary">{profile.current_tier.name}</Badge>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Spaces List */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">{t('yourSpaces')}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                {spaces.map((space) => (
-                  <Button
-                    key={space.id}
-                    variant={activeSpace?.id === space.id ? "default" : "ghost"}
-                    className="w-full justify-start"
-                    onClick={() => handleSpaceChange(space)}
-                  >
-                    <Users className="mr-2 h-4 w-4" />
-                    {space.name}
-                    <Badge variant="outline" className="ml-auto">
-                      {space.member_count}
-                    </Badge>
-                  </Button>
-                ))}
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Main Content */}
-          <div className="lg:col-span-3">
-            {activeSpace ? (
+        {/* No spaces message */}
+        {spaces.length === 0 ? (
+          <Card className="max-w-2xl mx-auto">
+            <CardContent className="text-center py-12">
+              <MessageSquare className="mx-auto h-16 w-16 text-gray-400 mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                {t('noSpaces')}
+              </h3>
+              <p className="text-gray-600">
+                {t('noSpacesDescription')}
+              </p>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {/* Sidebar */}
+            <div className="lg:col-span-1 space-y-4">
+              {/* Profile Card */}
               <Card>
                 <CardHeader>
-                  <CardTitle>{activeSpace.name}</CardTitle>
-                  <CardDescription>{activeSpace.description}</CardDescription>
+                  <div className="flex items-center gap-4">
+                    <Avatar>
+                      <AvatarImage src={profile?.avatar_url} />
+                      <AvatarFallback>
+                        {profile?.display_name?.charAt(0) || 'M'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <h3 className="font-semibold">{profile?.display_name || 'Member'}</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {t('level', { level: profile?.current_level || 1 })}
+                      </p>
+                    </div>
+                  </div>
                 </CardHeader>
                 <CardContent>
-                  <Tabs defaultValue="posts">
-                    <TabsList>
-                      <TabsTrigger value="posts">{t('posts')}</TabsTrigger>
-                      <TabsTrigger value="members">{t('members')}</TabsTrigger>
-                      <TabsTrigger value="about">{t('about')}</TabsTrigger>
-                    </TabsList>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">{t('points')}</span>
+                      <span className="font-medium">{profile?.total_points || 0}</span>
+                    </div>
+                    {profile?.current_tier && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">{t('tier')}</span>
+                        <Badge variant="secondary">{profile.current_tier.name}</Badge>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
 
-                    <TabsContent value="posts" className="space-y-4">
-                      {/* Create Post Button */}
-                      <CreatePostDialog 
-                        spaceId={activeSpace.id} 
-                        onPostCreated={() => loadCommunityData()}
-                      />
+              {/* Spaces List */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">{t('yourSpaces')}</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  {spaces.map((space) => (
+                    <Button
+                      key={space.id}
+                      variant={activeSpace?.id === space.id ? "default" : "ghost"}
+                      className="w-full justify-start"
+                      onClick={() => handleSpaceChange(space)}
+                    >
+                      <Users className="mr-2 h-4 w-4" />
+                      {space.name}
+                      <Badge variant="outline" className="ml-auto">
+                        {space.member_count}
+                      </Badge>
+                    </Button>
+                  ))}
+                </CardContent>
+              </Card>
+            </div>
 
-                      {/* Posts Feed */}
-                      {posts.length > 0 ? (
-                        posts.map((post) => (
-                          <PostCard 
-                            key={post.id}
-                            post={post}
-                            spaceId={activeSpace.id}
-                            onUpdate={() => loadCommunityData()}
-                          />
-                        ))
-                      ) : (
+            {/* Main Content */}
+            <div className="lg:col-span-3">
+              {activeSpace ? (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{activeSpace.name}</CardTitle>
+                    <CardDescription>{activeSpace.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Tabs defaultValue="posts">
+                      <TabsList>
+                        <TabsTrigger value="posts">{t('posts')}</TabsTrigger>
+                        <TabsTrigger value="members">{t('members')}</TabsTrigger>
+                        <TabsTrigger value="about">{t('about')}</TabsTrigger>
+                      </TabsList>
+
+                      <TabsContent value="posts" className="space-y-4">
+                        {/* Create Post Button */}
+                        <CreatePostDialog 
+                          spaceId={activeSpace.id} 
+                          onPostCreated={() => loadCommunityData()}
+                        />
+
+                        {/* Posts Feed */}
+                        {posts.length > 0 ? (
+                          posts.map((post) => (
+                            <PostCard 
+                              key={post.id}
+                              post={post}
+                              spaceId={activeSpace.id}
+                              onUpdate={() => loadCommunityData()}
+                            />
+                          ))
+                        ) : (
+                          <div className="text-center py-12">
+                            <MessageSquare className="mx-auto h-12 w-12 text-gray-400" />
+                            <p className="mt-4 text-gray-600">{t('noPosts')}</p>
+                            <p className="text-sm text-gray-500">
+                              {t('beFirst')}
+                            </p>
+                          </div>
+                        )}
+                      </TabsContent>
+
+                      <TabsContent value="members">
                         <div className="text-center py-12">
-                          <MessageSquare className="mx-auto h-12 w-12 text-gray-400" />
-                          <p className="mt-4 text-gray-600">{t('noPosts')}</p>
-                          <p className="text-sm text-gray-500">
-                            {t('beFirst')}
+                          <Users className="mx-auto h-12 w-12 text-gray-400" />
+                          <p className="mt-4 text-gray-600">
+                            {t('memberCount', { count: activeSpace.member_count })}
                           </p>
                         </div>
-                      )}
-                    </TabsContent>
+                      </TabsContent>
 
-                    <TabsContent value="members">
-                      <div className="text-center py-12">
-                        <Users className="mx-auto h-12 w-12 text-gray-400" />
-                        <p className="mt-4 text-gray-600">
-                          {t('memberCount', { count: activeSpace.member_count })}
-                        </p>
-                      </div>
-                    </TabsContent>
-
-                    <TabsContent value="about">
-                      <div className="space-y-4">
-                        {activeSpace.welcome_message && (
-                          <div>
-                            <h4 className="font-semibold mb-2">{t('welcome')}</h4>
-                            <p className="text-sm text-gray-600">
-                              {activeSpace.welcome_message}
-                            </p>
-                          </div>
-                        )}
-                        {activeSpace.rules && (
-                          <div>
-                            <h4 className="font-semibold mb-2">{t('rules')}</h4>
-                            <p className="text-sm text-gray-600">
-                              {activeSpace.rules}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </TabsContent>
-                  </Tabs>
-                </CardContent>
-              </Card>
-            ) : (
-              <Card>
-                <CardContent className="text-center py-12">
-                  <Users className="mx-auto h-12 w-12 text-gray-400" />
-                  <p className="mt-4 text-gray-600">
-                    {t('noSpaces')}
-                  </p>
-                </CardContent>
-              </Card>
-            )}
+                      <TabsContent value="about">
+                        <div className="space-y-4">
+                          {activeSpace.welcome_message && (
+                            <div>
+                              <h4 className="font-semibold mb-2">{t('welcome')}</h4>
+                              <p className="text-sm text-gray-600">
+                                {activeSpace.welcome_message}
+                              </p>
+                            </div>
+                          )}
+                          {activeSpace.rules && (
+                            <div>
+                              <h4 className="font-semibold mb-2">{t('rules')}</h4>
+                              <p className="text-sm text-gray-600">
+                                {activeSpace.rules}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      </TabsContent>
+                    </Tabs>
+                  </CardContent>
+                </Card>
+              ) : (
+                <Card>
+                  <CardContent className="text-center py-12">
+                    <Users className="mx-auto h-12 w-12 text-gray-400" />
+                    <p className="mt-4 text-gray-600">
+                      {t('noSpaces')}
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )

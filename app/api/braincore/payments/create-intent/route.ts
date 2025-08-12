@@ -14,13 +14,20 @@ export async function POST(request: NextRequest) {
       'Content-Type': 'application/json',
     }
     
-    if (authHeader) {
+    // Determine which endpoint to use based on authentication and is_guest flag
+    let endpoint: string
+    if (body.is_guest || !authHeader) {
+      // Use public endpoint for guest bookings
+      endpoint = `${BRAINCORE_API}/public/urbe/payment/create-intent`
+    } else {
+      // Use authenticated endpoint for members
+      endpoint = `${BRAINCORE_API}/finance/stripe/create-payment-intent`
       headers.Authorization = authHeader
     }
 
-    // Forward request to Braincore API
+    // Forward request to appropriate Braincore API endpoint
     const response = await axios.post(
-      `${BRAINCORE_API}/finance/stripe/create-payment-intent`,
+      endpoint,
       body,
       { headers }
     )

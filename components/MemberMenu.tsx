@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { braincore } from '@/lib/api/braincore'
+import { useAuth } from '@/lib/contexts/AuthContext'
 import { User, LogOut, Calendar } from 'lucide-react'
 import { Link } from '@/lib/i18n/navigation'
 import LoginModal from './auth/LoginModal'
@@ -15,51 +15,22 @@ interface MemberMenuProps {
 
 export default function MemberMenu({ isOpen, onToggle }: MemberMenuProps = {}) {
   const t = useTranslations('member')
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [member, setMember] = useState<{ first_name: string; last_name: string } | null>(null)
+  const { isAuthenticated, member, logout: authLogout, refreshAuth } = useAuth()
   const [showMenu, setShowMenu] = useState(false)
   const isDropdownOpen = isOpen !== undefined ? isOpen : showMenu
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showSignupModal, setShowSignupModal] = useState(false)
 
-  useEffect(() => {
-    // Check authentication status on mount and after auth changes
-    const checkAuth = () => {
-      const authenticated = braincore.isAuthenticated()
-      setIsAuthenticated(authenticated)
-      if (authenticated) {
-        const memberData = braincore.getMember()
-        setMember(memberData)
-      } else {
-        setMember(null)
-      }
-    }
-    
-    checkAuth()
-    
-    // Listen for storage changes (login/logout in other tabs)
-    window.addEventListener('storage', checkAuth)
-    return () => window.removeEventListener('storage', checkAuth)
-  }, [])
-
   const handleLogout = () => {
-    braincore.logout()
-    setIsAuthenticated(false)
-    setMember(null)
+    authLogout()
     setShowMenu(false)
   }
 
   const handleAuthSuccess = () => {
     setShowLoginModal(false)
     setShowSignupModal(false)
-    
-    // Update authentication status
-    const authenticated = braincore.isAuthenticated()
-    setIsAuthenticated(authenticated)
-    if (authenticated) {
-      const memberData = braincore.getMember()
-      setMember(memberData)
-    }
+    // Refresh auth state to update navigation
+    refreshAuth()
   }
 
   if (isAuthenticated && member) {

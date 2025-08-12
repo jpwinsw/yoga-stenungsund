@@ -41,7 +41,8 @@
       "networkError": "Nätverksfel. Försök igen senare.",
       "termsAgreement": "Jag godkänner",
       "privacyPolicy": "integritetspolicyn",
-      "and": "och"
+      "and": "och",
+      "existingBookingsFound": "Välkommen! Vi hittade {count} befintlig(a) bokning(ar) kopplade till ditt konto."
     }
   }
 }

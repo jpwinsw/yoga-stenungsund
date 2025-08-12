@@ -1,0 +1,39 @@
+{
+  "title": "Find Your Booking",
+  "metaTitle": "Booking Lookup - Yoga Stenungsund",
+  "metaDescription": "Look up and manage your guest booking at Yoga Stenungsund",
+  "description": "Enter your confirmation code and email to view your booking",
+  "confirmationCode": "Confirmation Code",
+  "codePlaceholder": "e.g., YS-ABC123",
+  "email": "Email Address",
+  "emailPlaceholder": "your.email@example.com",
+  "lookupBooking": "Find Booking",
+  "searching": "Searching...",
+  "bookingFound": "Booking found!",
+  "instructor": "Instructor",
+  "location": "Location",
+  "status": "Status",
+  "statuses": {
+    "confirmed": "Confirmed",
+    "pending": "Pending",
+    "cancelled": "Cancelled",
+    "completed": "Completed"
+  },
+  "cancelBooking": "Cancel Booking",
+  "cancelling": "Cancelling...",
+  "bookingCancelled": "Your booking has been cancelled",
+  "newLookup": "Look Up Another Booking",
+  "errors": {
+    "missingInfo": "Please enter both confirmation code and email",
+    "lookupFailed": "Could not find your booking. Please check your details and try again.",
+    "cancelFailed": "Could not cancel booking. Please try again later."
+  },
+  "createAccount": {
+    "title": "Create an account for easier booking management!",
+    "benefit1": "View all your bookings in one place",
+    "benefit2": "Quick booking without entering details",
+    "benefit3": "Access to memberships and special offers",
+    "button": "Create Account",
+    "later": "Maybe Later"
+  }
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "source": "/optimum-metoden-mediyoga-yogasteungsund-funktionsmedicin",
+    "target": "/valbefinnande/optimum-metoden",
+    "status": "301"
+  },
+  {
+    "source": "/pt-yoga",
+    "target": "/valbefinnande/pt-yoga",
+    "status": "301"
+  },
+  {
+    "source": "/elinsternsjo",
+    "target": "/valbefinnande/elin-sternsjo",
+    "status": "301"
+  },
+  {
+    "source": "/yogaterapi-restorative-behandling",
+    "target": "/valbefinnande/restorative",
+    "status": "301"
+  },
+  {
+    "source": "/tibetansk-ansiktsmassage",
+    "target": "/valbefinnande/ansiktsmassage",
+    "status": "301"
+  },
+  {
+    "source": "/malinmorander-funktionsmedicin",
+    "target": "/valbefinnande/malins-friskvard",
+    "status": "301"
+  },
+  {
+    "source": "/yst-rekommenderar",
+    "target": "/valbefinnande/rekommenderar",
+    "status": "301"
+  },
+  {
+    "source": "/wellness/<*>",
+    "target": "/valbefinnande/<*>",
+    "status": "301"
+  },
+  {
+    "source": "/en/wellbeing/<*>",
+    "target": "/en/valbefinnande/<*>",
+    "status": "301"
+  },
+  {
+    "source": "/classes",
+    "target": "/klasser",
+    "status": "301"
+  },
+  {
+    "source": "/schedule",
+    "target": "/schema",
+    "status": "301"
+  },
+  {
+    "source": "/contact",
+    "target": "/kontakt",
+    "status": "301"
+  },
+  {
+    "source": "/about",
+    "target": "/om-oss",
+    "status": "301"
+  },
+  {
+    "source": "/prices",
+    "target": "/priser",
+    "status": "301"
+  },
+  {
+    "source": "/teachers",
+    "target": "/larare",
+    "status": "301"
+  },
+  {
+    "source": "/memberships",
+    "target": "/medlemskap",
+    "status": "301"
+  }
+]

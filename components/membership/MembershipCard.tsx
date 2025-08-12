@@ -46,7 +46,7 @@ export default function MembershipCard({ plan, featured = false }: MembershipCar
   };
 
   const formatPrice = () => {
-    const price = plan.price / 100; // Convert from cents to currency
+    const price = plan.price; // Price is already in base currency unit (SEK)
     return new Intl.NumberFormat('sv-SE', {
       style: 'currency',
       currency: plan.currency,

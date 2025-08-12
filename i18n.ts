@@ -44,6 +44,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
     bookingSuccess: (await import(`./messages/${locale}/bookingSuccess.json`)).default,
     faq: (await import(`./messages/${locale}/faq.json`)).default,
     community: (await import(`./messages/${locale}/community.json`)).default,
+    wellbeing: (await import(`./messages/${locale}/wellbeing.json`)).default,
+    bookingLookup: (await import(`./messages/${locale}/bookingLookup.json`)).default,
   };
 
   return {

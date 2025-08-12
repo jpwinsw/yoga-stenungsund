@@ -1,0 +1,39 @@
+{
+  "title": "Hitta din bokning",
+  "metaTitle": "Bokningssökning - Yoga Stenungsund",
+  "metaDescription": "Sök upp och hantera din gästbokning hos Yoga Stenungsund",
+  "description": "Ange din bekräftelsekod och e-postadress för att se din bokning",
+  "confirmationCode": "Bekräftelsekod",
+  "codePlaceholder": "t.ex. YS-ABC123",
+  "email": "E-postadress",
+  "emailPlaceholder": "din.email@exempel.se",
+  "lookupBooking": "Hitta bokning",
+  "searching": "Söker...",
+  "bookingFound": "Bokning hittad!",
+  "instructor": "Instruktör",
+  "location": "Plats",
+  "status": "Status",
+  "statuses": {
+    "confirmed": "Bekräftad",
+    "pending": "Väntar",
+    "cancelled": "Avbokad",
+    "completed": "Genomförd"
+  },
+  "cancelBooking": "Avboka",
+  "cancelling": "Avbokar...",
+  "bookingCancelled": "Din bokning har avbokats",
+  "newLookup": "Sök annan bokning",
+  "errors": {
+    "missingInfo": "Ange både bekräftelsekod och e-postadress",
+    "lookupFailed": "Kunde inte hitta din bokning. Kontrollera dina uppgifter och försök igen.",
+    "cancelFailed": "Kunde inte avboka. Försök igen senare."
+  },
+  "createAccount": {
+    "title": "Skapa ett konto för enklare bokningshantering!",
+    "benefit1": "Se alla dina bokningar på ett ställe",
+    "benefit2": "Snabb bokning utan att ange uppgifter",
+    "benefit3": "Tillgång till medlemskap och specialerbjudanden",
+    "button": "Skapa konto",
+    "later": "Kanske senare"
+  }
+}

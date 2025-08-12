@@ -5,6 +5,8 @@ import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Link } from '@/lib/i18n/navigation'
 import { braincore } from '@/lib/api/braincore'
+import type { MemberSubscription as BrainCoreMemberSubscription } from '@/lib/types/braincore'
+import MembershipManagementModal from '@/components/membership/MembershipManagementModal'
 import { 
   Calendar, 
   Clock, 
@@ -36,14 +38,6 @@ interface Booking {
   special_requests: string | null
 }
 
-interface MemberSubscription {
-  subscription_id: number
-  plan_name: string
-  plan_type: string
-  status: string
-  current_credits?: number
-  credits_used_this_period?: number
-}
 
 interface WaitlistEntry {
   id: number
@@ -71,12 +65,13 @@ export default function MyBookingsPage() {
   const router = useRouter()
   const [bookings, setBookings] = useState<Booking[]>([])
   const [waitlistEntries, setWaitlistEntries] = useState<WaitlistEntry[]>([])
-  const [subscriptions, setSubscriptions] = useState<MemberSubscription[]>([])
+  const [subscriptions, setSubscriptions] = useState<BrainCoreMemberSubscription[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past' | 'cancelled' | 'waitlist'>('upcoming')
   const [cancellingId, setCancellingId] = useState<number | null>(null)
   const [leavingWaitlistId, setLeavingWaitlistId] = useState<number | null>(null)
+  const [showMembershipModal, setShowMembershipModal] = useState(false)
 
   const fetchBookings = useCallback(async () => {
     try {
@@ -243,13 +238,13 @@ export default function MyBookingsPage() {
                   <p className="text-sm text-gray-500">{t('membership.creditsRemaining')}</p>
                 </div>
               )}
-              <Link
-                href="/medlemskap"
+              <button
+                onClick={() => setShowMembershipModal(true)}
                 className="flex items-center gap-2 px-4 py-2 text-sm text-[var(--yoga-purple)] hover:bg-purple-50 rounded-lg transition-colors font-medium"
               >
                 <CreditCard className="w-4 h-4" />
                 {t('membership.manage')}
-              </Link>
+              </button>
             </div>
           </div>
         )}
@@ -427,6 +422,19 @@ export default function MyBookingsPage() {
               </div>
             ))}
           </div>
+        )}
+
+        {/* Membership Management Modal */}
+        {activeSubscription && (
+          <MembershipManagementModal
+            isOpen={showMembershipModal}
+            onClose={() => setShowMembershipModal(false)}
+            subscription={{
+              ...activeSubscription,
+              status: activeSubscription.status as 'active' | 'paused' | 'cancelled' | 'expired'
+            }}
+            onRefresh={fetchBookings}
+          />
         )}
       </div>
     </div>

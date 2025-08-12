@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Eye, EyeOff, AlertCircle } from 'lucide-react'
 import { braincore } from '@/lib/api/braincore'
+import { useAuth } from '@/lib/contexts/AuthContext'
 import type { LoginRequest } from '@/lib/types/braincore'
 import axios from 'axios'
 import {
@@ -29,6 +30,7 @@ export default function LoginModal({
   onSwitchToSignup
 }: LoginModalProps) {
   const t = useTranslations('member.auth.login')
+  const { refreshAuth } = useAuth()
   const [formData, setFormData] = useState<LoginRequest>({
     email: '',
     password: ''
@@ -44,6 +46,7 @@ export default function LoginModal({
 
     try {
       await braincore.login(formData)
+      refreshAuth() // Update auth state immediately
       onSuccess()
     } catch (err) {
       console.error('Login error:', err)

@@ -109,6 +109,76 @@ export default function Navigation() {
             <div className="relative">
               <button 
                 className="text-gray-700 hover:text-[var(--yoga-purple)] transition-colors flex items-center gap-1 font-medium text-[15px]"
+                onClick={() => setOpenDropdown(openDropdown === 'wellbeing' ? null : 'wellbeing')}
+                onMouseEnter={() => setOpenDropdown('wellbeing')}
+              >
+                {t('wellbeing')}
+                <svg className={`w-4 h-4 transition-transform duration-300 ${openDropdown === 'wellbeing' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div 
+                className={`absolute left-0 mt-2 w-64 rounded-xl shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all duration-200 z-50 overflow-hidden ${
+                  openDropdown === 'wellbeing' ? 'opacity-100 visible' : 'opacity-0 invisible'
+                }`}
+                onMouseLeave={() => setOpenDropdown(null)}
+              >
+                <div className="py-2">
+                  <Link 
+                    href="/valbefinnande/optimum-metoden" 
+                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[var(--yoga-cyan)]/10 hover:to-[var(--yoga-purple)]/10 hover:text-[var(--yoga-purple)] transition-all"
+                  >
+                    Optimum Metoden
+                  </Link>
+                  <Link 
+                    href="/valbefinnande/pt-yoga" 
+                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[var(--yoga-cyan)]/10 hover:to-[var(--yoga-purple)]/10 hover:text-[var(--yoga-purple)] transition-all"
+                  >
+                    PT-Yoga med Sara
+                  </Link>
+                  <Link 
+                    href="/valbefinnande/elin-sternsjo" 
+                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[var(--yoga-cyan)]/10 hover:to-[var(--yoga-purple)]/10 hover:text-[var(--yoga-purple)] transition-all"
+                  >
+                    Elin Sternsjö
+                  </Link>
+                  <Link 
+                    href="/valbefinnande/restorative" 
+                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[var(--yoga-cyan)]/10 hover:to-[var(--yoga-purple)]/10 hover:text-[var(--yoga-purple)] transition-all"
+                  >
+                    Restorative Terapi
+                  </Link>
+                  <Link 
+                    href="/valbefinnande/ansiktsmassage" 
+                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[var(--yoga-cyan)]/10 hover:to-[var(--yoga-purple)]/10 hover:text-[var(--yoga-purple)] transition-all"
+                  >
+                    Tibetansk Ansiktsmassage
+                  </Link>
+                  <Link 
+                    href="/valbefinnande/malins-friskvard" 
+                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[var(--yoga-cyan)]/10 hover:to-[var(--yoga-purple)]/10 hover:text-[var(--yoga-purple)] transition-all"
+                  >
+                    Malins Friskvård
+                  </Link>
+                  <Link 
+                    href="/valbefinnande/rekommenderar" 
+                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[var(--yoga-cyan)]/10 hover:to-[var(--yoga-purple)]/10 hover:text-[var(--yoga-purple)] transition-all"
+                  >
+                    YST Rekommenderar
+                  </Link>
+                  <div className="border-t border-gray-100 my-2"></div>
+                  <Link 
+                    href="/valbefinnande" 
+                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[var(--yoga-cyan)]/10 hover:to-[var(--yoga-purple)]/10 hover:text-[var(--yoga-purple)] font-medium transition-all"
+                  >
+                    {t('viewAllWellbeing')}
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="relative">
+              <button 
+                className="text-gray-700 hover:text-[var(--yoga-purple)] transition-colors flex items-center gap-1 font-medium text-[15px]"
                 onClick={() => setOpenDropdown(openDropdown === 'happenings' ? null : 'happenings')}
                 onMouseEnter={() => setOpenDropdown('happenings')}
               >
@@ -241,6 +311,13 @@ export default function Navigation() {
             onClick={() => setIsMobileMenuOpen(false)}
           >
             {t('community')}
+          </Link>
+          <Link
+            href="/valbefinnande"
+            className="block py-2 text-gray-700 hover:text-[var(--yoga-purple)] transition-colors font-medium"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            {t('wellbeing')}
           </Link>
           
           <div className="pt-4 border-t border-gray-100">

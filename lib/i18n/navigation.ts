@@ -47,7 +47,35 @@ export const pathnames = {
   },
   '/valbefinnande': {
     sv: '/valbefinnande',
-    en: '/wellness'
+    en: '/wellbeing'
+  },
+  '/valbefinnande/optimum-metoden': {
+    sv: '/valbefinnande/optimum-metoden',
+    en: '/wellbeing/optimum-method'
+  },
+  '/valbefinnande/pt-yoga': {
+    sv: '/valbefinnande/pt-yoga',
+    en: '/wellbeing/pt-yoga'
+  },
+  '/valbefinnande/elin-sternsjo': {
+    sv: '/valbefinnande/elin-sternsjo',
+    en: '/wellbeing/elin-sternsjo'
+  },
+  '/valbefinnande/restorative': {
+    sv: '/valbefinnande/restorative',
+    en: '/wellbeing/restorative'
+  },
+  '/valbefinnande/ansiktsmassage': {
+    sv: '/valbefinnande/ansiktsmassage',
+    en: '/wellbeing/facial-massage'
+  },
+  '/valbefinnande/malins-friskvard': {
+    sv: '/valbefinnande/malins-friskvard',
+    en: '/wellbeing/malins-wellness'
+  },
+  '/valbefinnande/rekommenderar': {
+    sv: '/valbefinnande/rekommenderar',
+    en: '/wellbeing/recommendations'
   },
   '/retreater': {
     sv: '/retreater',
@@ -76,6 +104,10 @@ export const pathnames = {
   '/booking-success': {
     sv: '/booking-success',
     en: '/booking-success'
+  },
+  '/booking-lookup': {
+    sv: '/booking-lookup',
+    en: '/booking-lookup'
   }
 } as const;
 

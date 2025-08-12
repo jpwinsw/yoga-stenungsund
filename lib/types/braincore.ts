@@ -58,9 +58,15 @@ export interface MembershipPlan {
   description?: string
   price: number
   currency: string
-  billing_period: 'monthly' | 'quarterly' | 'yearly' | 'one_time'
+  billing_period: 'monthly' | 'quarterly' | 'yearly' | 'one_time' | 'term'
   benefits?: string[]
   limitations?: string[]
+  
+  // Term-based membership fields
+  is_term_based?: boolean
+  term_duration_days?: number
+  allowed_service_templates?: number[]
+  sessions_per_week?: number
 }
 
 export interface BookingRequest {
@@ -112,6 +118,8 @@ export interface LoginResponse {
   first_name: string
   last_name: string
   is_verified: boolean
+  has_existing_bookings?: boolean
+  existing_bookings_count?: number
 }
 
 export interface SignupRequest {
@@ -323,4 +331,49 @@ export interface CommunityComment {
   user_has_liked?: boolean
   created_at: string
   updated_at: string
+}
+
+// Term Availability Response
+export interface TermAvailability {
+  term_start: string
+  term_end: string
+  total_weeks: number
+  sessions_per_week: number
+  total_required_sessions: number
+  available_slots_by_week: Record<string, Array<{
+    session_id: number
+    date: string
+    start_time: string
+    end_time: string
+    instructor_name: string
+    available_spots: number
+  }>>
+}
+
+// Recovery Credit
+export interface RecoveryCredit {
+  id: number
+  credit_type: string
+  amount: number
+  expires_at: string
+  source: string
+  used: boolean
+  created_at: string
+}
+
+// Credit History Entry
+export interface CreditHistoryEntry {
+  id: number
+  transaction_type: 'credit' | 'debit'
+  amount: number
+  description: string
+  created_at: string
+  balance_after: number
+}
+
+// Subscription Action Response
+export interface SubscriptionActionResponse {
+  success: boolean
+  message: string
+  subscription?: MemberSubscription
 }

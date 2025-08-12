@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Calendar, Clock, MapPin, User } from 'lucide-react'
 import { formatDate, formatTime } from '@/lib/utils/date'
@@ -34,6 +34,7 @@ export default function BookingModal({
   onBookingSuccess
 }: BookingModalProps) {
   const t = useTranslations('schema.booking')
+  const locale = useLocale()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -57,6 +58,7 @@ export default function BookingModal({
     publishable_key: string
     amount: number
   } | null>(null)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [bookingData, setBookingData] = useState<{
     session_id: number
     contact_id?: number
@@ -67,6 +69,7 @@ export default function BookingModal({
       phone?: string
     }
   } | null>(null)
+  const [pendingBookingId, setPendingBookingId] = useState<number | null>(null)
   const [bookingOptions, setBookingOptions] = useState<BookingOptions | null>(null)
   const [loadingOptions, setLoadingOptions] = useState(false)
   const [showCreditConfirmation, setShowCreditConfirmation] = useState(false)
@@ -94,11 +97,12 @@ export default function BookingModal({
       setShowPayment(false)
       setPaymentIntent(null)
       setBookingData(null)
+      setPendingBookingId(null)
       setShowCreditConfirmation(false)
       setCreditsRequired(0)
       setHasAutoBooked(false)
       
-      braincore.getBookingOptions(session.id)
+      braincore.getBookingOptions(session.id, locale)
         .then((options) => {
           setBookingOptions(options)
           
@@ -115,7 +119,7 @@ export default function BookingModal({
           setLoadingOptions(false)
         })
     }
-  }, [isOpen, session.id])
+  }, [isOpen, session.id, locale])
   
   const handleProceedToPayment = useCallback(async () => {
     // Check authentication status again to get fresh value
@@ -145,8 +149,11 @@ export default function BookingModal({
       
       // Check if payment is required
       if (bookingResponse.payment_required && bookingResponse.payment_amount) {
-        // Store booking data for after payment
+        // Store booking data and booking ID for after payment
         setBookingData(bookingData)
+        if (bookingResponse.booking_id) {
+          setPendingBookingId(bookingResponse.booking_id)
+        }
         
         // Create payment intent
         const paymentData = {
@@ -238,7 +245,15 @@ export default function BookingModal({
   const handleAuthSuccess = () => {
     setShowLoginModal(false)
     setShowSignupModal(false)
-    // Proceed with payment after successful auth
+    
+    // If we already have a successful booking (guest who just signed up), don't book again
+    if (bookingSuccess && bookingReference) {
+      // Just close the modal - they already have their booking
+      onClose()
+      return
+    }
+    
+    // Otherwise proceed with payment/booking after successful auth
     // Use setTimeout to ensure state updates and auth token is set
     setTimeout(() => {
       handleProceedToPayment()
@@ -336,28 +351,12 @@ export default function BookingModal({
   
   const handlePaymentSuccess = async (paymentIntentId: string) => {
     try {
-      if (!bookingData) {
-        throw new Error('No booking data available')
+      if (!pendingBookingId) {
+        throw new Error('No pending booking ID available')
       }
       
-      let response
-      
-      // Check if this is a guest booking or member booking
-      if (bookingData.guest_info) {
-        // Guest booking
-        response = await braincore.createGuestBooking({
-          session_id: bookingData.session_id,
-          guest_info: bookingData.guest_info,
-          payment_intent_id: paymentIntentId
-        })
-      } else {
-        // Member booking
-        response = await braincore.createBooking({
-          session_id: bookingData.session_id,
-          contact_id: bookingData.contact_id!,
-          payment_intent_id: paymentIntentId
-        })
-      }
+      // Confirm the booking payment
+      const response = await braincore.confirmBookingPayment(pendingBookingId, paymentIntentId)
       
       setBookingSuccess(true)
       setBookingReference(response.confirmation_code)
@@ -367,7 +366,7 @@ export default function BookingModal({
         onBookingSuccess()
       }
     } catch (err) {
-      console.error('Booking creation after payment error:', err)
+      console.error('Booking payment confirmation error:', err)
       setError(t('bookingError'))
       setShowPayment(false)
     }
@@ -435,10 +434,13 @@ export default function BookingModal({
       
       // Check if payment is required (it should be for guest drop-in)
       if (bookingResponse.payment_required && bookingResponse.payment_amount) {
-        // Store booking data for after payment
+        // Store booking data and booking ID for after payment
         setBookingData(bookingData)
+        if (bookingResponse.booking_id) {
+          setPendingBookingId(bookingResponse.booking_id)
+        }
         
-        // Create payment intent
+        // Create payment intent for guest
         const paymentData = {
           company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '5'),
           amount: bookingResponse.payment_amount * 100, // Convert to öre/cents
@@ -447,7 +449,8 @@ export default function BookingModal({
           entity_type: 'service_booking',
           entity_id: session.id,
           customer_email: guestData.email,
-          customer_name: `${guestData.first_name} ${guestData.last_name}`
+          customer_name: `${guestData.first_name} ${guestData.last_name}`,
+          is_guest: true
         }
         
         const paymentIntentResponse = await braincore.createPaymentIntent(paymentData)
@@ -557,7 +560,7 @@ export default function BookingModal({
               <h3 className="text-xl font-semibold mb-2">
                 {waitlistSuccess ? t('waitlistSuccess') : t('bookingSuccess')}
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 mb-2">
                 {waitlistSuccess && waitlistPosition ? (
                   <>
                     {t('waitlistPosition')}: <span className="font-mono">#{waitlistPosition}</span>
@@ -568,15 +571,58 @@ export default function BookingModal({
                   </>
                 )}
               </p>
+              {!waitlistSuccess && (guestData.email || braincore.getMember()?.email) && (
+                <p className="text-sm text-gray-500 mb-4">
+                  {t('confirmationEmailSent', { email: guestData.email || braincore.getMember()?.email || '' })}
+                </p>
+              )}
               {waitlistSuccess && (
                 <p className="text-sm text-gray-500 mb-4">{t('waitlistInfo')}</p>
               )}
-              <Button
-                onClick={onClose}
-                className="px-6"
-              >
-                {t('backToSchedule')}
-              </Button>
+              
+              {/* Account creation prompt for guests */}
+              {!waitlistSuccess && guestData.email && !braincore.isAuthenticated() && (
+                <div className="bg-[var(--yoga-sage)]/10 border border-[var(--yoga-sage)]/20 rounded-lg p-4 mb-4">
+                  <h4 className="font-semibold text-gray-900 mb-2">{t('createAccountPrompt.title')}</h4>
+                  <ul className="text-sm text-gray-600 space-y-1 mb-3">
+                    <li>• {t('createAccountPrompt.benefit1')}</li>
+                    <li>• {t('createAccountPrompt.benefit2')}</li>
+                    <li>• {t('createAccountPrompt.benefit3')}</li>
+                    <li>• {t('createAccountPrompt.benefit4')}</li>
+                  </ul>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setShowSignupModal(true)
+                        // Pre-fill the signup form with guest data
+                        setBookingSuccess(false)
+                      }}
+                      className="flex-1"
+                    >
+                      {t('createAccountPrompt.createAccount')}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={onClose}
+                      className="flex-1"
+                    >
+                      {t('createAccountPrompt.continueLater')}
+                    </Button>
+                  </div>
+                </div>
+              )}
+              
+              {!guestData.email && (
+                <Button
+                  onClick={onClose}
+                  className="px-6"
+                >
+                  {t('backToSchedule')}
+                </Button>
+              )}
             </div>
           ) : showWaitlistOption ? (
             /* Waitlist Option */
@@ -899,6 +945,12 @@ export default function BookingModal({
           setShowSignupModal(false)
           setShowLoginModal(true)
         }}
+        prefillData={guestData.email ? {
+          email: guestData.email,
+          firstName: guestData.first_name,
+          lastName: guestData.last_name,
+          phone: guestData.phone
+        } : undefined}
       />
     </>
   )

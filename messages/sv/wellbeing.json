@@ -1,0 +1,177 @@
+{
+  "metadata": {
+    "title": "Välbefinnande | Yoga Stenungsund",
+    "description": "Upptäck våra behandlingar och individuella sessioner för välbefinnande. PT-yoga, tibetansk ansiktsmassage, restorative terapi och mer."
+  },
+  "hero": {
+    "title": "Välbefinnande",
+    "subtitle": "Enskilda sessioner för din hälsa och välmående",
+    "description": "Hos oss kan du boka individuella behandlingar och sessioner som komplement till din yogapraktik eller som fristående behandlingar för ökad livskvalitet."
+  },
+  "intro": {
+    "title": "Behandlingar & Sessioner",
+    "description": "Våra erfarna terapeuter erbjuder ett brett utbud av behandlingar anpassade efter dina behov"
+  },
+  "cta": {
+    "bookSession": "Boka session",
+    "learnMore": "Läs mer",
+    "contact": "Kontakta",
+    "viewAll": "Se alla behandlingar"
+  },
+  "optimum": {
+    "title": "Optimum Metoden",
+    "subtitle": "MediYoga & Funktionsmedicin",
+    "description": "Optimum-metoden kombinerar MediYoga med funktionsmedicinsk kunskap för att hjälpa dig att optimera din hälsa och välmående.",
+    "features": {
+      "group": "Gruppklasser",
+      "individual": "Individuella sessioner",
+      "online": "Online-sessioner tillgängliga"
+    },
+    "practitioner": "Med Elin Sternsjö",
+    "contact": "Kontakt: 0768970675 eller sternsjoelin@gmail.com"
+  },
+  "ptYoga": {
+    "title": "PT-Yoga med Sara",
+    "subtitle": "Personlig yoga-träning",
+    "description": "Skräddarsydd yoga anpassad efter dina behov och mål. Sara hjälper dig utveckla din praktik med fokus på teknik, andning och medveten rörelse.",
+    "benefits": {
+      "title": "Vad vi arbetar med:",
+      "mobility": "Rörlighet och flexibilitet",
+      "strength": "Styrka och stabilitet",
+      "technique": "Yogapositioner och teknik",
+      "breathing": "Andnings- och meditationstekniker"
+    },
+    "about": "Sara är legitimerad arbetsterapeut med specialisering inom stress och neurologiska behandlingar. Utbildad inom hathayoga, ashtanga vinyasa yoga och yin yoga.",
+    "contact": "Telefon: 0703-162331 | E-post: sara.s.bergstrom@gmail.com"
+  },
+  "restorative": {
+    "title": "Restorative Terapi",
+    "subtitle": "Djup avslappning med Annika Valton",
+    "description": "Unna dig en vilsam, lugn stund där du helt och fullt vilar, tryggt och omhändertaget.",
+    "includes": {
+      "title": "Behandlingen innehåller:",
+      "touch": "Lätt beröring och massage",
+      "oils": "Eteriska oljor",
+      "pressure": "Behagligt tryck",
+      "sound": "Läkande vibrationer från klangskålar"
+    },
+    "forWho": {
+      "title": "För dig som:",
+      "rest": "Behöver vila och återhämtning",
+      "stress": "Lever med hög stress",
+      "burnout": "Är utbränd eller utmattad"
+    },
+    "booking": "Bokning via SMS: 0707146301"
+  },
+  "facial": {
+    "title": "Tibetansk Ansiktsmassage",
+    "subtitle": "75 minuters behandling",
+    "description": "En djupgående ansiktsmassage som löser upp spänningar, förbättrar blodcirkulationen och ger din hud ny lyster.",
+    "price": "Pris: 800 kr",
+    "benefits": {
+      "title": "Fördelar:",
+      "tension": "Löser upp muskelspänningar",
+      "circulation": "Förbättrar blodcirkulationen",
+      "glow": "Ger huden lyster",
+      "stress": "Minskar stress"
+    },
+    "idealFor": {
+      "title": "Perfekt för dig med:",
+      "tired": "Trötthet",
+      "headache": "Spänningshuvudvärk",
+      "jaw": "Käkspänningar",
+      "eyestrain": "Trötta ögon",
+      "rejuvenation": "Behov av ansiktsföryngring"
+    },
+    "practitioner": "Annika Valton",
+    "booking": "SMS: 0707146301"
+  },
+  "malins": {
+    "title": "Malins Friskvård",
+    "subtitle": "Funktionsmedicin & Kroppsterapi",
+    "description": "Över 20 års erfarenhet inom hälso- och sjukvård. Specialiserad inom funktionsmedicin och holistisk hälsa.",
+    "services": {
+      "title": "Behandlingar:",
+      "cranio": "Kraniosakralterapi",
+      "lymph": "Lymfmassage",
+      "massage": "Svensk klassisk massage",
+      "kinesiology": "Kinesiologi",
+      "nutrition": "Näringsterapi"
+    },
+    "methods": {
+      "title": "Avancerade metoder:",
+      "frequency": "Frekvensmaskiner",
+      "hairAnalysis": "Hårmineral analys",
+      "bloodAnalysis": "Blodanalys"
+    },
+    "contact": "Telefon: 0707481808"
+  },
+  "recommendations": {
+    "title": "YST Rekommenderar",
+    "subtitle": "Våra personliga favoriter",
+    "description": "Här delar vi produkter och tjänster som vi använder och älskar i vårt dagliga liv - både på och av mattan.",
+    "categories": {
+      "food": "Livsmedel",
+      "mats": "Yogamattor",
+      "clothing": "Yogakläder",
+      "jewelry": "Smycken",
+      "heading": "Kategorier"
+    },
+    "intro": "Vi stödjer gärna små företag och delar med oss av produkter som verkligen gör skillnad i vår praktik.",
+    "products": {
+      "curcuma": {
+        "name": "Curcuma.se",
+        "description": "Eko gurkmejamix - Enkelt att beställa för smidiga leder och go och glad maga",
+        "link": "Besök Curcuma.se"
+      },
+      "ooo": {
+        "name": "OOO Yogamatta",
+        "description": "Familjeägt företag från Borås",
+        "detail": "Erbjuder både ull- och standardmattor",
+        "link": "Handla mattor"
+      },
+      "vackraliv": {
+        "name": "VackraLiv",
+        "description": "Göteborgsbaserat företag",
+        "detail": "Detaljerade mattor av hög kvalitet",
+        "link": "Besök VackraLiv"
+      },
+      "vackralivClothing": {
+        "name": "VackraLiv - Magical Soft Skin",
+        "description": "Rekommenderar tights och toppar från \"Magical Soft skin\" kollektionen",
+        "detail": "Bambu - fungerar året runt, temperaturreglerande material",
+        "link": "Se kollektionen"
+      },
+      "mykarma": {
+        "name": "MyKarma",
+        "description": "Malas (bönepärlor) handknutna i Stenungsund",
+        "local": "Lokalt hantverk",
+        "link": "Besök MyKarma"
+      }
+    },
+    "materials": {
+      "title": "Materialtips",
+      "bamboo": {
+        "name": "Bambu",
+        "description": "Fungerar året runt, temperaturreglerande"
+      },
+      "wool": {
+        "name": "Ull",
+        "description": "Varmt och skönt för vinterstilar"
+      },
+      "avoid": {
+        "name": "Undvik polyester",
+        "description": "Speciellt vid yin och andra vinterstilar"
+      }
+    },
+    "quote": "Här rekommenderar vi några av våra personliga produkter som vi använder och älskar i vårt dagliga liv - både på och av mattan",
+    "team": "YST Team"
+  },
+  "booking": {
+    "title": "Boka din behandling",
+    "description": "Kontakta respektive terapeut direkt för bokning och frågor.",
+    "general": "För allmänna frågor:",
+    "phone": "Telefon: +46739123976",
+    "email": "E-post: Yogastenungsund@gmail.com"
+  }
+}

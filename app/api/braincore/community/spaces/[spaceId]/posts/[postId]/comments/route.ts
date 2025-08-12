@@ -18,7 +18,7 @@ export async function GET(
     }
     
     const response = await fetch(
-      `${BRAINCORE_API}/commune/spaces/${spaceId}/posts/${postId}/comments`,
+      `${BRAINCORE_API}/commune/member/spaces/${spaceId}/posts/${postId}/comments`,
       {
         method: 'GET',
         headers: {
@@ -64,7 +64,7 @@ export async function POST(
     }
     
     const response = await fetch(
-      `${BRAINCORE_API}/commune/spaces/${spaceId}/posts/${postId}/comments`,
+      `${BRAINCORE_API}/commune/member/spaces/${spaceId}/posts/${postId}/comments`,
       {
         method: 'POST',
         headers: {

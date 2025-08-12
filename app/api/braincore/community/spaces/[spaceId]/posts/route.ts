@@ -20,7 +20,7 @@ export async function GET(
     }
     
     const response = await fetch(
-      `${BRAINCORE_API}/commune/spaces/${spaceId}/posts?page=${page}`,
+      `${BRAINCORE_API}/commune/member/spaces/${spaceId}/posts?page=${page}`,
       {
         method: 'GET',
         headers: {
@@ -39,7 +39,9 @@ export async function GET(
       )
     }
     
-    return NextResponse.json(data)
+    // Wrap array in object to match expected interface
+    const posts = Array.isArray(data) ? data : (data.posts || [])
+    return NextResponse.json({ posts })
   } catch (error) {
     console.error('Fetch posts error:', error)
     return NextResponse.json(
@@ -66,7 +68,7 @@ export async function POST(
     }
     
     const response = await fetch(
-      `${BRAINCORE_API}/commune/spaces/${spaceId}/posts`,
+      `${BRAINCORE_API}/commune/member/spaces/${spaceId}/posts`,
       {
         method: 'POST',
         headers: {

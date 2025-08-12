@@ -48,6 +48,53 @@ const nextConfig: NextConfig = {
         destination: "/larare",
         permanent: true,
       },
+      // Redirects from old wellbeing URLs to new structure
+      {
+        source: "/optimum-metoden-mediyoga-yogasteungsund-funktionsmedicin",
+        destination: "/valbefinnande/optimum-metoden",
+        permanent: true,
+      },
+      {
+        source: "/pt-yoga",
+        destination: "/valbefinnande/pt-yoga",
+        permanent: true,
+      },
+      {
+        source: "/elinsternsjo",
+        destination: "/valbefinnande/elin-sternsjo",
+        permanent: true,
+      },
+      {
+        source: "/yogaterapi-restorative-behandling",
+        destination: "/valbefinnande/restorative",
+        permanent: true,
+      },
+      {
+        source: "/tibetansk-ansiktsmassage",
+        destination: "/valbefinnande/ansiktsmassage",
+        permanent: true,
+      },
+      {
+        source: "/malinmorander-funktionsmedicin",
+        destination: "/valbefinnande/malins-friskvard",
+        permanent: true,
+      },
+      {
+        source: "/yst-rekommenderar",
+        destination: "/valbefinnande/rekommenderar",
+        permanent: true,
+      },
+      // Also handle English versions of wellbeing pages
+      {
+        source: "/en/wellbeing/:path*",
+        destination: "/en/valbefinnande/:path*",
+        permanent: true,
+      },
+      {
+        source: "/wellness/:path*",
+        destination: "/valbefinnande/:path*",
+        permanent: true,
+      },
     ];
   },
 };

@@ -33,7 +33,28 @@
     "title": "Redo att börja din yogaresa?",
     "description": "Ta första steget mot ett mer balanserat liv. Prova din första klass hos oss!",
     "button": "Se schema",
-    "trial": "Boka provklass"
+    "trial": "Boka provklass",
+    "schedule": "Se schema"
+  },
+  "features": {
+    "title": "Förvandla din praktik",
+    "description": "Upplev fördelarna med en regelbunden yogapraktik med vår stöttande gemenskap och expertvägledning.",
+    "feature1": {
+      "title": "Andning & Rörelse",
+      "description": "Koppla samman andning med rörelse i våra dynamiska flödesklasser"
+    },
+    "feature2": {
+      "title": "Styrka & Flexibilitet",
+      "description": "Bygg fysisk styrka samtidigt som du förbättrar flexibiliteten"
+    },
+    "feature3": {
+      "title": "Vila & Återhämtning",
+      "description": "Hitta djup avslappning i våra återställande klasser"
+    },
+    "feature4": {
+      "title": "Gemenskap & Koppling",
+      "description": "Gå med i en välkomnande gemenskap av yogautövare"
+    }
   },
   "quote": {
     "text": "Yoga är inte om att röra tårna. Det handlar om vad du lär dig på vägen ner.",

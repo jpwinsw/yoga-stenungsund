@@ -18,7 +18,9 @@
     "happenings": "Happenings",
     "viewAllHappenings": "Se alla happenings",
     "book_class": "Boka klass",
-    "community": "Community"
+    "community": "Community",
+    "wellbeing": "Välbefinnande",
+    "viewAllWellbeing": "Se alla behandlingar"
   },
   "hero": {
     "title": "Välkommen till Yoga Stenungsund",
@@ -34,7 +36,8 @@
       "subtitle": "Din lokala yogastudio i hjärtat av Stenungsund",
       "description": "Upptäck kraften i yoga med våra erfarna lärare. Vi erbjuder klasser för alla nivåer i en varm och välkomnande miljö.",
       "tagline": "Alla kan finna lugnet på havet, kan du finna det i din vardag?",
-      "cta": "Utforska våra klasser"
+      "cta": "Utforska våra klasser",
+      "trial": "Prova din första klass"
     },
     "intro": {
       "title": "Varför välja Yoga Stenungsund?",
@@ -62,7 +65,32 @@
       "title": "Redo att börja din yogaresa?",
       "description": "Ta första steget mot ett mer balanserat liv. Prova din första klass hos oss!",
       "button": "Se schema",
-      "trial": "Boka provklass"
+      "trial": "Boka provklass",
+      "schedule": "Se schema"
+    },
+    "features": {
+      "title": "Förvandla din praktik",
+      "description": "Upplev fördelarna med en regelbunden yogapraktik med vår stöttande gemenskap och expertvägledning.",
+      "feature1": {
+        "title": "Andning & Rörelse",
+        "description": "Koppla samman andning med rörelse i våra dynamiska flödesklasser"
+      },
+      "feature2": {
+        "title": "Styrka & Flexibilitet",
+        "description": "Bygg fysisk styrka samtidigt som du förbättrar flexibiliteten"
+      },
+      "feature3": {
+        "title": "Vila & Återhämtning",
+        "description": "Hitta djup avslappning i våra återställande klasser"
+      },
+      "feature4": {
+        "title": "Gemenskap & Koppling",
+        "description": "Gå med i en välkomnande gemenskap av yogautövare"
+      }
+    },
+    "quote": {
+      "text": "Yoga är resan av jaget, genom jaget, till jaget.",
+      "author": "Bhagavad Gita"
     }
   },
   "classes": {
@@ -90,6 +118,8 @@
   "happenings": {
     "title": "Happenings",
     "description": "Upptäck våra speciella evenemang, retreater och workshops. Fördjupa din yogapraktik och skapa nya minnen tillsammans med vår community.",
+    "metaTitle": "Happenings - Evenemang, Retreater & Workshops | Yoga Stenungsund",
+    "metaDescription": "Upptäck våra speciella evenemang, retreater och workshops. Fördjupa din yogapraktik och skapa nya minnen tillsammans med vår community.",
     "featured": "Utvald",
     "readMore": "Läs mer",
     "backToHappenings": "Tillbaka till Happenings",

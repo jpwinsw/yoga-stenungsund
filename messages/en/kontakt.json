@@ -1,1 +1,45 @@
-{"title": "Page Title"}
+{
+  "metaTitle": "Contact | Yoga Stenungsund",
+  "metaDescription": "Contact Yoga Stenungsund. We are located at Strandvägen 15 in Stenungsund. Book classes, ask about memberships or corporate yoga.",
+  "title": "Contact Us",
+  "subtitle": "We're here to answer your questions and help you on your yoga journey",
+  "contactInfo": "Contact Information",
+  "visitUs": "Visit us",
+  "callUs": "Call us",
+  "emailUs": "Email us",
+  "openingHours": "Opening Hours",
+  "weekdays": "Monday - Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+  "days": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
+  },
+  "followUs": "Follow us",
+  "sendMessage": "Send Message",
+  "form": {
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "email": "Email",
+    "emailPlaceholder": "your@email.com",
+    "phone": "Phone (optional)",
+    "phonePlaceholder": "+46 70 123 45 67",
+    "subject": "Subject",
+    "selectSubject": "Select subject",
+    "subjects": {
+      "general": "General inquiry",
+      "membership": "Membership",
+      "classes": "Classes and schedule",
+      "private": "Private lessons",
+      "corporate": "Corporate yoga"
+    },
+    "message": "Message",
+    "messagePlaceholder": "Write your message here...",
+    "send": "Send Message"
+  }
+}

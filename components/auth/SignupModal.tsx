@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { Eye, EyeOff, AlertCircle, Check } from 'lucide-react'
 import { braincore } from '@/lib/api/braincore'
+import { useAuth } from '@/lib/contexts/AuthContext'
 import type { SignupRequest } from '@/lib/types/braincore'
 import axios from 'axios'
 import {
@@ -20,32 +21,54 @@ interface SignupModalProps {
   onClose: () => void
   onSuccess: () => void
   onSwitchToLogin: () => void
+  prefillData?: {
+    email?: string
+    firstName?: string
+    lastName?: string
+    phone?: string
+  }
 }
 
 export default function SignupModal({
   isOpen,
   onClose,
   onSuccess,
-  onSwitchToLogin
+  onSwitchToLogin,
+  prefillData
 }: SignupModalProps) {
   const t = useTranslations('member.auth.signup')
+  const { refreshAuth } = useAuth()
   const [formData, setFormData] = useState<SignupRequest & { confirmPassword: string }>({
-    email: '',
+    email: prefillData?.email || '',
     password: '',
     confirmPassword: '',
-    first_name: '',
-    last_name: '',
-    phone: ''
+    first_name: prefillData?.firstName || '',
+    last_name: prefillData?.lastName || '',
+    phone: prefillData?.phone || ''
   })
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [acceptedTerms, setAcceptedTerms] = useState(false)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
   const passwordRequirements = {
     minLength: formData.password.length >= 8,
   }
+
+  // Update form data when prefillData changes
+  useEffect(() => {
+    if (prefillData) {
+      setFormData(prev => ({
+        ...prev,
+        email: prefillData.email || prev.email,
+        first_name: prefillData.firstName || prev.first_name,
+        last_name: prefillData.lastName || prev.last_name,
+        phone: prefillData.phone || prev.phone
+      }))
+    }
+  }, [prefillData])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -73,12 +96,24 @@ export default function SignupModal({
       await braincore.signup(signupData)
       
       // Auto-login after signup
-      await braincore.login({
+      const loginResponse = await braincore.login({
         email: formData.email,
         password: formData.password
       })
       
-      onSuccess()
+      // Refresh auth state to update navigation immediately
+      refreshAuth()
+      
+      // Check if user had existing bookings
+      if (loginResponse.has_existing_bookings && loginResponse.existing_bookings_count) {
+        setSuccessMessage(t('existingBookingsFound', { count: loginResponse.existing_bookings_count }))
+        // Show success message briefly before closing
+        setTimeout(() => {
+          onSuccess()
+        }, 3000)
+      } else {
+        onSuccess()
+      }
     } catch (err) {
       console.error('Signup error:', err)
       
@@ -118,6 +153,14 @@ export default function SignupModal({
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
               <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
               <p className="text-sm text-red-600">{error}</p>
+            </div>
+          )}
+
+          {/* Success Message */}
+          {successMessage && (
+            <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-start gap-2">
+              <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+              <p className="text-sm text-green-600">{successMessage}</p>
             </div>
           )}
 

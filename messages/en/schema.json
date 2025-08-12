@@ -64,6 +64,7 @@
     "waitlistPosition": "Your waitlist position",
     "waitlistError": "Could not join waitlist",
     "alreadyOnWaitlist": "You're already on the waitlist for this class",
+    "confirmationEmailSent": "A confirmation has been sent to {email}",
     "confirmCreditUsage": "Confirm credit usage",
     "creditUsageMessage": "This booking will use {credits} credits. You will have {remaining} credits remaining after booking.",
     "useCredits": "Use credits",
@@ -106,7 +107,16 @@
     "alreadyBooked": "Already Booked",
     "alreadyBookedMessage": "You have already booked this class.",
     "close": "Close",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "createAccountPrompt": {
+      "title": "Create an account to get more!",
+      "benefit1": "Easily manage your bookings",
+      "benefit2": "Access to Yoga Stenungsund Community",
+      "benefit3": "Exclusive tips and yoga practices",
+      "benefit4": "Purchase memberships and save money",
+      "createAccount": "Create Account",
+      "continueLater": "Maybe Later"
+    }
   },
   "auth": {
     "login": {
