@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import axios from 'axios'
 
-const BRAINCORE_API = process.env.BRAINCORE_API_URL || 'http://localhost:8010/api'
+const BRAINCORE_API = process.env.NEXT_PUBLIC_BRAINCORE_API || 'https://api.brain-core.ai'
 
 export async function POST(
   request: NextRequest,
