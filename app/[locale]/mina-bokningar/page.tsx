@@ -110,7 +110,19 @@ export default function MyBookingsPage() {
 
     try {
       setCancellingId(bookingId)
-      await braincore.cancelBooking(bookingId)
+      
+      // Check if this is a term-based membership booking
+      const activeSubscription = subscriptions.find(sub => sub.status === 'active')
+      const isTermBased = activeSubscription?.plan_type === 'term'
+      
+      let result
+      if (isTermBased) {
+        // Use term-specific cancellation endpoint
+        result = await braincore.cancelTermBooking(bookingId)
+      } else {
+        // Use regular cancellation
+        await braincore.cancelBooking(bookingId)
+      }
       
       // Update local state
       setBookings(bookings.map(b => 
@@ -119,7 +131,18 @@ export default function MyBookingsPage() {
           : b
       ))
       
-      alert(t('actions.cancelSuccess'))
+      // Show appropriate success message
+      if (isTermBased && result?.message) {
+        // Show recovery credit message if available
+        alert(result.message)
+      } else {
+        alert(t('actions.cancelSuccess'))
+      }
+      
+      // Refresh bookings to update recovery credits if term-based
+      if (isTermBased) {
+        fetchBookings()
+      }
     } catch (err) {
       console.error('Failed to cancel booking:', err)
       alert(t('actions.cancelError'))

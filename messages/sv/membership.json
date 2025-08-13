@@ -78,6 +78,23 @@
     "monthly": "Månadsvis",
     "yearly": "Årsvis"
   },
+  "recoveryCredits": {
+    "title": "Återhämtningskrediter",
+    "available": "tillgängliga",
+    "noCredits": "Inga återhämtningskrediter",
+    "howToGet": "Avboka ett bokat pass för att få återhämtningskrediter",
+    "recoveryCreditsAvailable": "återhämtningskrediter tillgängliga",
+    "recoveryCredit": "Återhämtningskredit",
+    "expiresIn": "Går ut om {days} dagar",
+    "expiringSoon": "{count} krediter går snart ut",
+    "learnMore": {
+      "title": "Om återhämtningskrediter",
+      "description": "När du avbokar ett pass från ditt terminsmedlemskap får du en återhämtningskredit som du kan använda för att boka valfritt annat pass.",
+      "validFor": "Krediter är giltiga i 30 dagar",
+      "useAnytime": "Använd för alla tillgängliga klasser"
+    },
+    "error": "Kunde inte ladda återhämtningskrediter"
+  },
   "benefits": {
     "title": "Förmåner för alla medlemmar",
     "unlimitedYoga": {

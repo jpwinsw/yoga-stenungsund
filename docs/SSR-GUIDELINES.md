@@ -37,7 +37,7 @@ export function ClientComponent({ initialData }) {
 ```tsx
 // For static content pages
 export default async function AboutPage() {
-  const company = await getCompany()
+  const companySettings = await getCompanySettings()
   return <div>{/* Render static content */}</div>
 }
 ```

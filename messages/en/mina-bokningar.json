@@ -26,6 +26,7 @@
     "no": "No, keep it",
     "cancelling": "Cancelling...",
     "cancelSuccess": "Booking cancelled successfully",
+    "cancelSuccessWithCredit": "Booking cancelled successfully. You've received a recovery credit that you can use to book another class.",
     "cancelError": "Failed to cancel booking. Please try again.",
     "leaveWaitlist": "Leave waitlist",
     "leaving": "Leaving...",

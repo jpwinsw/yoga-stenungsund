@@ -1,6 +1,5 @@
 import axios from 'axios'
 import type {
-  Company,
   ScheduleSession,
   Service,
   Instructor,
@@ -27,11 +26,9 @@ import type {
   SubscriptionActionResponse
 } from '@/lib/types/braincore'
 
-const BRAINCORE_API = process.env.NEXT_PUBLIC_BRAINCORE_API || 'https://api.brain-core.ai'
 const COMPANY_ID = process.env.NEXT_PUBLIC_COMPANY_ID || '5'
 
 export const braincoreAPI = {
-  getCompany: () => `/api/company/${COMPANY_ID}`,
   getSchedule: (startDate: string, endDate: string) =>
     `/public/urbe/schedule/${COMPANY_ID}?start_date=${startDate}&end_date=${endDate}`,
   getServices: () => `/public/urbe/services/${COMPANY_ID}`,
@@ -45,12 +42,10 @@ export const braincoreAPI = {
 }
 
 class BraincoreClient {
-  private baseURL: string
   private token: string | null = null
   private member: Member | null = null
 
   constructor() {
-    this.baseURL = BRAINCORE_API
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('member_token')
       const memberData = localStorage.getItem('member_data')
@@ -92,14 +87,6 @@ class BraincoreClient {
   
   getMember(): Member | null {
     return this.member
-  }
-
-  async getCompany(): Promise<Company> {
-    const response = await axios.get(
-      `${this.baseURL}${braincoreAPI.getCompany()}`,
-      { headers: this.getHeaders() }
-    )
-    return response.data
   }
 
   async getSchedule(startDate: string, endDate: string): Promise<ScheduleSession[]> {
@@ -496,16 +483,18 @@ class BraincoreClient {
   }
 
   async getRecoveryCredits(): Promise<RecoveryCredit[]> {
+    // Use our API route to avoid CORS issues
     const response = await axios.get(
-      `${this.baseURL}/api/urbe/member-portal/recovery-credits`,
+      `/api/braincore/member/recovery-credits`,
       { headers: this.getHeaders() }
     )
     return response.data
   }
 
   async cancelTermBooking(bookingId: number): Promise<{ success: boolean; message: string }> {
+    // Use our API route to avoid CORS issues
     const response = await axios.post(
-      `${this.baseURL}/api/urbe/term-membership/cancel-term-booking/${bookingId}`,
+      `/api/braincore/member/term-bookings/${bookingId}/cancel`,
       {},
       { headers: this.getHeaders() }
     )

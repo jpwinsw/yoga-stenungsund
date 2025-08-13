@@ -1,30 +1,11 @@
 import useSWR from 'swr'
 import { braincore } from '@/lib/api/braincore'
 import type {
-  Company,
   ScheduleSession,
   Service,
   Instructor,
   MembershipPlan
 } from '@/lib/types/braincore'
-
-export function useCompany() {
-  const { data, error, isLoading, mutate } = useSWR<Company>(
-    'company',
-    () => braincore.getCompany(),
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
-  )
-
-  return {
-    company: data,
-    isLoading,
-    isError: error,
-    mutate
-  }
-}
 
 export function useSchedule(startDate: string, endDate: string) {
   const { data, error, isLoading, mutate } = useSWR<ScheduleSession[]>(

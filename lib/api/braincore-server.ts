@@ -1,6 +1,5 @@
 import { cache } from 'react'
 import type {
-  Company,
   ScheduleSession,
   Service,
   Instructor,
@@ -32,10 +31,6 @@ async function fetchFromBraincore<T>(endpoint: string): Promise<T> {
 }
 
 // Use React cache to dedupe requests during a single render
-export const getCompany = cache(async (): Promise<Company> => {
-  return fetchFromBraincore(`/api/company/${COMPANY_ID}`)
-})
-
 export const getSchedule = cache(async (startDate: string, endDate: string): Promise<ScheduleSession[]> => {
   const response = await fetchFromBraincore<{ sessions: ScheduleSession[] }>(
     `/public/urbe/schedule/${COMPANY_ID}?start_date=${startDate}&end_date=${endDate}`

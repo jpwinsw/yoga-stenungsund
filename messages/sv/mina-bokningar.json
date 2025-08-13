@@ -26,6 +26,7 @@
     "no": "Nej, behåll",
     "cancelling": "Avbokar...",
     "cancelSuccess": "Bokningen har avbokats",
+    "cancelSuccessWithCredit": "Bokningen har avbokats. Du har fått en återhämtningskredit som du kan använda för att boka ett annat pass.",
     "cancelError": "Kunde inte avboka. Försök igen.",
     "leaveWaitlist": "Lämna väntelistan",
     "leaving": "Lämnar...",

@@ -52,7 +52,8 @@ export default function ContactClient({ companySettings }: ContactClientProps) {
   
   // Generate Google Maps embed URL using coordinates or address
   const mapQuery = encodeURIComponent(`${address}, ${zipCode} ${city}, Sweden`)
-  const mapEmbedUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${mapQuery}&zoom=15`
+  const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''
+  const mapEmbedUrl = `https://www.google.com/maps/embed/v1/place?key=${googleMapsApiKey}&q=${mapQuery}&zoom=15`
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-[var(--yoga-cream)]/30">
