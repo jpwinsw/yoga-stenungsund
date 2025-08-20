@@ -5,7 +5,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Link } from '@/lib/i18n/navigation'
 import { braincore } from '@/lib/api/braincore'
-import type { MemberSubscription as BrainCoreMemberSubscription } from '@/lib/types/braincore'
+import type { MemberSubscription as BrainCoreMemberSubscription, BookingReceipt } from '@/lib/types/braincore'
 import MembershipManagementModal from '@/components/membership/MembershipManagementModal'
 import { 
   Calendar, 
@@ -18,7 +18,9 @@ import {
   Info,
   CheckCircle,
   XCircle,
-  Users
+  Users,
+  Receipt,
+  Download
 } from 'lucide-react'
 import { formatDate, formatTime } from '@/lib/utils/date'
 
@@ -66,25 +68,29 @@ export default function MyBookingsPage() {
   const [bookings, setBookings] = useState<Booking[]>([])
   const [waitlistEntries, setWaitlistEntries] = useState<WaitlistEntry[]>([])
   const [subscriptions, setSubscriptions] = useState<BrainCoreMemberSubscription[]>([])
+  const [bookingReceipts, setBookingReceipts] = useState<BookingReceipt[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past' | 'cancelled' | 'waitlist'>('upcoming')
   const [cancellingId, setCancellingId] = useState<number | null>(null)
   const [leavingWaitlistId, setLeavingWaitlistId] = useState<number | null>(null)
   const [showMembershipModal, setShowMembershipModal] = useState(false)
+  const [downloadingReceipt, setDownloadingReceipt] = useState<string | null>(null)
 
   const fetchBookings = useCallback(async () => {
     try {
       setLoading(true)
       setError(null)
-      const [bookingsResponse, waitlistResponse, subscriptionsResponse] = await Promise.all([
+      const [bookingsResponse, waitlistResponse, subscriptionsResponse, receiptsResponse] = await Promise.all([
         braincore.getMemberBookings(),
         braincore.getMemberWaitlist(),
-        braincore.getMemberSubscriptions()
+        braincore.getMemberSubscriptions(),
+        braincore.getMemberBookingReceipts().catch(() => []) // Fail silently if receipts not available
       ])
       setBookings(bookingsResponse)
       setWaitlistEntries(waitlistResponse)
       setSubscriptions(subscriptionsResponse)
+      setBookingReceipts(receiptsResponse)
     } catch (err) {
       console.error('Failed to fetch bookings:', err)
       setError(t('error'))
@@ -113,14 +119,31 @@ export default function MyBookingsPage() {
       
       // Check if this is a term-based membership booking
       const activeSubscription = subscriptions.find(sub => sub.status === 'active')
-      const isTermBased = activeSubscription?.plan_type === 'term'
+      const isTermBased = activeSubscription?.plan_type === 'term_based'
       
       let result
+      let useTermCancellation = false
+      
+      // Try term cancellation first if user has term membership
       if (isTermBased) {
-        // Use term-specific cancellation endpoint
-        result = await braincore.cancelTermBooking(bookingId)
+        try {
+          // Try term-specific cancellation endpoint
+          result = await braincore.cancelTermBooking(bookingId)
+          useTermCancellation = true
+        } catch (termError: unknown) {
+          // If it fails with 404, this booking isn't part of the term membership
+          // Fall back to regular cancellation
+          const error = termError as { response?: { status?: number } }
+          if (error.response?.status === 404) {
+            console.log('Booking not part of term membership, using regular cancellation')
+            await braincore.cancelBooking(bookingId)
+          } else {
+            // Re-throw if it's a different error
+            throw termError
+          }
+        }
       } else {
-        // Use regular cancellation
+        // Use regular cancellation if no term membership
         await braincore.cancelBooking(bookingId)
       }
       
@@ -132,15 +155,15 @@ export default function MyBookingsPage() {
       ))
       
       // Show appropriate success message
-      if (isTermBased && result?.message) {
+      if (useTermCancellation && result?.message) {
         // Show recovery credit message if available
         alert(result.message)
       } else {
         alert(t('actions.cancelSuccess'))
       }
       
-      // Refresh bookings to update recovery credits if term-based
-      if (isTermBased) {
+      // Refresh bookings to update recovery credits if term cancellation was used
+      if (useTermCancellation) {
         fetchBookings()
       }
     } catch (err) {
@@ -149,6 +172,32 @@ export default function MyBookingsPage() {
     } finally {
       setCancellingId(null)
     }
+  }
+
+  const handleDownloadReceipt = async (documentNumber: string) => {
+    try {
+      setDownloadingReceipt(documentNumber)
+      const blob = await braincore.downloadReceiptPDF(documentNumber)
+      
+      // Create download link
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `receipt_${documentNumber}.pdf`
+      document.body.appendChild(a)
+      a.click()
+      window.URL.revokeObjectURL(url)
+      document.body.removeChild(a)
+    } catch (err) {
+      console.error('Failed to download receipt:', err)
+      alert(t('actions.downloadReceiptError'))
+    } finally {
+      setDownloadingReceipt(null)
+    }
+  }
+
+  const getReceiptForBooking = (bookingId: number) => {
+    return bookingReceipts.find(r => r.booking_id === bookingId)
   }
 
   const handleLeaveWaitlist = async (entryId: number) => {
@@ -429,18 +478,57 @@ export default function MyBookingsPage() {
                     </button>
                   </div>
                 ) : (
-                  activeTab === 'upcoming' && (booking as Booking).status === 'confirmed' && (
-                    <div className="flex justify-end pt-4 border-t border-gray-100">
+                  <div className="flex justify-between pt-4 border-t border-gray-100">
+                    {/* Receipt download button for past bookings */}
+                    {(activeTab === 'past' || activeTab === 'cancelled') && (
+                      (() => {
+                        const receipt = getReceiptForBooking((booking as Booking).booking_id)
+                        if (receipt?.receipt?.pdf_available && receipt.receipt) {
+                          const receiptData = receipt.receipt
+                          return (
+                            <button
+                              onClick={() => handleDownloadReceipt(receiptData.document_number)}
+                              disabled={downloadingReceipt === receiptData.document_number}
+                              className="flex items-center gap-2 px-4 py-2 text-[var(--yoga-purple)] hover:bg-purple-50 rounded-lg transition-colors disabled:opacity-50 font-medium text-sm"
+                            >
+                              {downloadingReceipt === receiptData.document_number ? (
+                              <>
+                                <Download className="w-4 h-4 animate-pulse" />
+                                {t('actions.downloading')}
+                              </>
+                            ) : (
+                              <>
+                                <Receipt className="w-4 h-4" />
+                                {t('actions.downloadReceipt')}
+                              </>
+                            )}
+                            </button>
+                          )
+                        } else if ((booking as Booking).amount_paid > 0) {
+                          return (
+                          <span className="flex items-center gap-2 px-4 py-2 text-gray-400 text-sm">
+                            <Receipt className="w-4 h-4" />
+                            {t('actions.receiptNotAvailable')}
+                          </span>
+                          )
+                        } else {
+                          return <div />
+                        }
+                      })()
+                    )}
+                    
+                    {/* Cancel button for upcoming bookings */}
+                    {activeTab === 'upcoming' && (booking as Booking).status === 'confirmed' ? (
                       <button
                         onClick={() => handleCancelBooking((booking as Booking).booking_id)}
                         disabled={cancellingId === (booking as Booking).booking_id}
-                        className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50 font-medium text-sm"
+                        className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50 font-medium text-sm ml-auto"
                       >
                         <XCircle className="w-4 h-4" />
                         {cancellingId === (booking as Booking).booking_id ? t('actions.cancelling') : t('actions.cancel')}
                       </button>
-                    </div>
-                  )
+                    ) : null}
+                  </div>
                 )}
               </div>
             ))}

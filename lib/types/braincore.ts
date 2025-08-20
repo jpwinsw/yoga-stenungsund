@@ -46,10 +46,47 @@ export interface Instructor {
   id: number
   name: string
   bio?: string
-  certifications?: string[]
-  specialties?: string[]
-  image_url?: string
+  photo_url?: string
+  photo_variants?: Record<string, string>  // Variant key to URL mapping for optimized images
+  image_url?: string  // Keep for backward compatibility
+  title?: string
+  first_name?: string
+  last_name?: string
+  email?: string
+  
+  // Professional qualifications - can be strings or objects with translations
+  certifications?: Array<string | { code: string; display_name: string }>
+  specialties?: Array<string | { code: string; display_name: string }>
   years_experience?: number
+  teaching_philosophy?: string
+  professional_background?: string
+  languages_spoken?: string[]
+  
+  // Social media presence
+  social_media?: {
+    instagram?: string
+    facebook?: string
+    linkedin?: string
+    youtube?: string
+    tiktok?: string
+    website?: string
+    other?: Record<string, string>
+  }
+  
+  // Media assets
+  media?: {
+    video_introduction?: string
+    gallery?: string[]
+  }
+  
+  // Student engagement
+  testimonials?: Array<{
+    text: string
+    author: string
+    date: string
+  }>
+  featured_services?: number[]
+  style_tags?: string[]
 }
 
 export interface MembershipPlan {
@@ -363,12 +400,13 @@ export interface RecoveryCredit {
 
 // Credit History Entry
 export interface CreditHistoryEntry {
-  id: number
+  transaction_id: number  // Changed from 'id' to match backend response
   transaction_type: 'credit' | 'debit'
   amount: number
   description: string
   created_at: string
   balance_after: number
+  booking_id?: number  // Optional booking reference
 }
 
 // Subscription Action Response
@@ -376,4 +414,49 @@ export interface SubscriptionActionResponse {
   success: boolean
   message: string
   subscription?: MemberSubscription
+}
+
+// Receipt Types
+export interface Receipt {
+  document_number: string
+  document_type: string
+  pdf_available: boolean
+  created_at: string
+}
+
+export interface BookingReceipt {
+  booking_id: number
+  session_id: number
+  booking_date: string
+  status: string
+  payment_status: string
+  confirmation_code: string
+  amount: number
+  currency: string
+  payment_method: string | null
+  payment_date: string | null
+  receipt: Receipt | null
+}
+
+export interface SubscriptionReceipt {
+  subscription_id: number
+  plan_id: number
+  billing_period: string
+  start_date: string
+  end_date: string | null
+  amount: number
+  currency: string
+  payment_method: string
+  payment_date: string | null
+  receipt: Receipt | null
+}
+
+export interface ReceiptsSummary {
+  total_bookings: number
+  total_transactions: number
+  total_spent: number
+  currency: string
+  receipts_available: number
+  oldest_receipt: string | null
+  latest_receipt: string | null
 }

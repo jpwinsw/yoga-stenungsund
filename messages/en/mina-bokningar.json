@@ -32,7 +32,11 @@
     "leaving": "Leaving...",
     "confirmLeaveWaitlist": "Are you sure you want to leave this waitlist?",
     "leaveWaitlistSuccess": "Successfully left waitlist",
-    "leaveWaitlistError": "Failed to leave waitlist. Please try again."
+    "leaveWaitlistError": "Failed to leave waitlist. Please try again.",
+    "downloadReceipt": "Download receipt",
+    "downloading": "Downloading...",
+    "downloadReceiptError": "Failed to download receipt. Please try again.",
+    "receiptNotAvailable": "Receipt not available"
   },
   "details": {
     "bookingReference": "Booking reference",

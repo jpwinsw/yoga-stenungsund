@@ -85,8 +85,15 @@
     "howToGet": "Avboka ett bokat pass för att få återhämtningskrediter",
     "recoveryCreditsAvailable": "återhämtningskrediter tillgängliga",
     "recoveryCredit": "Återhämtningskredit",
+    "credit": "kredit",
+    "expiresOn": "Går ut: {date}",
     "expiresIn": "Går ut om {days} dagar",
     "expiringSoon": "{count} krediter går snart ut",
+    "info": {
+      "title": "Om återhämtningskrediter",
+      "description": "Använd dessa krediter för att boka valfri tillgänglig klass"
+    },
+    "useCredits": "Använd krediter",
     "learnMore": {
       "title": "Om återhämtningskrediter",
       "description": "När du avbokar ett pass från ditt terminsmedlemskap får du en återhämtningskredit som du kan använda för att boka valfritt annat pass.",
@@ -138,5 +145,66 @@
     "manageBookings": "Du kan avboka enskilda pass och få återhämtningskrediter",
     "viewMyBookings": "Se mina bokningar",
     "viewSchedule": "Visa schema"
+  },
+  "management": {
+    "title": "Hantera medlemskap",
+    "tabs": {
+      "overview": "Översikt",
+      "credits": "Krediter",
+      "actions": "Åtgärder"
+    },
+    "fields": {
+      "type": "Medlemskapstyp",
+      "price": "Pris",
+      "startDate": "Startdatum",
+      "endDate": "Slutdatum",
+      "nextBilling": "Nästa fakturering",
+      "creditsRemaining": "Krediter kvar",
+      "creditsUsed": "Använda krediter",
+      "benefits": "Förmåner"
+    },
+    "status": {
+      "active": "Aktivt",
+      "paused": "Pausat",
+      "cancelled": "Avslutat",
+      "expired": "Utgånget"
+    },
+    "planType": {
+      "monthly": "Månadsvis",
+      "yearly": "Årsvis",
+      "term": "Termin",
+      "term_based": "Terminsbaserat"
+    },
+    "actions": {
+      "warning": "Varning",
+      "warningDescription": "Ändringar av ditt medlemskap träder i kraft omedelbart och kan inte ångras.",
+      "pause": "Pausa medlemskap",
+      "pauseDescription": "Pausa ditt medlemskap tillfälligt. Du behåller dina krediter och kan återuppta när som helst.",
+      "pauseButton": "Pausa medlemskap",
+      "resume": "Återuppta medlemskap",
+      "resumeDescription": "Aktivera ditt pausade medlemskap igen och fortsätt där du slutade.",
+      "resumeButton": "Återuppta medlemskap",
+      "cancel": "Avsluta medlemskap",
+      "cancelDescription": "Avsluta ditt medlemskap permanent. Denna åtgärd kan inte ångras.",
+      "cancelButton": "Avsluta medlemskap",
+      "notAvailable": "Inte tillgängligt",
+      "noticeRequired": "Kräver {days} dagars varsel",
+      "refundAvailable": "Återbetalningstyp: {type}",
+      "cancellationFee": "Avbokningsavgift: {fee}",
+      "alreadyCancelled": "Detta medlemskap är redan avslutat"
+    },
+    "confirmPause": "Är du säker på att du vill pausa ditt medlemskap?",
+    "confirmResume": "Är du säker på att du vill återuppta ditt medlemskap?",
+    "confirmCancel": "Är du säker på att du vill avsluta ditt medlemskap? Denna åtgärd kan inte ångras.",
+    "success": "Lyckades",
+    "error": "Fel",
+    "pauseSuccess": "Medlemskapet har pausats",
+    "pauseError": "Kunde inte pausa medlemskapet",
+    "resumeSuccess": "Medlemskapet har återupptagits",
+    "resumeError": "Kunde inte återuppta medlemskapet",
+    "cancelSuccess": "Medlemskapet har avslutats",
+    "cancelError": "Kunde inte avsluta medlemskapet",
+    "noCreditHistory": "Ingen kredithistorik tillgänglig",
+    "balance": "Saldo"
   }
 }

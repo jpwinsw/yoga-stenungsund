@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
     }
     
     const response = await fetch(
-      `${BRAINCORE_API}/api/urbe/member-portal/recovery-credits`,
+      `${BRAINCORE_API}/urbe/member-portal/recovery-credits`,
       {
         method: 'GET',
         headers

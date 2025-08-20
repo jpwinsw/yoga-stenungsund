@@ -28,7 +28,7 @@ interface Subscription {
   plan_name: string
   plan_type: string
   price: number
-  status: 'active' | 'paused' | 'cancelled' | 'expired'
+  status: string
   start_date?: string
   end_date?: string
   next_billing_date?: string
@@ -191,7 +191,7 @@ export default function MembershipManagementModal({
     )
   }
 
-  const isTermBased = subscription?.plan_type === 'term'
+  const isTermBased = subscription?.plan_type === 'term_based'
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -321,7 +321,7 @@ export default function MembershipManagementModal({
               ) : (
                 <div className="space-y-3">
                   {creditHistory.map((transaction) => (
-                    <div key={transaction.id} className="border rounded-lg p-4">
+                    <div key={transaction.transaction_id} className="border rounded-lg p-4">
                       <div className="flex justify-between items-start">
                         <div>
                           <p className="font-medium">{transaction.description}</p>

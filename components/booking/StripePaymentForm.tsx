@@ -19,6 +19,8 @@ interface StripePaymentFormProps {
   onError: (error: string) => void
   publishableKey: string
   clientSecret: string
+  guestEmail?: string  // Email to use for the payment
+  customerName?: string // Name to use for the payment
 }
 
 // Separate component for the payment form content
@@ -26,8 +28,10 @@ function PaymentForm({
   amount, 
   currency = 'sek',
   onSuccess,
-  onError 
-}: Omit<StripePaymentFormProps, 'sessionId' | 'companyId' | 'publishableKey' | 'clientSecret'>) {
+  onError,
+  guestEmail,
+  customerName
+}: Omit<StripePaymentFormProps, 'publishableKey' | 'clientSecret'>) {
   const t = useTranslations('schema.booking')
   const stripe = useStripe()
   const elements = useElements()
@@ -45,19 +49,36 @@ function PaymentForm({
     setErrorMessage(null)
 
     try {
+      // Build confirmParams with billing details if provided
+      const confirmParams: Parameters<Stripe['confirmPayment']>[0]['confirmParams'] = {
+        return_url: `${window.location.origin}/booking-success`,
+      }
+      
+      // If we have guest email/name, include them in the payment method data
+      if (guestEmail || customerName) {
+        confirmParams.payment_method_data = {
+          billing_details: {
+            ...(guestEmail && { email: guestEmail }),
+            ...(customerName && { name: customerName }),
+          }
+        }
+      }
+      
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/booking-success`,
-        },
+        confirmParams,
         redirect: 'if_required',
       })
 
       if (error) {
+        console.error('Stripe payment error:', error)
         setErrorMessage(error.message || t('paymentError'))
         onError(error.message || 'Payment failed')
       } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        console.log('Payment succeeded, calling onSuccess with:', paymentIntent.id)
         onSuccess(paymentIntent.id)
+      } else {
+        console.log('Payment intent status:', paymentIntent?.status)
       }
     } catch (err) {
       console.error('Payment error:', err)
@@ -86,6 +107,8 @@ function PaymentForm({
             layout: 'tabs',
             defaultValues: {
               billingDetails: {
+                email: guestEmail || undefined,
+                name: customerName || undefined,
                 address: {
                   country: 'SE',
                 }
@@ -136,6 +159,8 @@ export default function StripePaymentForm({
   onError,
   publishableKey,
   clientSecret,
+  guestEmail,
+  customerName,
 }: StripePaymentFormProps) {
   const [stripePromise, setStripePromise] = useState<Promise<Stripe | null> | null>(null)
 
@@ -166,6 +191,8 @@ export default function StripePaymentForm({
         currency={currency}
         onSuccess={onSuccess}
         onError={onError}
+        guestEmail={guestEmail}
+        customerName={customerName}
       />
     </Elements>
   )

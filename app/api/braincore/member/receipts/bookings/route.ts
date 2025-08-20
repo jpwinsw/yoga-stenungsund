@@ -5,7 +5,6 @@ const BRAINCORE_API = process.env.NEXT_PUBLIC_BRAINCORE_API || 'https://api.brai
 export async function GET(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization')
-    const acceptLanguage = request.headers.get('accept-language')
     
     if (!authHeader) {
       return NextResponse.json(
@@ -19,33 +18,29 @@ export async function GET(request: NextRequest) {
       'Authorization': authHeader
     }
     
-    // Forward Accept-Language header if present
-    if (acceptLanguage) {
-      headers['Accept-Language'] = acceptLanguage
-    }
-    
+    // Call the backend API to get booking receipts
     const response = await fetch(
-      `${BRAINCORE_API}/urbe/member-portal/subscriptions`,
+      `${BRAINCORE_API}/urbe/member/receipts/bookings`,
       {
         method: 'GET',
         headers
       }
     )
     
-    const data = await response.json()
-    
     if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
       return NextResponse.json(
-        { error: data.detail || 'Failed to fetch subscriptions' },
+        { error: errorData.detail || 'Failed to fetch booking receipts' },
         { status: response.status }
       )
     }
     
+    const data = await response.json()
     return NextResponse.json(data)
   } catch (error) {
-    console.error('Get subscriptions error:', error)
+    console.error('Fetch booking receipts error:', error)
     return NextResponse.json(
-      { error: 'Failed to fetch subscriptions' },
+      { error: 'Failed to fetch booking receipts' },
       { status: 500 }
     )
   }

@@ -13,11 +13,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   }
 }
 
-export default async function TeachersPage() {
+export default async function TeachersPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
   let instructors: Instructor[] = []
   
   try {
-    instructors = await getInstructors()
+    instructors = await getInstructors(locale)
   } catch (error) {
     console.error('Failed to fetch instructors:', error)
   }

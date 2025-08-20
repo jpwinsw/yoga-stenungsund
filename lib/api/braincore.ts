@@ -23,7 +23,10 @@ import type {
   TermAvailability,
   RecoveryCredit,
   CreditHistoryEntry,
-  SubscriptionActionResponse
+  SubscriptionActionResponse,
+  BookingReceipt,
+  SubscriptionReceipt,
+  ReceiptsSummary
 } from '@/lib/types/braincore'
 
 const COMPANY_ID = process.env.NEXT_PUBLIC_COMPANY_ID || '5'
@@ -65,6 +68,11 @@ class BraincoreClient {
     }
     if (this.token) {
       headers.Authorization = `Bearer ${this.token}`
+    }
+    // Add Accept-Language header based on current locale
+    if (typeof window !== 'undefined') {
+      const locale = document.documentElement.lang || 'en'
+      headers['Accept-Language'] = locale
     }
     return headers
   }
@@ -492,11 +500,15 @@ class BraincoreClient {
   }
 
   async cancelTermBooking(bookingId: number): Promise<{ success: boolean; message: string }> {
-    // Use our API route to avoid CORS issues
+    // Use our API route to avoid CORS issues  
+    // Note: Must include trailing slash due to Next.js trailingSlash config
     const response = await axios.post(
-      `/api/braincore/member/term-bookings/${bookingId}/cancel`,
+      `/api/braincore/member/term-bookings/${bookingId}/cancel/`,
       {},
-      { headers: this.getHeaders() }
+      { 
+        headers: this.getHeaders(),
+        maxRedirects: 5 // Ensure axios follows redirects
+      }
     )
     return response.data
   }
@@ -545,6 +557,41 @@ class BraincoreClient {
     const response = await axios.post(
       `/api/braincore/bookings-confirm/${bookingId}/`,
       { payment_intent_id: paymentIntentId }
+    )
+    return response.data
+  }
+
+  async getMemberBookingReceipts(): Promise<BookingReceipt[]> {
+    const response = await axios.get(
+      `/api/braincore/member/receipts/bookings`,
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async getMemberSubscriptionReceipts(): Promise<SubscriptionReceipt[]> {
+    const response = await axios.get(
+      `/api/braincore/member/receipts/subscriptions`,
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async getReceiptsSummary(): Promise<ReceiptsSummary> {
+    const response = await axios.get(
+      `/api/braincore/member/receipts/summary`,
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async downloadReceiptPDF(documentNumber: string): Promise<Blob> {
+    const response = await axios.get(
+      `/api/braincore/member/receipts/download/${documentNumber}`,
+      { 
+        headers: this.getHeaders(),
+        responseType: 'blob'
+      }
     )
     return response.data
   }

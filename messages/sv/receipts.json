@@ -1,0 +1,23 @@
+{
+  "title": "Mina kvitton",
+  "subtitle": "Alla dina kvitton och fakturor på ett ställe",
+  "loading": "Laddar kvitton...",
+  "fetchError": "Kunde inte hämta kvitton",
+  "downloadError": "Kunde inte ladda ner kvitto",
+  "filter": {
+    "all": "Alla",
+    "bookings": "Bokningar",
+    "subscriptions": "Medlemskap"
+  },
+  "bookingReceipt": "Bokning - {code}",
+  "subscriptionReceipt": "Medlemskap - {period}",
+  "documentNumber": "Dokumentnummer",
+  "paid": "Betald",
+  "download": "Ladda ner",
+  "downloading": "Laddar ner...",
+  "noReceipts": "Inga kvitton tillgängliga",
+  "info": {
+    "title": "Om kvitton",
+    "description": "Här hittar du alla kvitton för dina bokningar och medlemskapsbetalningar. Kvitton sparas automatiskt när du gör en betalning och kan laddas ner som PDF."
+  }
+}

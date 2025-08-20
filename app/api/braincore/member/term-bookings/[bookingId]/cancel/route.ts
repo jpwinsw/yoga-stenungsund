@@ -17,13 +17,20 @@ export async function POST(
       )
     }
     
+    // Debug logging
+    console.log('Cancelling term booking:', {
+      bookingId,
+      authHeader: authHeader.substring(0, 20) + '...',
+      endpoint: `${BRAINCORE_API}/urbe/term-membership/cancel-term-booking/${bookingId}`
+    })
+    
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
       'Authorization': authHeader
     }
     
     const response = await fetch(
-      `${BRAINCORE_API}/api/urbe/term-membership/cancel-term-booking/${bookingId}`,
+      `${BRAINCORE_API}/urbe/term-membership/cancel-term-booking/${bookingId}`,
       {
         method: 'POST',
         headers,
@@ -32,6 +39,12 @@ export async function POST(
     )
     
     const data = await response.json()
+    
+    // Debug logging
+    console.log('Backend response:', {
+      status: response.status,
+      data
+    })
     
     if (!response.ok) {
       return NextResponse.json(

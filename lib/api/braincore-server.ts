@@ -9,7 +9,7 @@ import type {
 const BRAINCORE_API = process.env.NEXT_PUBLIC_BRAINCORE_API || 'https://api.brain-core.ai'
 const COMPANY_ID = process.env.NEXT_PUBLIC_COMPANY_ID || '5'
 
-async function fetchFromBraincore<T>(endpoint: string): Promise<T> {
+async function fetchFromBraincore<T>(endpoint: string, locale?: string): Promise<T> {
   const url = `${BRAINCORE_API}${endpoint}`
   console.log('Fetching from brain-core (server):', url)
   
@@ -17,6 +17,7 @@ async function fetchFromBraincore<T>(endpoint: string): Promise<T> {
     next: { revalidate: 300 }, // Cache for 5 minutes
     headers: {
       'Content-Type': 'application/json',
+      'Accept-Language': locale || 'sv',
     }
   })
   
@@ -31,19 +32,24 @@ async function fetchFromBraincore<T>(endpoint: string): Promise<T> {
 }
 
 // Use React cache to dedupe requests during a single render
-export const getSchedule = cache(async (startDate: string, endDate: string): Promise<ScheduleSession[]> => {
+export const getSchedule = cache(async (startDate: string, endDate: string, locale?: string): Promise<ScheduleSession[]> => {
   const response = await fetchFromBraincore<{ sessions: ScheduleSession[] }>(
-    `/public/urbe/schedule/${COMPANY_ID}?start_date=${startDate}&end_date=${endDate}`
+    `/public/urbe/schedule/${COMPANY_ID}?start_date=${startDate}&end_date=${endDate}`,
+    locale
   )
   return response.sessions || []
 })
 
-export const getServices = cache(async (): Promise<Service[]> => {
-  return fetchFromBraincore(`/public/urbe/services/${COMPANY_ID}`)
+export const getServices = cache(async (locale?: string): Promise<Service[]> => {
+  return fetchFromBraincore(`/public/urbe/services/${COMPANY_ID}`, locale)
 })
 
-export const getInstructors = cache(async (): Promise<Instructor[]> => {
-  return fetchFromBraincore(`/public/urbe/instructors/${COMPANY_ID}`)
+export const getInstructors = cache(async (locale?: string): Promise<Instructor[]> => {
+  const response = await fetchFromBraincore<{ instructors: Instructor[], locale: string, supported_languages: string[] }>(
+    `/public/urbe/instructors/${COMPANY_ID}`,
+    locale
+  )
+  return response.instructors || []
 })
 
 export const getMembershipPlans = cache(async (): Promise<MembershipPlan[]> => {

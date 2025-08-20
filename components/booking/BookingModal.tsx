@@ -156,15 +156,17 @@ export default function BookingModal({
         }
         
         // Create payment intent
+        // For drop-in bookings (when payment is required), treat as guest payment
         const paymentData = {
           company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '5'),
           amount: bookingResponse.payment_amount * 100, // Convert to öre/cents
           currency: 'sek',
           description: `Booking for ${session.service_template_name}`,
           entity_type: 'service_booking',
-          entity_id: session.id,
+          entity_id: bookingResponse.booking_id,  // Use the booking ID, not session ID
           customer_email: member.email,
-          customer_name: `${member.first_name} ${member.last_name}`
+          customer_name: `${member.first_name} ${member.last_name}`,
+          is_guest: true  // Treat drop-in as guest payment even for members
         }
         
         const paymentIntentResponse = await braincore.createPaymentIntent(paymentData)
@@ -350,13 +352,16 @@ export default function BookingModal({
   }
   
   const handlePaymentSuccess = async (paymentIntentId: string) => {
+    console.log('handlePaymentSuccess called with:', paymentIntentId, 'pendingBookingId:', pendingBookingId)
     try {
       if (!pendingBookingId) {
         throw new Error('No pending booking ID available')
       }
       
       // Confirm the booking payment
+      console.log('Confirming booking payment for booking:', pendingBookingId)
       const response = await braincore.confirmBookingPayment(pendingBookingId, paymentIntentId)
+      console.log('Booking payment confirmation response:', response)
       
       setBookingSuccess(true)
       setBookingReference(response.confirmation_code)
@@ -447,7 +452,7 @@ export default function BookingModal({
           currency: 'sek',
           description: `Guest booking for ${session.service_template_name}`,
           entity_type: 'service_booking',
-          entity_id: session.id,
+          entity_id: bookingResponse.booking_id,  // Use the booking ID, not session ID
           customer_email: guestData.email,
           customer_name: `${guestData.first_name} ${guestData.last_name}`,
           is_guest: true
@@ -535,6 +540,12 @@ export default function BookingModal({
                 clientSecret={paymentIntent.client_secret}
                 onSuccess={handlePaymentSuccess}
                 onError={handlePaymentError}
+                guestEmail={guestData.email || (braincore.getMember()?.email)}
+                customerName={guestData.first_name && guestData.last_name ? 
+                  `${guestData.first_name} ${guestData.last_name}` : 
+                  braincore.getMember() ? 
+                    `${braincore.getMember()?.first_name} ${braincore.getMember()?.last_name}` : 
+                    undefined}
               />
               
               <Button
@@ -818,12 +829,9 @@ export default function BookingModal({
                                 } else if (option.action === 'book_with_membership') {
                                   handleProceedToPayment()
                                 } else if (option.action === 'book_drop_in') {
-                                  if (braincore.isAuthenticated()) {
-                                    handleProceedToPayment()
-                                  } else {
-                                    // For drop-in without auth, show guest form
-                                    setShowGuestForm(true)
-                                  }
+                                  // For drop-in bookings, always proceed with drop-in flow
+                                  // The backend will handle it correctly whether authenticated or not
+                                  handleProceedToPayment()
                                 } else if (option.action === 'view_memberships') {
                                   // Close modal and navigate to memberships page
                                   onClose()

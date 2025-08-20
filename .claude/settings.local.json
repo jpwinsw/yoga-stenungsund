@@ -19,7 +19,8 @@
       "mcp__playwright__browser_press_key",
       "WebFetch(domain:developers.google.com)",
       "Bash(curl:*)",
-      "mcp__playwright__browser_snapshot"
+      "mcp__playwright__browser_snapshot",
+      "WebSearch"
     ],
     "deny": []
   }

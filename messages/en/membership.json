@@ -101,12 +101,14 @@
     "stepTitles": {
       "classType": "Select Class Type",
       "termStart": "Select Start Date",
+      "reviewSessions": "Review Your Classes",
       "bookSessions": "Book Your Classes",
       "confirm": "Confirm and Pay"
     },
     "selectClassType": "Choose which type of yoga class you want to attend during the term:",
     "selectTermStart": "Select which date the term should start (Mondays):",
     "termDates": "Term: {start} - {end}",
+    "reviewSessions": "You will be automatically booked for {total} classes. Uncheck classes you cannot attend:",
     "selectSessions": "Select {required} classes for the term ({selected} selected)",
     "week": "Week",
     "spotsAvailable": "spots available",
@@ -195,5 +197,66 @@
     "manageBookings": "You can cancel individual classes and receive recovery credits",
     "viewMyBookings": "View my bookings",
     "viewSchedule": "View schedule"
+  },
+  "management": {
+    "title": "Manage Membership",
+    "tabs": {
+      "overview": "Overview",
+      "credits": "Credits",
+      "actions": "Actions"
+    },
+    "fields": {
+      "type": "Membership Type",
+      "price": "Price",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "nextBilling": "Next Billing",
+      "creditsRemaining": "Credits Remaining",
+      "creditsUsed": "Credits Used",
+      "benefits": "Benefits"
+    },
+    "status": {
+      "active": "Active",
+      "paused": "Paused",
+      "cancelled": "Cancelled",
+      "expired": "Expired"
+    },
+    "planType": {
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "term": "Term",
+      "term_based": "Term Based"
+    },
+    "actions": {
+      "warning": "Warning",
+      "warningDescription": "Changes to your membership take effect immediately and cannot be undone.",
+      "pause": "Pause Membership",
+      "pauseDescription": "Temporarily pause your membership. You'll keep your credits and can resume anytime.",
+      "pauseButton": "Pause Membership",
+      "resume": "Resume Membership",
+      "resumeDescription": "Reactivate your paused membership and continue where you left off.",
+      "resumeButton": "Resume Membership",
+      "cancel": "Cancel Membership",
+      "cancelDescription": "Permanently cancel your membership. This action cannot be undone.",
+      "cancelButton": "Cancel Membership",
+      "notAvailable": "Not available",
+      "noticeRequired": "Requires {days} days notice",
+      "refundAvailable": "Refund type: {type}",
+      "cancellationFee": "Cancellation fee: {fee}",
+      "alreadyCancelled": "This membership is already cancelled"
+    },
+    "confirmPause": "Are you sure you want to pause your membership?",
+    "confirmResume": "Are you sure you want to resume your membership?",
+    "confirmCancel": "Are you sure you want to cancel your membership? This action cannot be undone.",
+    "success": "Success",
+    "error": "Error",
+    "pauseSuccess": "Membership paused successfully",
+    "pauseError": "Failed to pause membership",
+    "resumeSuccess": "Membership resumed successfully",
+    "resumeError": "Failed to resume membership",
+    "cancelSuccess": "Membership cancelled successfully",
+    "cancelError": "Failed to cancel membership",
+    "noCreditHistory": "No credit history available",
+    "balance": "Balance"
   }
 }

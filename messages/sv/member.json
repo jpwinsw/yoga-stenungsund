@@ -4,6 +4,7 @@
   "logout": "Logga ut",
   "myBookings": "Mina bokningar",
   "myProfile": "Min profil",
+  "myReceipts": "Mina kvitton",
   "auth": {
     "login": {
       "title": "Logga in",

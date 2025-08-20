@@ -97,6 +97,10 @@ export const pathnames = {
     sv: '/min-profil',
     en: '/my-profile'
   },
+  '/min-kvitton': {
+    sv: '/min-kvitton',
+    en: '/my-receipts'
+  },
   '/community': {
     sv: '/community',
     en: '/community'

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useAuth } from '@/lib/contexts/AuthContext'
-import { User, LogOut, Calendar } from 'lucide-react'
+import { User, LogOut, Calendar, Receipt } from 'lucide-react'
 import { Link } from '@/lib/i18n/navigation'
 import LoginModal from './auth/LoginModal'
 import SignupModal from './auth/SignupModal'
@@ -67,6 +67,14 @@ export default function MemberMenu({ isOpen, onToggle }: MemberMenuProps = {}) {
               >
                 <User className="w-4 h-4" />
                 {t('myProfile')}
+              </Link>
+              <Link
+                href="/min-kvitton"
+                className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[var(--yoga-cyan)]/10 hover:to-[var(--yoga-purple)]/10 hover:text-[var(--yoga-purple)] transition-all"
+                onClick={() => !onToggle && setShowMenu(false)}
+              >
+                <Receipt className="w-4 h-4" />
+                {t('myReceipts')}
               </Link>
               <div className="border-t border-gray-100 my-2"></div>
               <button

@@ -41,6 +41,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     membership: (await import(`./messages/${locale}/membership.json`)).default,
     'my-bookings': (await import(`./messages/${locale}/mina-bokningar.json`)).default,
     'my-profile': (await import(`./messages/${locale}/min-profil.json`)).default,
+    receipts: (await import(`./messages/${locale}/receipts.json`)).default,
     bookingSuccess: (await import(`./messages/${locale}/bookingSuccess.json`)).default,
     faq: (await import(`./messages/${locale}/faq.json`)).default,
     community: (await import(`./messages/${locale}/community.json`)).default,

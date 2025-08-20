@@ -32,7 +32,11 @@
     "leaving": "Lämnar...",
     "confirmLeaveWaitlist": "Är du säker på att du vill lämna denna väntelista?",
     "leaveWaitlistSuccess": "Du har lämnat väntelistan",
-    "leaveWaitlistError": "Kunde inte lämna väntelistan. Försök igen."
+    "leaveWaitlistError": "Kunde inte lämna väntelistan. Försök igen.",
+    "downloadReceipt": "Ladda ner kvitto",
+    "downloading": "Laddar ner...",
+    "downloadReceiptError": "Kunde inte ladda ner kvittot. Försök igen.",
+    "receiptNotAvailable": "Kvitto ej tillgängligt"
   },
   "details": {
     "bookingReference": "Bokningsreferens",

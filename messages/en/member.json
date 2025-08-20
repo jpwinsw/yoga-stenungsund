@@ -4,6 +4,7 @@
   "logout": "Log Out",
   "myBookings": "My Bookings",
   "myProfile": "My Profile",
+  "myReceipts": "My Receipts",
   "auth": {
     "login": {
       "title": "Log In",

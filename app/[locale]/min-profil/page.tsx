@@ -6,6 +6,7 @@ import { useRouter } from '@/lib/i18n/navigation'
 import { Link } from '@/lib/i18n/navigation'
 import { braincore } from '@/lib/api/braincore'
 import type { MemberProfile, MemberSubscription } from '@/lib/types/braincore'
+import MembershipManagementModal from '@/components/membership/MembershipManagementModal'
 import { 
   User, 
   Mail, 
@@ -38,6 +39,7 @@ export default function MyProfilePage() {
   })
   const [saving, setSaving] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')
+  const [showMembershipModal, setShowMembershipModal] = useState(false)
 
   const fetchProfileData = useCallback(async () => {
     try {
@@ -382,12 +384,12 @@ export default function MyProfilePage() {
                 )}
 
                 <div className="pt-4 border-t">
-                  <Link
-                    href="/medlemskap"
+                  <button
+                    onClick={() => setShowMembershipModal(true)}
                     className="text-sm text-[var(--yoga-purple)] hover:text-purple-700 font-medium"
                   >
                     {t('membership.manage')} →
-                  </Link>
+                  </button>
                 </div>
               </div>
             ) : (
@@ -433,6 +435,16 @@ export default function MyProfilePage() {
           </div>
         </div>
       </div>
+
+      {/* Membership Management Modal */}
+      {activeSubscription && (
+        <MembershipManagementModal
+          isOpen={showMembershipModal}
+          onClose={() => setShowMembershipModal(false)}
+          subscription={activeSubscription}
+          onRefresh={fetchProfileData}
+        />
+      )}
     </div>
   )
 }

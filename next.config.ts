@@ -6,6 +6,12 @@ const nextConfig: NextConfig = {
   output: "standalone",
   // Add trailing slash to help with routing
   trailingSlash: true,
+  // Configure allowed image domains
+  images: {
+    domains: [
+      'd3nx09olfb6r4i.cloudfront.net' // CloudFront CDN for Braincore S3 storage
+    ],
+  },
   // Ensure all routes are accessible
   async rewrites() {
     return [

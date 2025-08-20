@@ -1,0 +1,23 @@
+{
+  "title": "My Receipts",
+  "subtitle": "All your receipts and invoices in one place",
+  "loading": "Loading receipts...",
+  "fetchError": "Failed to fetch receipts",
+  "downloadError": "Failed to download receipt",
+  "filter": {
+    "all": "All",
+    "bookings": "Bookings",
+    "subscriptions": "Memberships"
+  },
+  "bookingReceipt": "Booking - {code}",
+  "subscriptionReceipt": "Membership - {period}",
+  "documentNumber": "Document number",
+  "paid": "Paid",
+  "download": "Download",
+  "downloading": "Downloading...",
+  "noReceipts": "No receipts available",
+  "info": {
+    "title": "About receipts",
+    "description": "Here you can find all receipts for your bookings and membership payments. Receipts are automatically saved when you make a payment and can be downloaded as PDF."
+  }
+}
