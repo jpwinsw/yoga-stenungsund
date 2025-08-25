@@ -1,0 +1,51 @@
+{
+  "title": "Privacy Policy",
+  "close": "Close",
+  "lastUpdated": "Last updated",
+  "sections": {
+    "dataController": {
+      "title": "1. Data Controller",
+      "company": "Yoga Stenungsund",
+      "address": "Stenungsund, Sweden",
+      "email": "Email: info@yogastenungsund.se",
+      "phone": "Phone: Contact us"
+    },
+    "dataCollection": {
+      "title": "2. What data do we collect?",
+      "contactInfo": "Contact information (name, email, phone number)",
+      "bookingInfo": "Booking information and preferences",
+      "paymentInfo": "Payment information (handled securely)",
+      "cookieData": "Cookie data and analytics (with your consent)"
+    },
+    "dataUsage": {
+      "title": "3. How do we use your data?",
+      "bookings": "To manage bookings and class registrations",
+      "communication": "To communicate with you about your bookings",
+      "improvement": "To improve our services",
+      "marketing": "For marketing (with your consent)"
+    },
+    "cookies": {
+      "title": "4. Cookies",
+      "description": "We use the following types of cookies:",
+      "necessary": "Necessary",
+      "necessaryDesc": "Essential for website functionality",
+      "analytics": "Analytics",
+      "analyticsDesc": "To understand how visitors use our website",
+      "marketing": "Marketing",
+      "marketingDesc": "For relevant ads and campaigns"
+    },
+    "rights": {
+      "title": "5. Your rights",
+      "access": "Access your personal data",
+      "rectification": "Correct inaccurate information",
+      "erasure": "Request deletion of your data",
+      "portability": "Transfer your data",
+      "withdraw": "Withdraw consent at any time"
+    },
+    "contact": {
+      "title": "6. Contact us",
+      "description": "If you have questions about our privacy policy, contact us at:",
+      "email": "Email: info@yogastenungsund.se"
+    }
+  }
+}

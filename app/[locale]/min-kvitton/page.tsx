@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
-import { useRouter } from '@/lib/i18n/navigation'
 import { braincore } from '@/lib/api/braincore'
+import { useAuth } from '@/lib/contexts/AuthContext'
+import AuthGuard from '@/components/auth/AuthGuard'
 import type { BookingReceipt, SubscriptionReceipt } from '@/lib/types/braincore'
 import { 
   Receipt, 
@@ -29,7 +30,7 @@ type CombinedReceipt = {
 
 export default function MyReceiptsPage() {
   const t = useTranslations('receipts')
-  const router = useRouter()
+  const { isAuthenticated } = useAuth()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [receipts, setReceipts] = useState<CombinedReceipt[]>([])
@@ -40,12 +41,6 @@ export default function MyReceiptsPage() {
     try {
       setLoading(true)
       setError(null)
-      
-      // Check if user is authenticated
-      if (!braincore.isAuthenticated()) {
-        router.push('/schema')
-        return
-      }
 
       // Fetch both booking and subscription receipts in parallel
       const [bookingReceipts, subscriptionReceipts] = await Promise.all([
@@ -100,11 +95,13 @@ export default function MyReceiptsPage() {
     } finally {
       setLoading(false)
     }
-  }, [t, router])
+  }, [t])
 
   useEffect(() => {
-    fetchReceipts()
-  }, [fetchReceipts])
+    if (isAuthenticated) {
+      fetchReceipts()
+    }
+  }, [fetchReceipts, isAuthenticated])
 
   const handleDownloadReceipt = async (documentNumber: string, receiptId: string) => {
     if (!documentNumber) return
@@ -165,7 +162,8 @@ export default function MyReceiptsPage() {
   }
 
   return (
-    <div className="min-h-screen pt-20 pb-16 bg-gradient-to-b from-[var(--yoga-cream)] to-white">
+    <AuthGuard>
+      <div className="min-h-screen pt-20 pb-16 bg-gradient-to-b from-[var(--yoga-cream)] to-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -302,5 +300,6 @@ export default function MyReceiptsPage() {
         </div>
       </div>
     </div>
+    </AuthGuard>
   )
 }

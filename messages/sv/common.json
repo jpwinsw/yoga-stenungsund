@@ -38,17 +38,25 @@
         "signUp": "Registrera dig",
         "loginError": "Inloggning misslyckades",
         "invalidCredentials": "Felaktig e-postadress eller lösenord",
+        "invalidEmail": "Ange en giltig e-postadress",
         "networkError": "Nätverksfel. Försök igen senare."
       },
       "signup": {
         "title": "Skapa konto",
         "close": "Stäng",
         "firstName": "Förnamn",
+        "firstNamePlaceholder": "Johan",
         "lastName": "Efternamn",
+        "lastNamePlaceholder": "Svensson",
         "email": "E-postadress",
+        "emailPlaceholder": "din@email.se",
         "phone": "Telefon (valfritt)",
         "phonePlaceholder": "+46 70 123 45 67",
         "password": "Lösenord",
+        "passwordPlaceholder": "Ange ditt lösenord",
+        "createPassword": "Skapa ett lösenord",
+        "createPasswordPlaceholder": "Välj ett säkert lösenord",
+        "passwordHint": "Måste vara minst 8 tecken",
         "confirmPassword": "Bekräfta lösenord",
         "passwordRequirements": "Lösenordskrav:",
         "minLength": "Minst 8 tecken",
@@ -63,6 +71,84 @@
         "termsAgreement": "Jag godkänner",
         "privacyPolicy": "integritetspolicyn",
         "and": "och"
+      },
+      "forgotPassword": {
+        "title": "Återställ lösenord",
+        "emailLabel": "E-postadress",
+        "emailPlaceholder": "din@email.com",
+        "description": "Ange din e-postadress så skickar vi dig en länk för att återställa ditt lösenord.",
+        "sendButton": "Skicka återställningslänk",
+        "error": "Något gick fel. Försök igen.",
+        "successMessage": "Kolla din e-post! Om ett konto finns med denna e-postadress har vi skickat en återställningslänk."
+      },
+      "resetPassword": {
+        "title": "Återställ ditt lösenord",
+        "description": "Ange ditt nya lösenord nedan",
+        "newPassword": "Nytt lösenord",
+        "newPasswordPlaceholder": "Ange nytt lösenord",
+        "confirmPassword": "Bekräfta lösenord",
+        "confirmPasswordPlaceholder": "Bekräfta nytt lösenord",
+        "resetButton": "Återställ lösenord",
+        "invalidToken": "Ogiltig eller utgången återställningslänk",
+        "passwordMismatch": "Lösenorden matchar inte",
+        "passwordTooShort": "Lösenordet måste vara minst 8 tecken",
+        "resetError": "Kunde inte återställa lösenordet. Försök igen.",
+        "successMessage": "Ditt lösenord har återställts! Omdirigerar..."
+      }
+    }
+  },
+  "common": {
+    "cancel": "Avbryt",
+    "close": "Stäng"
+  },
+  "privacyPolicy": {
+    "title": "Integritetspolicy",
+    "close": "Stäng",
+    "lastUpdated": "Senast uppdaterad",
+    "sections": {
+      "dataController": {
+        "title": "1. Personuppgiftsansvarig",
+        "company": "Yoga Stenungsund",
+        "address": "Stenungsund, Sverige",
+        "email": "E-post: info@yogastenungsund.se",
+        "phone": "Telefon: Kontakta oss"
+      },
+      "dataCollection": {
+        "title": "2. Vilka uppgifter samlar vi in?",
+        "contactInfo": "Kontaktuppgifter (namn, e-post, telefonnummer)",
+        "bookingInfo": "Bokningsinformation och preferenser",
+        "paymentInfo": "Betalningsinformation (hanteras säkert)",
+        "cookieData": "Cookie-data och analys (med ditt samtycke)"
+      },
+      "dataUsage": {
+        "title": "3. Hur använder vi dina uppgifter?",
+        "bookings": "För att hantera bokningar och klassanmälningar",
+        "communication": "För att kommunicera med dig om dina bokningar",
+        "improvement": "För att förbättra våra tjänster",
+        "marketing": "För marknadsföring (med ditt samtycke)"
+      },
+      "cookies": {
+        "title": "4. Cookies",
+        "description": "Vi använder följande typer av cookies:",
+        "necessary": "Nödvändiga",
+        "necessaryDesc": "Väsentliga för webbplatsens funktionalitet",
+        "analytics": "Analys",
+        "analyticsDesc": "För att förstå hur besökare använder vår webbplats",
+        "marketing": "Marknadsföring",
+        "marketingDesc": "För relevanta annonser och kampanjer"
+      },
+      "rights": {
+        "title": "5. Dina rättigheter",
+        "access": "Få tillgång till dina personuppgifter",
+        "rectification": "Rätta felaktig information",
+        "erasure": "Begära radering av dina uppgifter",
+        "portability": "Överföra dina uppgifter",
+        "withdraw": "Återkalla samtycke när som helst"
+      },
+      "contact": {
+        "title": "6. Kontakta oss",
+        "description": "Om du har frågor om vår integritetspolicy, kontakta oss på:",
+        "email": "E-post: info@yogastenungsund.se"
       }
     }
   }

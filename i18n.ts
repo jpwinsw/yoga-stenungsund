@@ -37,6 +37,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     happenings: rootMessages.happenings || {}, // Currently in root file
     metadata: (await import(`./messages/${locale}/metadata.json`)).default,
     common: (await import(`./messages/${locale}/common.json`)).default,
+    auth: (await import(`./messages/${locale}/auth.json`)).default,
     member: (await import(`./messages/${locale}/member.json`)).default,
     membership: (await import(`./messages/${locale}/membership.json`)).default,
     'my-bookings': (await import(`./messages/${locale}/mina-bokningar.json`)).default,
@@ -47,6 +48,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
     community: (await import(`./messages/${locale}/community.json`)).default,
     wellbeing: (await import(`./messages/${locale}/wellbeing.json`)).default,
     bookingLookup: (await import(`./messages/${locale}/bookingLookup.json`)).default,
+    cookieConsent: (await import(`./messages/${locale}/cookieConsent.json`)).default,
+    privacyPolicy: (await import(`./messages/${locale}/privacyPolicy.json`)).default,
   };
 
   return {

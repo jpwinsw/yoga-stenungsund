@@ -15,6 +15,7 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +24,20 @@ export default function Navigation() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      setMobileSubmenuOpen(null); // Reset submenus when closing main menu
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -252,10 +267,29 @@ export default function Navigation() {
       </div>
       
       {/* Mobile Menu */}
-      <div className={`lg:hidden transition-all duration-300 overflow-hidden ${
-        isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-      }`}>
-        <div className="px-4 py-6 space-y-4 bg-white/95 backdrop-blur-md border-t border-gray-100">
+      <div 
+        className={`fixed left-0 right-0 top-16 bg-white/95 backdrop-blur-md border-t border-gray-100 transition-all duration-300 z-40 lg:hidden ${
+          isMobileMenuOpen ? 'visible opacity-100' : 'invisible opacity-0'
+        }`}
+        style={{ height: 'calc(100vh - 4rem)' }}
+      >
+        <div className="h-full overflow-y-auto overscroll-contain px-4 py-6 space-y-4">
+          {/* Primary Actions at top */}
+          <div className="pb-4 border-b border-gray-100 space-y-4">
+            <Link
+              href="/schema"
+              className="block w-full text-center bg-[var(--yoga-cyan)] text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-[var(--yoga-cyan)]/90 transition-all duration-200"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {t('book_class')}
+            </Link>
+            <div className="flex items-center justify-between">
+              <MemberMenu />
+              <LanguageSwitcher />
+            </div>
+          </div>
+          
+          {/* Navigation Links */}
           <Link
             href="/"
             className="block py-2 text-gray-700 hover:text-[var(--yoga-purple)] transition-colors font-medium"
@@ -263,20 +297,47 @@ export default function Navigation() {
           >
             {t('home')}
           </Link>
-          <Link
-            href="/om-oss"
-            className="block py-2 text-gray-700 hover:text-[var(--yoga-purple)] transition-colors font-medium"
-            onClick={() => setIsMobileMenuOpen(false)}
+          <button
+            className="w-full py-2 text-gray-700 hover:text-[var(--yoga-purple)] transition-colors font-medium flex items-center justify-between text-left"
+            onClick={() => setMobileSubmenuOpen(mobileSubmenuOpen === 'about' ? null : 'about')}
           >
             {t('about')}
-          </Link>
-          <Link
-            href="/nyborjare"
-            className="block py-2 text-gray-700 hover:text-[var(--yoga-purple)] transition-colors font-medium"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            {t('beginners')}
-          </Link>
+            <svg className={`w-4 h-4 transition-transform duration-300 ${mobileSubmenuOpen === 'about' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          {mobileSubmenuOpen === 'about' && (
+            <div className="pl-4 space-y-2 mb-4">
+              <Link
+                href="/om-oss"
+                className="block py-1 text-sm text-gray-600 hover:text-[var(--yoga-purple)] transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t('aboutUs')}
+              </Link>
+              <Link
+                href="/nyborjare"
+                className="block py-1 text-sm text-gray-600 hover:text-[var(--yoga-purple)] transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t('beginners')}
+              </Link>
+              <Link
+                href="/larare"
+                className="block py-1 text-sm text-gray-600 hover:text-[var(--yoga-purple)] transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t('teachers')}
+              </Link>
+              <Link
+                href="/faq"
+                className="block py-1 text-sm text-gray-600 hover:text-[var(--yoga-purple)] transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t('faq')}
+              </Link>
+            </div>
+          )}
           <Link
             href="/klasser"
             className="block py-2 text-gray-700 hover:text-[var(--yoga-purple)] transition-colors font-medium"
@@ -312,43 +373,57 @@ export default function Navigation() {
           >
             {t('community')}
           </Link>
-          <Link
-            href="/valbefinnande"
-            className="block py-2 text-gray-700 hover:text-[var(--yoga-purple)] transition-colors font-medium"
-            onClick={() => setIsMobileMenuOpen(false)}
+          <button
+            className="w-full py-2 text-gray-700 hover:text-[var(--yoga-purple)] transition-colors font-medium flex items-center justify-between"
+            onClick={() => setMobileSubmenuOpen(mobileSubmenuOpen === 'wellbeing' ? null : 'wellbeing')}
           >
             {t('wellbeing')}
-          </Link>
-          
-          <div className="pt-4 border-t border-gray-100">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-medium text-gray-700">{t('happenings')}</span>
-            </div>
-            {happeningsEvents.map((event) => (
+            <svg className={`w-4 h-4 transition-transform duration-300 ${mobileSubmenuOpen === 'wellbeing' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          {mobileSubmenuOpen === 'wellbeing' && (
+            <div className="pl-4 space-y-2 mb-4">
               <Link
-                key={event.id}
-                href={{ pathname: '/happenings/[slug]', params: { slug: event.slug } }}
-                className="block py-2 pl-4 text-sm text-gray-600 hover:text-[var(--yoga-purple)] transition-colors"
+                href="/valbefinnande"
+                className="block py-1 text-sm text-gray-600 hover:text-[var(--yoga-purple)] transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {event.title[locale]}
+                {t('viewAllWellbeing')}
               </Link>
-            ))}
-          </div>
-          
-          <div className="pt-4 border-t border-gray-100 space-y-4">
-            <div className="flex items-center justify-between">
-              <MemberMenu />
-              <LanguageSwitcher />
             </div>
-            <Link
-              href="/schema"
-              className="block w-full text-center bg-[var(--yoga-cyan)] text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-[var(--yoga-cyan)]/90 transition-all duration-200"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {t('book_class')}
-            </Link>
-          </div>
+          )}
+          
+          <button
+            className="w-full py-2 text-gray-700 hover:text-[var(--yoga-purple)] transition-colors font-medium flex items-center justify-between"
+            onClick={() => setMobileSubmenuOpen(mobileSubmenuOpen === 'happenings' ? null : 'happenings')}
+          >
+            {t('happenings')}
+            <svg className={`w-4 h-4 transition-transform duration-300 ${mobileSubmenuOpen === 'happenings' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          {mobileSubmenuOpen === 'happenings' && (
+            <div className="pl-4 space-y-2 mb-4">
+              {happeningsEvents.slice(0, 3).map((event) => (
+                <Link
+                  key={event.id}
+                  href={{ pathname: '/happenings/[slug]', params: { slug: event.slug } }}
+                  className="block py-1 text-sm text-gray-600 hover:text-[var(--yoga-purple)] transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {event.title[locale]}
+                </Link>
+              ))}
+              <Link
+                href="/happenings/oversikt"
+                className="block py-1 text-sm text-[var(--yoga-purple)] font-medium hover:text-[var(--yoga-purple)]/80 transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t('viewAllHappenings')}
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>

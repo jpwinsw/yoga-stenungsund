@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { useRouter } from 'next/navigation'
 import { Link } from '@/lib/i18n/navigation'
 import { braincore } from '@/lib/api/braincore'
+import { useAuth } from '@/lib/contexts/AuthContext'
+import AuthGuard from '@/components/auth/AuthGuard'
 import type { MemberSubscription as BrainCoreMemberSubscription, BookingReceipt } from '@/lib/types/braincore'
 import MembershipManagementModal from '@/components/membership/MembershipManagementModal'
 import { 
@@ -64,7 +65,7 @@ interface WaitlistEntry {
 export default function MyBookingsPage() {
   const t = useTranslations('my-bookings')
   const locale = useLocale()
-  const router = useRouter()
+  const { isAuthenticated } = useAuth()
   const [bookings, setBookings] = useState<Booking[]>([])
   const [waitlistEntries, setWaitlistEntries] = useState<WaitlistEntry[]>([])
   const [subscriptions, setSubscriptions] = useState<BrainCoreMemberSubscription[]>([])
@@ -100,14 +101,10 @@ export default function MyBookingsPage() {
   }, [t])
 
   useEffect(() => {
-    // Check if user is authenticated
-    if (!braincore.isAuthenticated()) {
-      router.push('/schema')
-      return
+    if (isAuthenticated) {
+      fetchBookings()
     }
-
-    fetchBookings()
-  }, [router, fetchBookings])
+  }, [fetchBookings, isAuthenticated])
 
   const handleCancelBooking = async (bookingId: number) => {
     if (!confirm(t('actions.confirmCancel'))) {
@@ -281,7 +278,8 @@ export default function MyBookingsPage() {
   const activeSubscription = subscriptions.find(sub => sub.status === 'active')
 
   return (
-    <div className="min-h-screen pt-20 pb-16 bg-gradient-to-b from-[var(--yoga-cream)] to-white">
+    <AuthGuard>
+      <div className="min-h-screen pt-20 pb-16 bg-gradient-to-b from-[var(--yoga-cream)] to-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -549,5 +547,6 @@ export default function MyBookingsPage() {
         )}
       </div>
     </div>
+    </AuthGuard>
   )
 }

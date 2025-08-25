@@ -3,12 +3,10 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { MembershipPlan } from '@/lib/types/braincore';
-import { braincore } from '@/lib/api/braincore';
 import { Check } from 'lucide-react';
-import LoginModal from '@/components/auth/LoginModal';
-import SignupModal from '@/components/auth/SignupModal';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import SimpleMembershipCheckout from './SimpleMembershipCheckout';
 
 interface MembershipCardProps {
   plan: MembershipPlan;
@@ -17,32 +15,11 @@ interface MembershipCardProps {
 
 export default function MembershipCard({ plan, featured = false }: MembershipCardProps) {
   const t = useTranslations('membership');
-  const [loading, setLoading] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [loading] = useState(false);
+  const [showCheckoutFlow, setShowCheckoutFlow] = useState(false);
 
-  const handlePurchase = async () => {
-    // Check if user is authenticated
-    if (!braincore.isAuthenticated()) {
-      setShowLoginModal(true);
-      return;
-    }
-
-    setLoading(true);
-    try {
-      // Create Stripe checkout session for membership
-      const response = await braincore.createMembershipCheckout(plan.id);
-      
-      if (response.checkout_url) {
-        // Redirect to Stripe Checkout
-        window.location.href = response.checkout_url;
-      }
-    } catch (error) {
-      console.error('Failed to create checkout session:', error);
-      // TODO: Show error message to user
-    } finally {
-      setLoading(false);
-    }
+  const handlePurchase = () => {
+    setShowCheckoutFlow(true);
   };
 
   const formatPrice = () => {
@@ -125,30 +102,10 @@ export default function MembershipCard({ plan, featured = false }: MembershipCar
         </CardFooter>
       </Card>
 
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onSuccess={() => {
-          setShowLoginModal(false);
-          handlePurchase(); // Retry purchase after login
-        }}
-        onSwitchToSignup={() => {
-          setShowLoginModal(false);
-          setShowSignupModal(true);
-        }}
-      />
-      
-      <SignupModal
-        isOpen={showSignupModal}
-        onClose={() => setShowSignupModal(false)}
-        onSuccess={() => {
-          setShowSignupModal(false);
-          handlePurchase(); // Retry purchase after signup
-        }}
-        onSwitchToLogin={() => {
-          setShowSignupModal(false);
-          setShowLoginModal(true);
-        }}
+      <SimpleMembershipCheckout
+        plan={plan}
+        isOpen={showCheckoutFlow}
+        onClose={() => setShowCheckoutFlow(false)}
       />
     </>
   );

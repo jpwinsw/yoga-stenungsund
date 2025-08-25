@@ -197,9 +197,8 @@ export default function MembershipManagementModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="flex items-center justify-between">
-            <span>{t('title')}</span>
-            {subscription && getStatusBadge(subscription.status)}
+          <DialogTitle>
+            {t('title')}
           </DialogTitle>
         </DialogHeader>
 
@@ -211,10 +210,13 @@ export default function MembershipManagementModal({
               <TabsTrigger value="actions">{t('tabs.actions')}</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="overview" className="space-y-4 mt-4">
+            <TabsContent value="overview" className="space-y-4 mt-4 min-h-[400px]">
               {/* Subscription Overview */}
               <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-                <h3 className="font-semibold text-lg">{subscription.plan_name}</h3>
+                <div className="flex items-center gap-3">
+                  <h3 className="font-semibold text-lg">{subscription.plan_name}</h3>
+                  {getStatusBadge(subscription.status)}
+                </div>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -306,14 +308,33 @@ export default function MembershipManagementModal({
               )}
             </TabsContent>
 
-            <TabsContent value="credits" className="mt-4">
+            <TabsContent value="credits" className="mt-4 min-h-[400px]">
+              {/* Show current credit balance for punch cards and credit-based memberships */}
+              {(subscription.plan_type === 'punch_card' || subscription.plan_type === 'credits') && (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-sm font-medium text-blue-900">{t('fields.creditsRemaining')}</p>
+                      <p className="text-3xl font-bold text-blue-600">{subscription.current_credits || 0}</p>
+                    </div>
+                    {subscription.credits_used_this_period !== undefined && (
+                      <div className="text-right">
+                        <p className="text-sm font-medium text-blue-900">{t('fields.creditsUsed')}</p>
+                        <p className="text-2xl font-semibold text-blue-600">{subscription.credits_used_this_period}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
               {loadingCredits ? (
                 <div className="space-y-3">
                   {[1, 2, 3].map(i => (
                     <Skeleton key={i} className="h-20 w-full" />
                   ))}
                 </div>
-              ) : creditHistory.length === 0 ? (
+              ) : creditHistory.length === 0 && 
+                 (!subscription.current_credits || subscription.current_credits === 0) ? (
                 <div className="text-center py-8">
                   <Info className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                   <p className="text-gray-600">{t('noCreditHistory')}</p>
@@ -349,7 +370,7 @@ export default function MembershipManagementModal({
               )}
             </TabsContent>
 
-            <TabsContent value="actions" className="mt-4 space-y-4">
+            <TabsContent value="actions" className="mt-4 space-y-4 min-h-[400px]">
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5" />
                 <div className="flex-1">

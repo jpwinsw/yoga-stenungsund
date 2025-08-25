@@ -37,11 +37,35 @@ function PaymentForm({
   const elements = useElements()
   const [isProcessing, setIsProcessing] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [isFormComplete, setIsFormComplete] = useState(false)
+
+  // Listen for changes in the payment element to know if it's complete
+  useEffect(() => {
+    if (!elements) return
+
+    const paymentElement = elements.getElement('payment')
+    if (!paymentElement) return
+
+    paymentElement.on('change', (event: { complete: boolean }) => {
+      setIsFormComplete(event.complete)
+      // Clear error message when user starts typing
+      if (errorMessage && event.complete) {
+        setErrorMessage(null)
+      }
+    })
+  }, [elements, errorMessage])
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
 
     if (!stripe || !elements) {
+      return
+    }
+
+    // Check if the payment method is complete
+    const { error: submitError } = await elements.submit()
+    if (submitError) {
+      setErrorMessage(submitError.message || t('incompletePaymentMethod'))
       return
     }
 
@@ -127,7 +151,7 @@ function PaymentForm({
       <div className="space-y-4">
         <Button
           type="submit"
-          disabled={!stripe || isProcessing}
+          disabled={!stripe || !isFormComplete || isProcessing}
           className="w-full"
         >
           {isProcessing ? (

@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { ForgotPasswordModal } from './ForgotPasswordModal'
 
 interface LoginModalProps {
   isOpen: boolean
@@ -29,7 +30,7 @@ export default function LoginModal({
   onSuccess,
   onSwitchToSignup
 }: LoginModalProps) {
-  const t = useTranslations('member.auth.login')
+  const t = useTranslations('auth.login')
   const { refreshAuth } = useAuth()
   const [formData, setFormData] = useState<LoginRequest>({
     email: '',
@@ -38,6 +39,7 @@ export default function LoginModal({
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [showForgotPassword, setShowForgotPassword] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -76,7 +78,8 @@ export default function LoginModal({
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <>
+      <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
@@ -141,6 +144,7 @@ export default function LoginModal({
                 type="button"
                 variant="link"
                 className="text-sm p-0 h-auto"
+                onClick={() => setShowForgotPassword(true)}
               >
                 {t('forgotPassword')}
               </Button>
@@ -170,5 +174,11 @@ export default function LoginModal({
         </div>
       </DialogContent>
     </Dialog>
+    
+    <ForgotPasswordModal 
+      isOpen={showForgotPassword}
+      onClose={() => setShowForgotPassword(false)}
+    />
+    </>
   )
 }

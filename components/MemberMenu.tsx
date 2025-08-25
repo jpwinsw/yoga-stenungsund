@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useAuth } from '@/lib/contexts/AuthContext'
 import { User, LogOut, Calendar, Receipt } from 'lucide-react'
-import { Link } from '@/lib/i18n/navigation'
+import { Link, useRouter } from '@/lib/i18n/navigation'
 import LoginModal from './auth/LoginModal'
 import SignupModal from './auth/SignupModal'
 
@@ -16,6 +16,7 @@ interface MemberMenuProps {
 export default function MemberMenu({ isOpen, onToggle }: MemberMenuProps = {}) {
   const t = useTranslations('member')
   const { isAuthenticated, member, logout: authLogout, refreshAuth } = useAuth()
+  const router = useRouter()
   const [showMenu, setShowMenu] = useState(false)
   const isDropdownOpen = isOpen !== undefined ? isOpen : showMenu
   const [showLoginModal, setShowLoginModal] = useState(false)
@@ -24,6 +25,10 @@ export default function MemberMenu({ isOpen, onToggle }: MemberMenuProps = {}) {
   const handleLogout = () => {
     authLogout()
     setShowMenu(false)
+    // Redirect to home page after logout to ensure fresh page state
+    router.push('/')
+    // Force a refresh to ensure all components update
+    router.refresh()
   }
 
   const handleAuthSuccess = () => {

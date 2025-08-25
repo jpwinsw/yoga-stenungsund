@@ -34,11 +34,11 @@
         },
         {
           "question": "Vad gäller för avbokning?",
-          "answer": "Avbokning måste ske senast 2 timmar före klassens start. Vid sen avbokning eller utebliven närvaro dras klassen från ditt kort eller debiteras som drop-in."
+          "answer": "Avbokning måste ske senast 8 timmar före klassens start. Vid sen avbokning eller utebliven närvaro dras klassen från ditt kort eller debiteras som drop-in."
         },
         {
           "question": "Vad händer om en klass blir fullbokad?",
-          "answer": "Du kan sätta upp dig på väntelistan. Om någon avbokar får du automatiskt en plats och blir meddelad via e-post eller SMS."
+          "answer": "Du kan sätta upp dig på väntelistan. Om någon avbokar får du automatiskt en plats och blir meddelad via e-post."
         }
       ]
     },
@@ -47,7 +47,7 @@
       "questions": [
         {
           "question": "Vilka betalningsalternativ finns?",
-          "answer": "Vi erbjuder drop-in, klippkort med 10 klasser, månadskort och årskort. Vi har också studentrabatt och seniorpriser. Se vår prissida för aktuella priser."
+          "answer": "Vi erbjuder prova-på klass, drop-in, klippkort (5, 10 eller 20 klasser), terminskort och personlig PT-yoga."
         },
         {
           "question": "Gäller mitt kort på alla klasser?",

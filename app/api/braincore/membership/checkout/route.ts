@@ -15,8 +15,18 @@ export async function POST(request: NextRequest) {
       headers['Authorization'] = authHeader
     }
 
+    // Build query parameters
+    const queryParams = new URLSearchParams({
+      success_url: body.success_url,
+      cancel_url: body.cancel_url
+    })
+    
+    if (body.discount_code) {
+      queryParams.append('discount_code', body.discount_code)
+    }
+
     const response = await fetch(
-      `${BRAINCORE_API}/urbe/membership-checkout/checkout/${body.plan_id}?success_url=${encodeURIComponent(body.success_url)}&cancel_url=${encodeURIComponent(body.cancel_url)}`,
+      `${BRAINCORE_API}/urbe/membership-checkout/checkout/${body.plan_id}?${queryParams.toString()}`,
       {
         method: 'POST',
         headers,

@@ -1,0 +1,52 @@
+{
+  "title": "Cookie-inställningar",
+  "description": "Vi använder cookies för att förbättra din upplevelse på vår webbplats.",
+  "acceptAll": "Acceptera alla",
+  "rejectAll": "Avvisa alla",
+  "customize": "Anpassa",
+  "close": "Stäng",
+  "save": "Spara inställningar",
+  "savePreferences": "Spara inställningar",
+  "privacyPolicy": "Integritetspolicy",
+  "detailsDescription": "Hantera dina cookie-inställningar nedan. Du kan aktivera eller inaktivera olika typer av cookies enligt dina preferenser.",
+  "alwaysActive": "Alltid aktiv",
+  "details": {
+    "title": "Cookie-inställningar",
+    "description": "Hantera dina cookie-inställningar nedan. Du kan aktivera eller inaktivera olika typer av cookies.",
+    "necessary": {
+      "title": "Nödvändiga cookies",
+      "description": "Dessa cookies är nödvändiga för att webbplatsen ska fungera korrekt och kan inte inaktiveras."
+    },
+    "analytics": {
+      "title": "Analyticscookies",
+      "description": "Dessa cookies hjälper oss att förstå hur besökare interagerar med vår webbplats."
+    },
+    "marketing": {
+      "title": "Marknadsföringscookies",
+      "description": "Dessa cookies används för att visa dig relevanta annonser."
+    }
+  },
+  "necessary": {
+    "title": "Nödvändiga cookies",
+    "description": "Dessa cookies är nödvändiga för att webbplatsen ska fungera korrekt och kan inte inaktiveras i våra system. De sätts vanligtvis endast som svar på åtgärder du utför."
+  },
+  "analytics": {
+    "title": "Analyticscookies",
+    "description": "Dessa cookies låter oss räkna besök och trafikkällor så att vi kan mäta och förbättra prestandan på vår webbplats.",
+    "services": "Google Analytics, Google Tag Manager"
+  },
+  "marketing": {
+    "title": "Marknadsföringscookies",
+    "description": "Dessa cookies kan sättas via vår webbplats av våra reklampartners för att bygga en profil av dina intressen och visa dig relevanta annonser.",
+    "services": "Google Ads, Facebook Pixel"
+  },
+  "preferences": {
+    "title": "Inställningscookies",
+    "description": "Dessa cookies gör det möjligt för webbplatsen att tillhandahålla förbättrad funktionalitet och personalisering.",
+    "services": "Språkinställningar, Temainställningar"
+  },
+  "notice": "Vi använder cookies för att förbättra din upplevelse. Genom att fortsätta använda vår webbplats accepterar du vår användning av cookies.",
+  "manageCookies": "Hantera cookies",
+  "privacyInfo": "Integritetspolicy",
+  "backToSimple": "Tillbaka till enkel vy"
+}

@@ -34,11 +34,11 @@
         },
         {
           "question": "What's the cancellation policy?",
-          "answer": "Cancellations must be made at least 2 hours before class start. For late cancellations or no-shows, the class will be deducted from your card or charged as drop-in."
+          "answer": "Cancellations must be made at least 8 hours before class start. For late cancellations or no-shows, the class will be deducted from your card or charged as drop-in."
         },
         {
           "question": "What happens if a class is fully booked?",
-          "answer": "You can join the waiting list. If someone cancels, you'll automatically get a spot and be notified via email or SMS."
+          "answer": "You can join the waiting list. If someone cancels, you'll automatically get a spot and be notified via email."
         }
       ]
     },
@@ -47,7 +47,7 @@
       "questions": [
         {
           "question": "What payment options are available?",
-          "answer": "We offer drop-in, 10-class cards, monthly cards, and annual cards. We also have student discounts and senior prices. See our pricing page for current rates."
+          "answer": "We offer try-out classes, drop-in, class cards (5, 10, or 20 classes), term passes, and personal PT yoga."
         },
         {
           "question": "Does my card work for all classes?",

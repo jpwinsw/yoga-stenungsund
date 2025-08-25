@@ -1,15 +1,23 @@
 {
-  "title": "Our yoga classes",
-  "description": "We offer a wide range of yoga classes for all levels and needs. Find the perfect class for you!",
   "metaTitle": "Yoga Classes - Yoga Stenungsund",
   "metaDescription": "Explore our wide range of yoga classes including Hatha, Vinyasa, Yin, and more. Classes for all levels in Stenungsund.",
+  "title": "Our yoga classes",
+  "description": "We offer a wide range of yoga classes for all levels and needs. Find the perfect class for you!",
+  "overline": "Our offerings",
   "viewSchedule": "View schedule",
+  "intensity": "Intensity",
+  "instructors": "Instructors",
   "levels": {
     "beginner": "Beginner",
     "intermediate": "Intermediate",
     "advanced": "Advanced",
     "all": "All levels",
     "special": "Special class"
+  },
+  "cta": {
+    "title": "Ready to begin?",
+    "description": "Find the perfect class for you in our schedule.",
+    "button": "View schedule"
   },
   "types": {
     "hatha": {

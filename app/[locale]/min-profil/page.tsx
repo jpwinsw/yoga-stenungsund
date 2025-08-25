@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
-import { useRouter } from '@/lib/i18n/navigation'
 import { Link } from '@/lib/i18n/navigation'
 import { braincore } from '@/lib/api/braincore'
+import { useAuth } from '@/lib/contexts/AuthContext'
+import AuthGuard from '@/components/auth/AuthGuard'
 import type { MemberProfile, MemberSubscription } from '@/lib/types/braincore'
 import MembershipManagementModal from '@/components/membership/MembershipManagementModal'
 import { 
@@ -23,7 +24,7 @@ import {
 
 export default function MyProfilePage() {
   const t = useTranslations('my-profile')
-  const router = useRouter()
+  const { isAuthenticated } = useAuth()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [profile, setProfile] = useState<MemberProfile | null>(null)
@@ -73,14 +74,10 @@ export default function MyProfilePage() {
   }, [t])
 
   useEffect(() => {
-    // Check if user is authenticated
-    if (!braincore.isAuthenticated()) {
-      router.push('/schema')
-      return
+    if (isAuthenticated) {
+      fetchProfileData()
     }
-
-    fetchProfileData()
-  }, [router, fetchProfileData])
+  }, [fetchProfileData, isAuthenticated])
 
   const handleSaveProfile = async () => {
     try {
@@ -154,7 +151,8 @@ export default function MyProfilePage() {
   const activeSubscription = getActiveSubscription()
 
   return (
-    <div className="min-h-screen pt-20 pb-16 bg-gradient-to-b from-[var(--yoga-cream)] to-white">
+    <AuthGuard>
+      <div className="min-h-screen pt-20 pb-16 bg-gradient-to-b from-[var(--yoga-cream)] to-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -445,6 +443,7 @@ export default function MyProfilePage() {
           onRefresh={fetchProfileData}
         />
       )}
-    </div>
+      </div>
+    </AuthGuard>
   )
 }

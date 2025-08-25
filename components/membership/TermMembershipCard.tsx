@@ -3,11 +3,8 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { MembershipPlan } from '@/lib/types/braincore';
-import { braincore } from '@/lib/api/braincore';
 import { Check, Calendar, ChevronRight } from 'lucide-react';
-import LoginModal from '@/components/auth/LoginModal';
-import SignupModal from '@/components/auth/SignupModal';
-import TermBookingModal from './TermBookingModal';
+import EnhancedTermCheckout from './EnhancedTermCheckout';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -20,19 +17,11 @@ interface TermMembershipCardProps {
 export default function TermMembershipCard({ plan, featured = false }: TermMembershipCardProps) {
   const t = useTranslations('membership');
   const [loading] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSignupModal, setShowSignupModal] = useState(false);
-  const [showTermBookingModal, setShowTermBookingModal] = useState(false);
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
 
-  const handlePurchase = async () => {
-    // Check if user is authenticated
-    if (!braincore.isAuthenticated()) {
-      setShowLoginModal(true);
-      return;
-    }
-
-    // For term-based memberships, show the booking modal
-    setShowTermBookingModal(true);
+  const handlePurchase = () => {
+    // Open the unified checkout modal for both logged-in and non-logged-in users
+    setShowCheckoutModal(true);
   };
 
   const formatPrice = () => {
@@ -136,35 +125,9 @@ export default function TermMembershipCard({ plan, featured = false }: TermMembe
         </CardFooter>
       </Card>
 
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onSuccess={() => {
-          setShowLoginModal(false);
-          handlePurchase(); // Retry purchase after login
-        }}
-        onSwitchToSignup={() => {
-          setShowLoginModal(false);
-          setShowSignupModal(true);
-        }}
-      />
-      
-      <SignupModal
-        isOpen={showSignupModal}
-        onClose={() => setShowSignupModal(false)}
-        onSuccess={() => {
-          setShowSignupModal(false);
-          handlePurchase(); // Retry purchase after signup
-        }}
-        onSwitchToLogin={() => {
-          setShowSignupModal(false);
-          setShowLoginModal(true);
-        }}
-      />
-
-      <TermBookingModal
-        isOpen={showTermBookingModal}
-        onClose={() => setShowTermBookingModal(false)}
+      <EnhancedTermCheckout
+        isOpen={showCheckoutModal}
+        onClose={() => setShowCheckoutModal(false)}
         plan={plan}
       />
     </>

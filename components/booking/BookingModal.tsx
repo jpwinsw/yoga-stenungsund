@@ -75,10 +75,59 @@ export default function BookingModal({
   const [showCreditConfirmation, setShowCreditConfirmation] = useState(false)
   const [creditsRequired, setCreditsRequired] = useState<number>(0)
   const [hasAutoBooked, setHasAutoBooked] = useState(false)
+  const [showDropInForm, setShowDropInForm] = useState(false)
+  const [discountCode, setDiscountCode] = useState<string>('')
+  const [discountValidation, setDiscountValidation] = useState<{
+    valid: boolean
+    discount_amount: number
+    final_amount: number
+    discount_type: string
+    discount_value: number
+    message?: string
+  } | null>(null)
+  const [isValidatingDiscount, setIsValidatingDiscount] = useState(false)
   
   const startDate = new Date(session.start_time)
   const endDate = new Date(session.end_time)
   const durationMinutes = Math.floor((endDate.getTime() - startDate.getTime()) / 1000 / 60)
+  
+  // Validate discount code
+  const validateDiscountCode = async () => {
+    if (!discountCode.trim()) {
+      setDiscountValidation(null)
+      return
+    }
+    
+    setIsValidatingDiscount(true)
+    setError(null)
+    
+    try {
+      const response = await braincore.validateDiscountCode({
+        code: discountCode,
+        service_id: session.service_template_id,
+        amount: session.drop_in_price || 0,
+        company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '5')
+      })
+      
+      console.log('Discount validation response:', response)
+      
+      // Check if the discount is valid
+      if (!response.valid) {
+        setError(response.message || 'Invalid discount code')
+        setDiscountValidation(null)
+      } else {
+        setDiscountValidation(response)
+        // Clear any previous errors
+        setError(null)
+      }
+    } catch (err) {
+      console.error('Discount validation error:', err)
+      setError('Failed to validate discount code')
+      setDiscountValidation(null)
+    } finally {
+      setIsValidatingDiscount(false)
+    }
+  }
   
   // Fetch booking options when modal opens
   useEffect(() => {
@@ -101,6 +150,10 @@ export default function BookingModal({
       setShowCreditConfirmation(false)
       setCreditsRequired(0)
       setHasAutoBooked(false)
+      setShowDropInForm(false)
+      setDiscountCode('')
+      setDiscountValidation(null)
+      setIsValidatingDiscount(false)
       
       braincore.getBookingOptions(session.id, locale)
         .then((options) => {
@@ -142,6 +195,7 @@ export default function BookingModal({
       const bookingData = {
         session_id: session.id,
         contact_id: member.contact_id,
+        ...(discountValidation?.valid && discountCode ? { discount_code: discountCode } : {})
       }
       
       // Attempt to create booking
@@ -157,16 +211,22 @@ export default function BookingModal({
         
         // Create payment intent
         // For drop-in bookings (when payment is required), treat as guest payment
+        // Use discounted amount if discount is valid
+        const finalAmount = discountValidation?.valid ? 
+          discountValidation.final_amount : 
+          bookingResponse.payment_amount
+        
         const paymentData = {
           company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '5'),
-          amount: bookingResponse.payment_amount * 100, // Convert to öre/cents
+          amount: finalAmount * 100, // Convert to öre/cents
           currency: 'sek',
           description: `Booking for ${session.service_template_name}`,
           entity_type: 'service_booking',
           entity_id: bookingResponse.booking_id,  // Use the booking ID, not session ID
           customer_email: member.email,
           customer_name: `${member.first_name} ${member.last_name}`,
-          is_guest: true  // Treat drop-in as guest payment even for members
+          is_guest: true,  // Treat drop-in as guest payment even for members
+          ...(discountValidation?.valid && discountCode ? { discount_code: discountCode } : {})
         }
         
         const paymentIntentResponse = await braincore.createPaymentIntent(paymentData)
@@ -242,7 +302,7 @@ export default function BookingModal({
     } finally {
       setIsLoading(false)
     }
-  }, [session, t, onBookingSuccess])
+  }, [session, t, onBookingSuccess, discountCode, discountValidation])
   
   const handleAuthSuccess = () => {
     setShowLoginModal(false)
@@ -431,7 +491,8 @@ export default function BookingModal({
           last_name: guestData.last_name,
           email: guestData.email,
           phone: guestData.phone
-        }
+        },
+        ...(discountValidation?.valid && discountCode ? { discount_code: discountCode } : {})
       }
       
       // Attempt to create booking
@@ -446,16 +507,22 @@ export default function BookingModal({
         }
         
         // Create payment intent for guest
+        // Use discounted amount if discount is valid
+        const finalAmount = discountValidation?.valid ? 
+          discountValidation.final_amount : 
+          bookingResponse.payment_amount
+        
         const paymentData = {
           company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '5'),
-          amount: bookingResponse.payment_amount * 100, // Convert to öre/cents
+          amount: finalAmount * 100, // Convert to öre/cents
           currency: 'sek',
           description: `Guest booking for ${session.service_template_name}`,
           entity_type: 'service_booking',
           entity_id: bookingResponse.booking_id,  // Use the booking ID, not session ID
           customer_email: guestData.email,
           customer_name: `${guestData.first_name} ${guestData.last_name}`,
-          is_guest: true
+          is_guest: true,
+          ...(discountValidation?.valid && discountCode ? { discount_code: discountCode } : {})
         }
         
         const paymentIntentResponse = await braincore.createPaymentIntent(paymentData)
@@ -730,7 +797,7 @@ export default function BookingModal({
               )}
               
               {/* Booking Options */}
-              {!loadingOptions && bookingOptions && (
+              {!loadingOptions && bookingOptions && !showDropInForm && !showGuestForm && (
                 <>
                   {/* Check if user already has a booking */}
                   {bookingOptions.booking_options && bookingOptions.booking_options.length === 1 && 
@@ -819,7 +886,19 @@ export default function BookingModal({
                                 )}
                               </div>
                               {option.price && (
-                                <span className="font-medium">{option.price} {option.currency}</span>
+                                <div className="text-right">
+                                  {discountValidation?.valid && option.type === 'drop_in' ? (
+                                    <>
+                                      <span className="line-through text-gray-400 text-sm">{option.price} {option.currency}</span>
+                                      <br />
+                                      <span className="font-medium text-green-600">
+                                        {discountValidation.final_amount} {option.currency}
+                                      </span>
+                                    </>
+                                  ) : (
+                                    <span className="font-medium">{option.price} {option.currency}</span>
+                                  )}
+                                </div>
                               )}
                             </div>
                             <Button
@@ -829,9 +908,13 @@ export default function BookingModal({
                                 } else if (option.action === 'book_with_membership') {
                                   handleProceedToPayment()
                                 } else if (option.action === 'book_drop_in') {
-                                  // For drop-in bookings, always proceed with drop-in flow
-                                  // The backend will handle it correctly whether authenticated or not
-                                  handleProceedToPayment()
+                                  // For drop-in bookings, check if user is authenticated
+                                  if (braincore.isAuthenticated()) {
+                                    setShowDropInForm(true)
+                                  } else {
+                                    // Show guest form for non-authenticated users
+                                    setShowGuestForm(true)
+                                  }
                                 } else if (option.action === 'view_memberships') {
                                   // Close modal and navigate to memberships page
                                   onClose()
@@ -860,6 +943,96 @@ export default function BookingModal({
                   {error}
                 </div>
               )}
+              
+              {/* Drop-in Form for Authenticated Users */}
+              {showDropInForm && braincore.isAuthenticated() ? (
+                <div className="space-y-4">
+                  <h4 className="font-medium">{t('dropInBooking')}</h4>
+                  
+                  {/* Show booking details */}
+                  <div className="bg-gray-50 p-3 rounded-lg text-sm">
+                    <p className="font-medium">{session.service_template_name}</p>
+                    <p>{formatDate(startDate, 'EEEE, MMMM d')} • {formatTime(session.start_time)}</p>
+                    <p className="mt-2 font-medium">
+                      {t('price')}: {session.drop_in_price || 0} SEK
+                    </p>
+                  </div>
+                  
+                  {/* Discount Code Section */}
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('discountCode')} <span className="text-gray-400 text-xs">({t('optional')})</span>
+                    </label>
+                    <div className="flex gap-2">
+                      <Input
+                        type="text"
+                        value={discountCode}
+                        onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+                        placeholder={t('enterDiscountCode')}
+                        disabled={isValidatingDiscount}
+                      />
+                      <Button
+                        onClick={validateDiscountCode}
+                        disabled={!discountCode.trim() || isValidatingDiscount}
+                        variant="outline"
+                        type="button"
+                      >
+                        {isValidatingDiscount ? t('validating') : t('apply')}
+                      </Button>
+                    </div>
+                    
+                    {/* Show discount validation result */}
+                    {discountValidation && (
+                      <div className={`mt-2 text-sm ${discountValidation.valid ? 'text-green-600' : 'text-red-600'}`}>
+                        {discountValidation.valid ? (
+                          <div>
+                            <p className="font-medium">{t('discountApplied')}</p>
+                            <p>{t('discountAmount')}: {discountValidation.discount_amount} SEK</p>
+                            <p>{t('finalAmount')}: {discountValidation.final_amount} SEK</p>
+                          </div>
+                        ) : (
+                          <p>{discountValidation.message || t('invalidDiscountCode')}</p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Final price display */}
+                  {discountValidation?.valid && (
+                    <div className="border-t pt-3">
+                      <div className="flex justify-between items-center">
+                        <span>{t('originalPrice')}:</span>
+                        <span className="line-through text-gray-400">{session.drop_in_price || 0} SEK</span>
+                      </div>
+                      <div className="flex justify-between items-center font-medium text-green-600">
+                        <span>{t('finalAmount')}:</span>
+                        <span>{discountValidation.final_amount} SEK</span>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setShowDropInForm(false)
+                        setDiscountCode('')
+                        setDiscountValidation(null)
+                      }}
+                      className="flex-1"
+                    >
+                      {t('back')}
+                    </Button>
+                    <Button
+                      onClick={handleProceedToPayment}
+                      disabled={isLoading}
+                      className="flex-1"
+                    >
+                      {isLoading ? t('preparingPayment') : t('proceedToPayment')}
+                    </Button>
+                  </div>
+                </div>
+              ) : null}
               
               {/* Guest Form - shown when drop-in is selected for non-authenticated users */}
               {showGuestForm ? (
@@ -911,6 +1084,46 @@ export default function BookingModal({
                       onChange={(e) => setGuestData(prev => ({ ...prev, phone: e.target.value }))}
                     />
                   </div>
+                  
+                  {/* Discount Code Section for Guest Checkout */}
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('discountCode')} <span className="text-gray-400 text-xs">({t('optional')})</span>
+                    </label>
+                    <div className="flex gap-2">
+                      <Input
+                        type="text"
+                        value={discountCode}
+                        onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+                        placeholder={t('enterDiscountCode')}
+                        disabled={isValidatingDiscount}
+                      />
+                      <Button
+                        onClick={validateDiscountCode}
+                        disabled={!discountCode.trim() || isValidatingDiscount}
+                        variant="outline"
+                        type="button"
+                      >
+                        {isValidatingDiscount ? t('validating') : t('apply')}
+                      </Button>
+                    </div>
+                    
+                    {/* Show discount validation result */}
+                    {discountValidation && (
+                      <div className={`mt-2 text-sm ${discountValidation.valid ? 'text-green-600' : 'text-red-600'}`}>
+                        {discountValidation.valid ? (
+                          <div>
+                            <p className="font-medium">{t('discountApplied')}</p>
+                            <p>{t('discountAmount')}: {discountValidation.discount_amount} SEK</p>
+                            <p>{t('finalAmount')}: {discountValidation.final_amount} SEK</p>
+                          </div>
+                        ) : (
+                          <p>{discountValidation.message || t('invalidDiscountCode')}</p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  
                   <div className="flex gap-3">
                     <Button
                       variant="outline"

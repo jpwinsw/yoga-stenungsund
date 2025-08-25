@@ -566,7 +566,7 @@ function GridView({ weekDays, getSessionsForDay, handleBookingClick }: ViewProps
             key={index}
             variants={staggerItem}
             className={cn(
-              "min-h-[450px] rounded-2xl transition-all relative overflow-hidden",
+              "rounded-2xl transition-all relative overflow-hidden",
               isToday ? "shadow-lg" : "shadow-sm"
             )}
           >
@@ -609,7 +609,7 @@ function GridView({ weekDays, getSessionsForDay, handleBookingClick }: ViewProps
             </div>
             
             {/* Sessions */}
-            <div className="relative z-10 p-3 space-y-2 overflow-y-auto max-h-[350px] scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+            <div className="relative z-10 p-3 space-y-2">
               {sessions.length === 0 ? (
                 <EmptyDayState dayIndex={index} />
               ) : (
@@ -810,7 +810,7 @@ function LoadingSkeleton({ viewMode }: { viewMode: string }) {
         {viewMode === 'grid' && (
           <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
             {[...Array(7)].map((_, i) => (
-              <div key={i} className="min-h-[450px] rounded-2xl bg-gray-100">
+              <div key={i} className="rounded-2xl bg-gray-100 h-64">
                 {/* Day header skeleton */}
                 <div className="p-4 pb-3 border-b border-gray-200">
                   <div className="h-6 bg-gray-200 rounded w-24 mx-auto mb-2" />

@@ -5,6 +5,8 @@
   "description": "Choose the membership that suits you best and start your yoga journey with us",
   "purchase": "Choose membership",
   "purchasing": "Processing...",
+  "confirmPurchase": "Complete Your Membership",
+  "proceedToPayment": "Continue to Payment",
   "periods": {
     "monthly": "per month",
     "quarterly": "per quarter",
@@ -98,6 +100,8 @@
     "error": "Failed to load recovery credits"
   },
   "termBooking": {
+    "termDuration": "{weeks} weeks",
+    "sessionsPerWeek": "{count} classes/week",
     "stepTitles": {
       "classType": "Select Class Type",
       "termStart": "Select Start Date",
@@ -156,10 +160,6 @@
   },
   "benefits": {
     "title": "Benefits for all members",
-    "unlimitedYoga": {
-      "title": "Unlimited yoga",
-      "description": "Attend all regular classes as often as you like"
-    },
     "freeWorkshops": {
       "title": "Free workshops",
       "description": "Access selected workshops and special classes"
@@ -186,6 +186,43 @@
     "description": "Have questions about our memberships? We've collected answers to the most common questions.",
     "link": "See all questions and answers"
   },
+  "termCheckout": {
+    "selectClassType": "Select Class Type",
+    "selectClassTypeDescription": "You will practice {count} times per week for {weeks} weeks",
+    "scheduleWeek1": "Schedule Week 1",
+    "selectSessions": "Select {count} sessions for the first week",
+    "noSessionsAvailable": "No sessions available this week",
+    "selectedCount": "{selected} of {required} sessions selected",
+    "reviewPattern": "Review Your Weekly Pattern",
+    "patternDescription": "This schedule will be used as a template for the remaining weeks",
+    "yourWeeklyPattern": "Your Weekly Pattern",
+    "patternWillBeApplied": "This pattern will be applied to {weeks} remaining weeks",
+    "autoResolveConflicts": "Automatically find alternatives if the same time is not available",
+    "patternApplied": "Pattern Applied",
+    "reviewAndResolve": "Review the results and resolve any conflicts",
+    "sessionsScheduled": "sessions scheduled",
+    "conflictsToResolve": "conflicts to resolve",
+    "week": "Week",
+    "conflictFor": "Conflict for",
+    "confirmBooking": "Confirm Booking",
+    "confirmDescription": "You're about to reserve {count} classes for your term",
+    "membership": "Membership",
+    "classType": "Class Type",
+    "termPeriod": "Term Period",
+    "totalSessions": "Total Sessions",
+    "classes": "classes",
+    "weeks": "weeks",
+    "total": "Total",
+    "reservationNote": "Smart reservation:",
+    "reservationDescription": "Your spots will be held during payment. If you don't complete the purchase, they'll be automatically released.",
+    "paymentNote": "You will be redirected to secure payment",
+    "processing": "Processing...",
+    "back": "Back",
+    "next": "Next",
+    "cancel": "Cancel",
+    "proceedToPayment": "Proceed to Payment",
+    "reservingSessions": "Reserving all your term sessions..."
+  },
   "termSuccess": {
     "metaTitle": "Thank You for Your Purchase - Term Pass | Yoga Stenungsund",
     "metaDescription": "Your term pass is now active and all your selected classes are booked.",
@@ -197,6 +234,63 @@
     "manageBookings": "You can cancel individual classes and receive recovery credits",
     "viewMyBookings": "View my bookings",
     "viewSchedule": "View schedule"
+  },
+  "weeklySchedule": {
+    "scheduleWeek1Title": "Schedule Week 1",
+    "scheduleWeekN": "Week {week}",
+    "selectionComplete": "Perfect! You've selected all your sessions for this week",
+    "selectionInstructions": "Choose {count, plural, =1 {# class} other {# classes}} you'd like to attend this week",
+    "selectMore": "{count, plural, =1 {Select # more class to continue} other {Select # more classes to continue}}",
+    "smartTipTitle": "Smart scheduling tip:",
+    "smartTipDescription": "Choose times that work well for your routine. We'll try to book the same times for the remaining weeks of your term.",
+    "today": "Today",
+    "noClasses": "No classes",
+    "full": "Full",
+    "lowSpots": "Only {count} left!",
+    "spotsAvailable": "{count} spots",
+    "readyToContinue": "Great choices! Click 'Next' to continue",
+    "varietyTip": "Tip: Pick a variety of times to explore different classes and instructors",
+    "withInstructor": "with {instructor}"
+  },
+  "checkout": {
+    "processing": "Processing...",
+    "periods": {
+      "monthly": "per month",
+      "quarterly": "per quarter",
+      "yearly": "per year",
+      "oneTime": "one-time"
+    },
+    "newCustomer": "Don't have an account?",
+    "haveAccount": "Already have an account? Sign in",
+    "addReceiptDetails": "Add receipt details",
+    "receiptTooltip": "Need a receipt for wellness benefits? Fill in details here for your receipt.",
+    "personalNumber": "Personal Number",
+    "personalNumberPlaceholder": "YYYYMMDD-XXXX",
+    "streetAddress": "Street Address",
+    "streetAddressPlaceholder": "Street Name 123",
+    "postalCode": "Postal Code",
+    "postalCodePlaceholder": "123 45",
+    "city": "City",
+    "cityPlaceholder": "Stockholm",
+    "companyName": "Company Name (optional)",
+    "companyPlaceholder": "Your Company AB",
+    "vatNumber": "VAT Number (optional)",
+    "vatPlaceholder": "SE123456789001",
+    "saved": "saved",
+    "haveDiscountCode": "Have a discount code?",
+    "remove": "Remove",
+    "optional": "optional",
+    "completePurchase": "Complete Purchase",
+    "securePayment": "🔒 Secure payment via Stripe",
+    "welcomeBack": "Welcome back, {name}!",
+    "enterPasswordToContinue": "We see you have an account. Please enter your password to continue.",
+    "forgotPassword": "Forgot password?",
+    "proceedWithPurchase": "We'll proceed with your purchase, {name}",
+    "addReceiptDetailsBelow": "Add receipt details below if needed",
+    "errors": {
+      "checkoutFailed": "Failed to create checkout session. Please try again.",
+      "invalidPassword": "Invalid password. Please try again."
+    }
   },
   "management": {
     "title": "Manage Membership",
@@ -225,7 +319,12 @@
       "monthly": "Monthly",
       "yearly": "Yearly",
       "term": "Term",
-      "term_based": "Term Based"
+      "term_based": "Term Based",
+      "punch_card": "Punch Card",
+      "unlimited": "Unlimited",
+      "credits": "Credits",
+      "drop_in": "Drop-in",
+      "trial": "Trial"
     },
     "actions": {
       "warning": "Warning",

@@ -1,0 +1,51 @@
+{
+  "title": "Integritetspolicy",
+  "close": "Stäng",
+  "lastUpdated": "Senast uppdaterad",
+  "sections": {
+    "dataController": {
+      "title": "1. Personuppgiftsansvarig",
+      "company": "Yoga Stenungsund",
+      "address": "Stenungsund, Sverige",
+      "email": "E-post: info@yogastenungsund.se",
+      "phone": "Telefon: Kontakta oss"
+    },
+    "dataCollection": {
+      "title": "2. Vilka uppgifter samlar vi in?",
+      "contactInfo": "Kontaktinformation (namn, e-post, telefonnummer)",
+      "bookingInfo": "Bokningsinformation och preferenser",
+      "paymentInfo": "Betalningsinformation (hanteras säkert)",
+      "cookieData": "Cookie-data och analys (med ditt samtycke)"
+    },
+    "dataUsage": {
+      "title": "3. Hur använder vi dina uppgifter?",
+      "bookings": "För att hantera bokningar och klassregistreringar",
+      "communication": "För att kommunicera med dig om dina bokningar",
+      "improvement": "För att förbättra våra tjänster",
+      "marketing": "För marknadsföring (med ditt samtycke)"
+    },
+    "cookies": {
+      "title": "4. Cookies",
+      "description": "Vi använder följande typer av cookies:",
+      "necessary": "Nödvändiga",
+      "necessaryDesc": "Väsentliga för webbplatsens funktionalitet",
+      "analytics": "Analys",
+      "analyticsDesc": "För att förstå hur besökare använder vår webbplats",
+      "marketing": "Marknadsföring",
+      "marketingDesc": "För relevanta annonser och kampanjer"
+    },
+    "rights": {
+      "title": "5. Dina rättigheter",
+      "access": "Få tillgång till dina personuppgifter",
+      "rectification": "Rätta felaktig information",
+      "erasure": "Begära radering av dina uppgifter",
+      "portability": "Överföra dina uppgifter",
+      "withdraw": "Återkalla samtycke när som helst"
+    },
+    "contact": {
+      "title": "6. Kontakta oss",
+      "description": "Om du har frågor om vår integritetspolicy, kontakta oss på:",
+      "email": "E-post: info@yogastenungsund.se"
+    }
+  }
+}

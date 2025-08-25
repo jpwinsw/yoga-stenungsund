@@ -92,3 +92,4 @@ const t = await getTranslations('namespace')
 ### Production Build
 
 The project uses `output: "standalone"` in next.config.ts for optimized Docker deployments. The build includes all locales and generates static pages where possible.
+- Always use translation strings as per app pattern

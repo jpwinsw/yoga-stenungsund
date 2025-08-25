@@ -8,6 +8,7 @@ interface AuthContextType {
   isAuthenticated: boolean
   member: Member | null
   isLoading: boolean
+  sessionExpiresAt: Date | null
   login: (credentials: LoginRequest) => Promise<LoginResponse>
   signup: (data: SignupRequest) => Promise<unknown>
   logout: () => void
@@ -20,6 +21,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [member, setMember] = useState<Member | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [sessionExpiresAt, setSessionExpiresAt] = useState<Date | null>(null)
 
   const checkAuth = useCallback(() => {
     const authenticated = braincore.isAuthenticated()
@@ -27,8 +29,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (authenticated) {
       const memberData = braincore.getMember()
       setMember(memberData)
+      const expiresAt = braincore.getSessionExpiresAt()
+      setSessionExpiresAt(expiresAt)
     } else {
       setMember(null)
+      setSessionExpiresAt(null)
     }
     setIsLoading(false)
   }, [])
@@ -38,7 +43,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     
     // Listen for storage changes (login/logout in other tabs)
     window.addEventListener('storage', checkAuth)
-    return () => window.removeEventListener('storage', checkAuth)
+    // Listen for explicit logout events
+    window.addEventListener('auth-logout', checkAuth)
+    
+    // Check session validity every minute
+    const intervalId = setInterval(() => {
+      if (braincore.isAuthenticated()) {
+        // Still valid, update expiry time
+        const expiresAt = braincore.getSessionExpiresAt()
+        setSessionExpiresAt(expiresAt)
+      } else {
+        // Session expired
+        checkAuth()
+      }
+    }, 60000) // Check every minute
+    
+    return () => {
+      window.removeEventListener('storage', checkAuth)
+      window.removeEventListener('auth-logout', checkAuth)
+      clearInterval(intervalId)
+    }
   }, [checkAuth])
 
   const login = async (credentials: LoginRequest) => {
@@ -57,6 +81,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     braincore.logout()
     setIsAuthenticated(false)
     setMember(null)
+    setSessionExpiresAt(null)
   }
 
   const refreshAuth = () => {
@@ -69,6 +94,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isAuthenticated,
         member,
         isLoading,
+        sessionExpiresAt,
         login,
         signup,
         logout,

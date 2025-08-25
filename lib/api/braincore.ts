@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import type {
   ScheduleSession,
   Service,
@@ -30,6 +30,34 @@ import type {
 } from '@/lib/types/braincore'
 
 const COMPANY_ID = process.env.NEXT_PUBLIC_COMPANY_ID || '5'
+
+// Setup axios interceptor for 401 handling
+axios.interceptors.response.use(
+  (response) => response,
+  (error: AxiosError) => {
+    if (error.response?.status === 401) {
+      // Clear auth data
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('member_token')
+        localStorage.removeItem('member_data')
+        localStorage.removeItem('session_expires_at')
+        
+        // Dispatch auth logout event
+        window.dispatchEvent(new Event('auth-logout'))
+        
+        // Redirect to login with return URL
+        const currentPath = window.location.pathname
+        const returnUrl = encodeURIComponent(currentPath)
+        
+        // Check if we're already on a login-related page to avoid redirect loops
+        if (!currentPath.includes('/schema') && !currentPath.includes('/login')) {
+          window.location.href = `/schema?sessionExpired=true&returnUrl=${returnUrl}`
+        }
+      }
+    }
+    return Promise.reject(error)
+  }
+)
 
 export const braincoreAPI = {
   getSchedule: (startDate: string, endDate: string) =>
@@ -77,10 +105,15 @@ class BraincoreClient {
     return headers
   }
 
-  setToken(token: string) {
+  setToken(token: string, expiresIn?: number) {
     this.token = token
     if (typeof window !== 'undefined') {
       localStorage.setItem('member_token', token)
+      
+      // Store expiration time (default 30 days if not provided)
+      const expirationMs = expiresIn || 30 * 24 * 60 * 60 * 1000 // 30 days in ms
+      const expiresAt = new Date(Date.now() + expirationMs).toISOString()
+      localStorage.setItem('session_expires_at', expiresAt)
     }
   }
 
@@ -90,6 +123,9 @@ class BraincoreClient {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('member_token')
       localStorage.removeItem('member_data')
+      localStorage.removeItem('session_expires_at')
+      // Dispatch a custom event to notify all components about logout
+      window.dispatchEvent(new Event('auth-logout'))
     }
   }
   
@@ -249,6 +285,29 @@ class BraincoreClient {
     )
   }
 
+  async validateDiscountCode(data: {
+    code: string
+    membership_plan_id?: number
+    service_id?: number
+    amount: number
+    company_id?: number
+  }): Promise<{
+    valid: boolean
+    discount_amount: number
+    final_amount: number
+    discount_type: string
+    discount_value: number
+    message?: string
+  }> {
+    // Use our API route to avoid CORS issues
+    const response = await axios.post(
+      `/api/braincore/discount/validate`,
+      data,
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
   async createPaymentIntent(data: {
     company_id: number
     amount: number
@@ -259,6 +318,7 @@ class BraincoreClient {
     customer_email?: string
     customer_name?: string
     is_guest?: boolean
+    discount_code?: string
   }): Promise<{
     payment_intent_id: string
     client_secret: string
@@ -308,6 +368,17 @@ class BraincoreClient {
     return response.data
   }
 
+  async checkEmailExists(email: string): Promise<{ exists: boolean; has_password: boolean }> {
+    const response = await axios.post(
+      `/api/braincore/auth/check-email`,
+      {
+        email,
+        company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '5')
+      }
+    )
+    return response.data
+  }
+
   async login(data: LoginRequest): Promise<LoginResponse> {
     // Use our API route to avoid CORS issues
     const response = await axios.post(
@@ -317,8 +388,8 @@ class BraincoreClient {
     )
     const loginData = response.data
     
-    // Set token using session_token field
-    this.setToken(loginData.session_token)
+    // Set token using session_token field (30 days expiry)
+    this.setToken(loginData.session_token, 30 * 24 * 60 * 60 * 1000)
     
     // Store member data by reconstructing Member object from response
     this.member = {
@@ -352,7 +423,32 @@ class BraincoreClient {
   }
 
   isAuthenticated(): boolean {
-    return !!this.token
+    if (!this.token) return false
+    
+    // Check if session has expired
+    if (typeof window !== 'undefined') {
+      const expiresAt = localStorage.getItem('session_expires_at')
+      if (expiresAt) {
+        const expirationDate = new Date(expiresAt)
+        if (expirationDate < new Date()) {
+          // Session has expired, clear it
+          this.clearToken()
+          return false
+        }
+      }
+    }
+    
+    return true
+  }
+  
+  getSessionExpiresAt(): Date | null {
+    if (typeof window !== 'undefined') {
+      const expiresAt = localStorage.getItem('session_expires_at')
+      if (expiresAt) {
+        return new Date(expiresAt)
+      }
+    }
+    return null
   }
 
   // Community Methods
@@ -431,7 +527,7 @@ class BraincoreClient {
     return response.data
   }
 
-  async createMembershipCheckout(planId: number): Promise<{
+  async createMembershipCheckout(planId: number, discountCode?: string): Promise<{
     checkout_session_id: string
     checkout_url: string
     publishable_key: string
@@ -445,7 +541,8 @@ class BraincoreClient {
       {
         plan_id: planId,
         success_url: successUrl,
-        cancel_url: cancelUrl
+        cancel_url: cancelUrl,
+        ...(discountCode && { discount_code: discountCode })
       },
       { headers: this.getHeaders() }
     )
@@ -476,6 +573,7 @@ class BraincoreClient {
     }>
     success_url: string
     cancel_url: string
+    discount_code?: string
   }): Promise<{
     checkout_session_id: string
     checkout_url: string
@@ -580,6 +678,50 @@ class BraincoreClient {
   async getReceiptsSummary(): Promise<ReceiptsSummary> {
     const response = await axios.get(
       `/api/braincore/member/receipts/summary`,
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async applyWeeklyPattern(data: {
+    plan_id: number
+    selected_template_id: number
+    weekly_pattern: Array<{
+      dayOfWeek: number
+      time: string
+      sessionId: number
+      templateId: number
+    }>
+    term_weeks: number
+    auto_resolve_conflicts?: boolean
+  }): Promise<{
+    scheduled_sessions: number[]
+    total_scheduled: number
+    required_total: number
+    conflicts: Array<{
+      week: number
+      missing_slots: Array<{
+        dayOfWeek: number
+        time: string
+      }>
+      alternatives: ScheduleSession[]
+    }>
+  }> {
+    const response = await axios.post(
+      '/api/braincore/pattern-booking',
+      data,
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async getAggregatedSessions(
+    templateIds: number[],
+    startDate: string,
+    endDate: string
+  ): Promise<ScheduleSession[]> {
+    const response = await axios.get(
+      `/api/braincore/pattern-booking?template_ids=${templateIds.join(',')}&start_date=${startDate}&end_date=${endDate}`,
       { headers: this.getHeaders() }
     )
     return response.data

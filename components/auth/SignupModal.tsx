@@ -36,7 +36,7 @@ export default function SignupModal({
   onSwitchToLogin,
   prefillData
 }: SignupModalProps) {
-  const t = useTranslations('member.auth.signup')
+  const t = useTranslations('auth.signup')
   const { refreshAuth } = useAuth()
   const [formData, setFormData] = useState<SignupRequest & { confirmPassword: string }>({
     email: prefillData?.email || '',

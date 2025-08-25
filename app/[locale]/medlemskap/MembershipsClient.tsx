@@ -86,7 +86,6 @@ export default function MembershipsClient({ plans }: MembershipsClientProps) {
             
             <div className="grid md:grid-cols-2 gap-8">
               {[
-                'benefits.unlimitedYoga',
                 'benefits.freeWorkshops',
                 'benefits.priorityBooking',
                 'benefits.memberEvents',

@@ -20,7 +20,20 @@
       "WebFetch(domain:developers.google.com)",
       "Bash(curl:*)",
       "mcp__playwright__browser_snapshot",
-      "WebSearch"
+      "WebSearch",
+      "Read(//Users/jwindzer/Dropbox/braincore/**)",
+      "Read(//Users/jwindzer/Dropbox/braincore/**)",
+      "Read(//Users/jwindzer/Dropbox/braincore/**)",
+      "Read(//Users/jwindzer/Dropbox/braincore/**)",
+      "Read(//Users/jwindzer/Dropbox/braincore/**)",
+      "Read(//Users/jwindzer/Dropbox/braincore/**)",
+      "Read(//Users/jwindzer/Dropbox/braincore/**)",
+      "Read(//Users/jwindzer/Dropbox/braincore/**)",
+      "Read(//Users/jwindzer/Dropbox/Ocean Group JW/Mollösunds Wärdshus/wards/**)",
+      "Read(//Users/jwindzer/Dropbox/Ocean Group JW/Mollösunds Wärdshus/wards/**)",
+      "Read(//Users/jwindzer/Dropbox/Ocean Group JW/Mollösunds Wärdshus/wards/**)",
+      "Read(//Users/jwindzer/Dropbox/Ocean Group JW/Mollösunds Wärdshus/wards/**)",
+      "Read(//Users/jwindzer/Dropbox/Ocean Group JW/Mollösunds Wärdshus/wards/**)"
     ],
     "deny": []
   }

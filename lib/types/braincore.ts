@@ -112,6 +112,8 @@ export interface BookingRequest {
   payment_method?: string
   join_waitlist?: boolean
   payment_intent_id?: string
+  use_credits?: boolean
+  discount_code?: string
 }
 
 export interface BookingResponse {
@@ -266,6 +268,7 @@ export interface GuestBookingRequest {
     phone?: string
   }
   payment_intent_id?: string
+  discount_code?: string
 }
 
 export interface CreatePaymentIntentRequest {

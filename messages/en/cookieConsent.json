@@ -1,0 +1,52 @@
+{
+  "title": "Cookie Settings",
+  "description": "We use cookies to enhance your experience on our website.",
+  "acceptAll": "Accept All",
+  "rejectAll": "Reject All",
+  "customize": "Customize",
+  "close": "Close",
+  "save": "Save Preferences",
+  "savePreferences": "Save Preferences",
+  "privacyPolicy": "Privacy Policy",
+  "detailsDescription": "Manage your cookie preferences below. You can enable or disable different types of cookies as per your preference.",
+  "alwaysActive": "Always Active",
+  "details": {
+    "title": "Cookie Preferences",
+    "description": "Manage your cookie preferences below. You can enable or disable different types of cookies.",
+    "necessary": {
+      "title": "Necessary Cookies",
+      "description": "These cookies are essential for the website to function properly and cannot be disabled."
+    },
+    "analytics": {
+      "title": "Analytics Cookies",
+      "description": "These cookies help us understand how visitors interact with our website."
+    },
+    "marketing": {
+      "title": "Marketing Cookies",
+      "description": "These cookies are used to show you relevant advertisements."
+    }
+  },
+  "necessary": {
+    "title": "Necessary Cookies",
+    "description": "These cookies are essential for the website to function properly and cannot be disabled in our systems. They are usually only set in response to actions made by you."
+  },
+  "analytics": {
+    "title": "Analytics Cookies",
+    "description": "These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site.",
+    "services": "Google Analytics, Google Tag Manager"
+  },
+  "marketing": {
+    "title": "Marketing Cookies",
+    "description": "These cookies may be set through our site by our advertising partners to build a profile of your interests and show you relevant adverts.",
+    "services": "Google Ads, Facebook Pixel"
+  },
+  "preferences": {
+    "title": "Preference Cookies",
+    "description": "These cookies enable the website to provide enhanced functionality and personalization.",
+    "services": "Language preferences, Theme settings"
+  },
+  "notice": "We use cookies to improve your experience. By continuing to use our site, you accept our use of cookies.",
+  "manageCookies": "Manage Cookies",
+  "privacyInfo": "Privacy Policy",
+  "backToSimple": "Back to Simple View"
+}

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const BRAINCORE_API = process.env.NEXT_PUBLIC_BRAINCORE_API || 'https://api.brain-core.ai'
+const BRAINCORE_API = process.env.NEXT_PUBLIC_BRAINCORE_API || 'http://localhost:8010'
 
 export async function GET(
   request: NextRequest,

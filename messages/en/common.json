@@ -38,17 +38,25 @@
         "signUp": "Sign Up",
         "loginError": "Login failed",
         "invalidCredentials": "Invalid email or password",
+        "invalidEmail": "Please enter a valid email address",
         "networkError": "Network error. Please try again later."
       },
       "signup": {
         "title": "Create Account",
         "close": "Close",
         "firstName": "First Name",
+        "firstNamePlaceholder": "John",
         "lastName": "Last Name",
+        "lastNamePlaceholder": "Doe",
         "email": "Email",
+        "emailPlaceholder": "your@email.com",
         "phone": "Phone (optional)",
         "phonePlaceholder": "+46 70 123 45 67",
         "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "createPassword": "Create a password",
+        "createPasswordPlaceholder": "Choose a secure password",
+        "passwordHint": "Must be at least 8 characters",
         "confirmPassword": "Confirm Password",
         "passwordRequirements": "Password requirements:",
         "minLength": "At least 8 characters",
@@ -63,6 +71,84 @@
         "termsAgreement": "I agree to the",
         "privacyPolicy": "Privacy Policy",
         "and": "and"
+      },
+      "forgotPassword": {
+        "title": "Reset Password",
+        "emailLabel": "Email address",
+        "emailPlaceholder": "your@email.com",
+        "description": "Enter your email address and we'll send you a link to reset your password.",
+        "sendButton": "Send Reset Link",
+        "error": "Something went wrong. Please try again.",
+        "successMessage": "Check your email! If an account exists with this email, we've sent you a password reset link."
+      },
+      "resetPassword": {
+        "title": "Reset Your Password",
+        "description": "Enter your new password below",
+        "newPassword": "New Password",
+        "newPasswordPlaceholder": "Enter new password",
+        "confirmPassword": "Confirm Password",
+        "confirmPasswordPlaceholder": "Confirm new password",
+        "resetButton": "Reset Password",
+        "invalidToken": "Invalid or expired reset link",
+        "passwordMismatch": "Passwords do not match",
+        "passwordTooShort": "Password must be at least 8 characters",
+        "resetError": "Failed to reset password. Please try again.",
+        "successMessage": "Your password has been reset successfully! Redirecting..."
+      }
+    }
+  },
+  "common": {
+    "cancel": "Cancel",
+    "close": "Close"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "close": "Close",
+    "lastUpdated": "Last updated",
+    "sections": {
+      "dataController": {
+        "title": "1. Data Controller",
+        "company": "Yoga Stenungsund",
+        "address": "Stenungsund, Sweden",
+        "email": "Email: info@yogastenungsund.se",
+        "phone": "Phone: Contact us"
+      },
+      "dataCollection": {
+        "title": "2. What data do we collect?",
+        "contactInfo": "Contact information (name, email, phone number)",
+        "bookingInfo": "Booking information and preferences",
+        "paymentInfo": "Payment information (handled securely)",
+        "cookieData": "Cookie data and analytics (with your consent)"
+      },
+      "dataUsage": {
+        "title": "3. How do we use your data?",
+        "bookings": "To manage bookings and class registrations",
+        "communication": "To communicate with you about your bookings",
+        "improvement": "To improve our services",
+        "marketing": "For marketing (with your consent)"
+      },
+      "cookies": {
+        "title": "4. Cookies",
+        "description": "We use the following types of cookies:",
+        "necessary": "Necessary",
+        "necessaryDesc": "Essential for website functionality",
+        "analytics": "Analytics",
+        "analyticsDesc": "To understand how visitors use our website",
+        "marketing": "Marketing",
+        "marketingDesc": "For relevant ads and campaigns"
+      },
+      "rights": {
+        "title": "5. Your rights",
+        "access": "Access your personal data",
+        "rectification": "Correct inaccurate information",
+        "erasure": "Request deletion of your data",
+        "portability": "Transfer your data",
+        "withdraw": "Withdraw consent at any time"
+      },
+      "contact": {
+        "title": "6. Contact us",
+        "description": "If you have questions about our privacy policy, contact us at:",
+        "email": "Email: info@yogastenungsund.se"
       }
     }
   }

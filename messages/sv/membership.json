@@ -5,6 +5,8 @@
   "description": "Välj det medlemskap som passar dig bäst och börja din yogaresa med oss",
   "purchase": "Välj medlemskap",
   "purchasing": "Behandlar...",
+  "confirmPurchase": "Slutför ditt medlemskap",
+  "proceedToPayment": "Fortsätt till betalning",
   "periods": {
     "monthly": "per månad",
     "quarterly": "per kvartal",
@@ -23,6 +25,8 @@
     "recoveryCredits": "Avbokade pass blir krediter för valfri klass"
   },
   "termBooking": {
+    "termDuration": "{weeks} veckor",
+    "sessionsPerWeek": "{count} pass/vecka",
     "stepTitles": {
       "classType": "Välj klasstyp",
       "reviewSessions": "Granska dina pass",
@@ -104,10 +108,6 @@
   },
   "benefits": {
     "title": "Förmåner för alla medlemmar",
-    "unlimitedYoga": {
-      "title": "Obegränsad yoga",
-      "description": "Delta i alla ordinarie klasser så ofta du vill"
-    },
     "freeWorkshops": {
       "title": "Gratis workshops",
       "description": "Få tillgång till utvalda workshops och specialklasser"
@@ -146,6 +146,100 @@
     "viewMyBookings": "Se mina bokningar",
     "viewSchedule": "Visa schema"
   },
+  "weeklySchedule": {
+    "scheduleWeek1Title": "Schemalägg vecka 1",
+    "scheduleWeekN": "Vecka {week}",
+    "selectionComplete": "Perfekt! Du har valt alla dina pass för denna vecka",
+    "selectionInstructions": "Välj {count, plural, =1 {# pass} other {# pass}} du vill gå på denna vecka",
+    "selectMore": "{count, plural, =1 {Välj # pass till för att fortsätta} other {Välj # pass till för att fortsätta}}",
+    "smartTipTitle": "Smart schemaläggning:",
+    "smartTipDescription": "Välj tider som passar din rutin. Vi försöker boka samma tider för resterande veckor av din termin.",
+    "today": "Idag",
+    "noClasses": "Inga pass",
+    "full": "Fullt",
+    "lowSpots": "Endast {count} kvar!",
+    "spotsAvailable": "{count} platser",
+    "readyToContinue": "Bra val! Klicka på 'Nästa' för att fortsätta",
+    "varietyTip": "Tips: Välj olika tider för att utforska olika klasser och instruktörer",
+    "withInstructor": "med {instructor}"
+  },
+  "termCheckout": {
+    "selectClassType": "Välj typ av klass",
+    "selectClassTypeDescription": "Du kommer att träna {count} gånger per vecka i {weeks} veckor",
+    "scheduleWeek1": "Schemalägg vecka 1",
+    "selectSessions": "Välj {count} pass för första veckan",
+    "noSessionsAvailable": "Inga tillgängliga pass denna vecka",
+    "selectedCount": "{selected} av {required} pass valda",
+    "reviewPattern": "Granska ditt veckeschema",
+    "patternDescription": "Detta schema kommer att användas som mall för resterande veckor",
+    "yourWeeklyPattern": "Ditt veckeschema",
+    "patternWillBeApplied": "Detta schema kommer att tillämpas på {weeks} återstående veckor",
+    "autoResolveConflicts": "Hitta automatiskt alternativ om samma tid inte är tillgänglig",
+    "patternApplied": "Schema tillämpat",
+    "reviewAndResolve": "Granska resultatet och lös eventuella konflikter",
+    "sessionsScheduled": "pass schemalagda",
+    "conflictsToResolve": "konflikter att lösa",
+    "week": "Vecka",
+    "conflictFor": "Konflikt för",
+    "confirmBooking": "Bekräfta bokning",
+    "confirmDescription": "Du håller på att reservera {count} pass för din termin",
+    "membership": "Medlemskap",
+    "classType": "Klasstyp",
+    "termPeriod": "Terminsperiod",
+    "totalSessions": "Totalt antal pass",
+    "classes": "pass",
+    "weeks": "veckor",
+    "total": "Totalt",
+    "reservationNote": "Smart reservation:",
+    "reservationDescription": "Dina platser hålls under betalningen. Om du inte slutför köpet släpps de automatiskt.",
+    "paymentNote": "Du kommer att omdirigeras till säker betalning",
+    "processing": "Bearbetar...",
+    "back": "Tillbaka",
+    "next": "Nästa",
+    "cancel": "Avbryt",
+    "proceedToPayment": "Gå till betalning",
+    "reservingSessions": "Reserverar alla dina terminspass..."
+  },
+  "checkout": {
+    "processing": "Behandlar...",
+    "periods": {
+      "monthly": "per månad",
+      "quarterly": "per kvartal",
+      "yearly": "per år",
+      "oneTime": "engångsbelopp"
+    },
+    "newCustomer": "Har du inget konto?",
+    "haveAccount": "Har du redan ett konto? Logga in",
+    "addReceiptDetails": "Lägg till kvittouppgifter",
+    "receiptTooltip": "Behöver du kvitto för friskvårdsavdrag? Fyll i uppgifter här för ditt kvitto.",
+    "personalNumber": "Personnummer",
+    "personalNumberPlaceholder": "ÅÅÅÅMMDD-XXXX",
+    "streetAddress": "Gatuadress",
+    "streetAddressPlaceholder": "Gatunamn 123",
+    "postalCode": "Postnummer",
+    "postalCodePlaceholder": "123 45",
+    "city": "Ort",
+    "cityPlaceholder": "Stockholm",
+    "companyName": "Företagsnamn (valfritt)",
+    "companyPlaceholder": "Ditt Företag AB",
+    "vatNumber": "Organisationsnummer (valfritt)",
+    "vatPlaceholder": "SE123456789001",
+    "saved": "sparad",
+    "haveDiscountCode": "Har du en rabattkod?",
+    "remove": "Ta bort",
+    "optional": "valfritt",
+    "completePurchase": "Slutför köp",
+    "securePayment": "🔒 Säker betalning via Stripe",
+    "welcomeBack": "Välkommen tillbaka, {name}!",
+    "enterPasswordToContinue": "Vi ser att du har ett konto. Ange ditt lösenord för att fortsätta.",
+    "forgotPassword": "Glömt lösenord?",
+    "proceedWithPurchase": "Vi fortsätter med ditt köp, {name}",
+    "addReceiptDetailsBelow": "Lägg till kvittouppgifter nedan om du behöver det",
+    "errors": {
+      "checkoutFailed": "Kunde inte skapa betalningssession. Försök igen.",
+      "invalidPassword": "Felaktigt lösenord. Försök igen."
+    }
+  },
   "management": {
     "title": "Hantera medlemskap",
     "tabs": {
@@ -173,7 +267,12 @@
       "monthly": "Månadsvis",
       "yearly": "Årsvis",
       "term": "Termin",
-      "term_based": "Terminsbaserat"
+      "term_based": "Terminsbaserat",
+      "punch_card": "Klippkort",
+      "unlimited": "Obegränsat",
+      "credits": "Krediter",
+      "drop_in": "Drop-in",
+      "trial": "Provperiod"
     },
     "actions": {
       "warning": "Varning",

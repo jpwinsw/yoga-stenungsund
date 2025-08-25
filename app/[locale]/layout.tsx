@@ -6,6 +6,7 @@ import { locales } from '@/i18n';
 import Navigation from '@/components/Navigation';
 import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/lib/contexts/AuthContext';
+import CookieConsentWrapper from '@/components/CookieConsentWrapper';
 import "./globals.css";
 
 const geistSans = Geist({
@@ -58,6 +59,7 @@ export default async function LocaleLayout({
               {children}
             </main>
             <Toaster />
+            <CookieConsentWrapper locale={locale} />
           </AuthProvider>
         </NextIntlClientProvider>
       </body>
