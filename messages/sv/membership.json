@@ -158,6 +158,7 @@
     "noClasses": "Inga pass",
     "full": "Fullt",
     "lowSpots": "Endast {count} kvar!",
+    "spots": "platser",
     "spotsAvailable": "{count} platser",
     "readyToContinue": "Bra val! Klicka på 'Nästa' för att fortsätta",
     "varietyTip": "Tips: Välj olika tider för att utforska olika klasser och instruktörer",
@@ -233,6 +234,8 @@
     "welcomeBack": "Välkommen tillbaka, {name}!",
     "enterPasswordToContinue": "Vi ser att du har ett konto. Ange ditt lösenord för att fortsätta.",
     "forgotPassword": "Glömt lösenord?",
+    "accountExists": "Kontot finns redan",
+    "accountExistsDescription": "Ett konto med {email} finns redan. Ange ditt lösenord för att fortsätta eller använd glömt lösenord om du inte kommer ihåg det.",
     "proceedWithPurchase": "Vi fortsätter med ditt köp, {name}",
     "addReceiptDetailsBelow": "Lägg till kvittouppgifter nedan om du behöver det",
     "errors": {

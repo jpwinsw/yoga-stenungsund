@@ -23,6 +23,7 @@ import { format, addWeeks, startOfWeek, getWeek, endOfWeek } from 'date-fns';
 import { sv, enUS } from 'date-fns/locale';
 import { useLocale } from 'next-intl';
 import { ForgotPasswordModal } from '@/components/auth/ForgotPasswordModal';
+import PrivacyPolicyModal from '@/components/PrivacyPolicyModal';
 import WeeklyScheduleSelector from '@/components/membership/WeeklyScheduleSelector';
 
 interface EnhancedTermCheckoutProps {
@@ -58,8 +59,10 @@ type Step = 'auth' | 'schedule-week1' | 'review-pattern' | 'apply-pattern' | 'co
 
 export default function EnhancedTermCheckout({ plan, isOpen, onClose }: EnhancedTermCheckoutProps) {
   const t = useTranslations('membership.termCheckout');
-  const tAuth = useTranslations('auth');
+  const tMembership = useTranslations('membership');
+  const tAuth = useTranslations('auth.signup');
   const tCheckout = useTranslations('membership.checkout');
+  const tBooking = useTranslations('schema.booking');
   const tWeekly = useTranslations('membership.weeklySchedule');
   const locale = useLocale();
   const dateLocale = locale === 'sv' ? sv : enUS;
@@ -73,6 +76,7 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
   // Auth form state (from SimpleMembershipCheckout)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
@@ -88,7 +92,15 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
   const [companyName, setCompanyName] = useState('');
   const [vatNumber, setVatNumber] = useState('');
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
   const [discountCode, setDiscountCode] = useState('');
+  const [discountValidation, setDiscountValidation] = useState<{
+    valid: boolean;
+    discount_amount: number;
+    final_amount: number;
+  } | null>(null);
+  const [isValidatingDiscount, setIsValidatingDiscount] = useState(false);
   const [showDiscountField, setShowDiscountField] = useState(false);
   
   // Selection state - no longer needed since we show all allowed templates
@@ -126,11 +138,67 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
   // Removed unused loadTemplates function - we're loading all sessions instead
 
 
+  const validateDiscountCode = async () => {
+    if (!discountCode.trim()) {
+      setDiscountValidation(null);
+      return;
+    }
+    
+    setIsValidatingDiscount(true);
+    try {
+      const response = await braincore.validateDiscountCode({
+        code: discountCode,
+        membership_plan_id: plan.id,
+        amount: plan.price,
+        company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '5')
+      });
+      
+      if (response.valid) {
+        setDiscountValidation(response);
+        setError(null);
+      } else {
+        setError(response.message || tBooking('invalidDiscountCode'));
+        setDiscountValidation(null);
+      }
+    } catch {
+      setError(tBooking('invalidDiscountCode'));
+      setDiscountValidation(null);
+    } finally {
+      setIsValidatingDiscount(false);
+    }
+  };
+
   const handleAuthAndProceed = async () => {
     setLoading(true);
     setError(null);
     
     try {
+      // Auto-validate discount code if entered but not validated
+      if (discountCode && !discountValidation?.valid) {
+        setIsValidatingDiscount(true);
+        try {
+          const response = await braincore.validateDiscountCode({
+            code: discountCode,
+            membership_plan_id: plan.id,
+            amount: plan.price,
+            company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '5')
+          });
+          
+          if (response.valid) {
+            setDiscountValidation(response);
+          } else {
+            // Invalid discount code - continue without discount
+            setDiscountCode('');
+            setDiscountValidation(null);
+          }
+        } catch {
+          // Error validating - continue without discount
+          setDiscountCode('');
+          setDiscountValidation(null);
+        } finally {
+          setIsValidatingDiscount(false);
+        }
+      }
       // Check if user is authenticated already
       if (!braincore.isAuthenticated()) {
         // If user manually selected "I have an account" or we auto-detected they need password
@@ -160,21 +228,20 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
             console.error('Email check failed:', error);
           }
           
-          // New user - create account
+          // New user - create account with user-provided password
           try {
-            const tempPassword = Math.random().toString(36).slice(-12);
             await braincore.signup({
               email,
-              password: tempPassword,
+              password,
               first_name: firstName,
               last_name: lastName,
               phone
             });
             
-            // Auto-login
+            // Auto-login with same password
             await braincore.login({ 
               email, 
-              password: tempPassword
+              password
             });
           } catch (signupError) {
             // If email already exists (race condition), ask for password
@@ -304,7 +371,10 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
 
   // Check auth status on mount
   useEffect(() => {
+    if (!isOpen) return;
+    
     const checkAuth = async () => {
+      setCheckingAuth(true);
       if (braincore.isAuthenticated()) {
         try {
           const profile = await braincore.getMemberProfile();
@@ -320,11 +390,10 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
           console.error('Failed to get profile:', error);
         }
       }
+      setCheckingAuth(false);
     };
     
-    if (isOpen) {
-      checkAuth();
-    }
+    checkAuth();
   }, [isOpen]);
 
   // Note: We removed the single template loading function since we now load all allowed templates
@@ -423,7 +492,16 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
       }
       
       setAllWeekSchedules(schedules);
-      setCurrentStep('apply-pattern');
+      
+      // Check if there are any conflicts
+      const hasConflicts = schedules.some(week => week.conflicts.length > 0);
+      
+      // Skip the apply-pattern step if no conflicts
+      if (hasConflicts) {
+        setCurrentStep('apply-pattern');
+      } else {
+        setCurrentStep('confirm');
+      }
     } catch (error) {
       console.error('Failed to apply pattern:', error);
       setError('Failed to apply pattern to all weeks');
@@ -499,6 +577,37 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
     setError(null);
     
     try {
+      // Auto-validate discount code if entered but not validated - same as SimpleMembershipCheckout
+      let finalDiscountValidation = discountValidation;
+      if (discountCode && !discountValidation?.valid) {
+        setIsValidatingDiscount(true);
+        try {
+          const response = await braincore.validateDiscountCode({
+            code: discountCode,
+            membership_plan_id: plan.id,
+            amount: plan.price,
+            company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '5')
+          });
+          
+          if (response.valid) {
+            setDiscountValidation(response);
+            finalDiscountValidation = response;
+          } else {
+            // Invalid discount code - continue without discount
+            setDiscountCode('');
+            setDiscountValidation(null);
+            finalDiscountValidation = null;
+          }
+        } catch {
+          // Error validating - continue without discount
+          setDiscountCode('');
+          setDiscountValidation(null);
+          finalDiscountValidation = null;
+        } finally {
+          setIsValidatingDiscount(false);
+        }
+      }
+      
       // Prepare all selected sessions from all weeks
       const allSelectedSessions = allWeekSchedules.flatMap(week => 
         week.selectedSessions.map(sessionId => {
@@ -540,12 +649,13 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
         return;
       }
       
-      // Create checkout session with temporary reservation
+      // Create checkout session with temporary reservation and discount if applicable - same as SimpleMembershipCheckout
       const response = await braincore.createTermMembershipCheckout({
         plan_id: plan.id,
         selected_service_template_id: parseInt(primaryTemplateId),
         term_start_date: termStartDate.toISOString(),
         pre_booked_sessions: allSelectedSessions.filter(s => s !== null) as { session_id: number; date: Date; time: string; }[],
+        discount_code: finalDiscountValidation?.valid ? discountCode : undefined,
         success_url: `${window.location.origin}/medlemskap/terminskort-tack`,
         cancel_url: `${window.location.origin}/medlemskap`
       });
@@ -557,7 +667,7 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
       }
     } catch (error) {
       console.error('Checkout failed:', error);
-      setError(t('failedToCreateCheckout'));
+      setError(tMembership('failedToCreateCheckout'));
     } finally {
       setLoading(false);
     }
@@ -581,10 +691,56 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
   };
 
 
-  const renderAuthStep = () => (
-    <div className="space-y-4">
-      {/* If user is logged in, show simple message */}
-      {authenticatedUser ? (
+  const renderAuthStep = () => {
+    const finalPrice = discountValidation?.valid 
+      ? discountValidation.final_amount 
+      : plan.price;
+      
+    const formatPrice = (price: number) => {
+      return new Intl.NumberFormat('sv-SE', {
+        style: 'currency',
+        currency: plan.currency || 'SEK',
+        minimumFractionDigits: 0,
+      }).format(price);
+    };
+    
+    const getPeriodText = () => {
+      // For term memberships, just show the term text
+      // We could also use billing_period if it's set
+      return '';  // No period text needed for term memberships as it's a one-time payment
+    };
+    
+    return (
+      <div className="space-y-3">
+        {/* Price display */}
+        <div className="text-center py-2 bg-gray-50 rounded-lg">
+          <div className="text-2xl font-light">
+            {formatPrice(finalPrice)}
+            <span className="text-lg text-gray-600 ml-2">{getPeriodText()}</span>
+          </div>
+        </div>
+        
+        {/* Loading state while checking auth */}
+        {checkingAuth ? (
+          <div className="space-y-4">
+            {/* Skeleton for auth form */}
+            <div className="space-y-2">
+              <div className="h-4 w-24 bg-gray-200 rounded animate-pulse"></div>
+              <div className="h-10 w-full bg-gray-100 rounded animate-pulse"></div>
+            </div>
+            <div className="space-y-2">
+              <div className="h-4 w-20 bg-gray-200 rounded animate-pulse"></div>
+              <div className="h-10 w-full bg-gray-100 rounded animate-pulse"></div>
+            </div>
+            <div className="flex gap-3 mt-4">
+              <div className="h-10 flex-1 bg-gray-200 rounded animate-pulse"></div>
+              <div className="h-10 flex-1 bg-gray-200 rounded animate-pulse"></div>
+            </div>
+          </div>
+        ) : (
+        <>
+        {/* If user is logged in, show simple message */}
+        {authenticatedUser ? (
         <div className="bg-[var(--yoga-light-sage)] p-4 rounded-lg">
           <p className="text-sm font-medium">
             {tCheckout('proceedWithPurchase', { 
@@ -617,6 +773,8 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
             <Input
               id="email"
               type="email"
+              name="email"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={tAuth('emailPlaceholder')}
@@ -628,10 +786,22 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
           {(needsPassword || isExistingUser) ? (
             <div className="space-y-3">
               {needsPassword && (
-                <div className="bg-[var(--yoga-light-sage)] p-4 rounded-lg">
-                  <p className="text-sm font-medium">{tCheckout('welcomeBack', { name: existingUserName })}</p>
-                  <p className="text-xs text-gray-600 mt-1">{tCheckout('enterPasswordToContinue')}</p>
-                </div>
+                <>
+                  <Alert className="border-orange-200 bg-orange-50">
+                    <AlertCircle className="h-4 w-4 text-orange-600" />
+                    <AlertDescription className="text-sm">
+                      <strong className="font-semibold text-orange-900">{tCheckout('accountExists')}</strong>
+                      <br />
+                      <span className="text-orange-800">
+                        {tCheckout('accountExistsDescription', { email })}
+                      </span>
+                    </AlertDescription>
+                  </Alert>
+                  <div className="bg-[var(--yoga-light-sage)] p-4 rounded-lg">
+                    <p className="text-sm font-medium">{tCheckout('welcomeBack', { name: existingUserName })}</p>
+                    <p className="text-xs text-gray-600 mt-1">{tCheckout('enterPasswordToContinue')}</p>
+                  </div>
+                </>
               )}
               
               <div className="space-y-2">
@@ -639,6 +809,8 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
                 <Input
                   id="password"
                   type="password"
+                  name="password"
+                  autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder={tAuth('passwordPlaceholder')}
@@ -656,36 +828,84 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
               </button>
             </div>
           ) : (
-            /* New user fields */
-            <div className="space-y-3">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-2">
+            /* New user fields - 2-column layout matching SimpleMembershipCheckout */
+            <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+              {/* Left column */}
+              <div className="space-y-3">
+                <div>
                   <Label htmlFor="firstName">{tAuth('firstName')} *</Label>
                   <Input
                     id="firstName"
+                    type="text"
+                    name="firstName"
+                    autoComplete="given-name"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     placeholder={tAuth('firstNamePlaceholder')}
                     required
                   />
                 </div>
-                <div className="space-y-2">
+                
+                <div>
+                  <Label htmlFor="newPassword">{tAuth('password')} *</Label>
+                  <Input
+                    id="newPassword"
+                    type="password"
+                    name="newPassword"
+                    autoComplete="new-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder={tAuth('passwordPlaceholder')}
+                    required
+                    minLength={8}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">{tAuth('passwordRequirements')}</p>
+                </div>
+              </div>
+              
+              {/* Right column */}
+              <div className="space-y-3">
+                <div>
                   <Label htmlFor="lastName">{tAuth('lastName')} *</Label>
                   <Input
                     id="lastName"
+                    type="text"
+                    name="lastName"
+                    autoComplete="family-name"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     placeholder={tAuth('lastNamePlaceholder')}
                     required
                   />
                 </div>
+                
+                <div>
+                  <Label htmlFor="confirmPassword">{tAuth('confirmPassword')} *</Label>
+                  <Input
+                    id="confirmPassword"
+                    type="password"
+                    name="confirmPassword"
+                    autoComplete="new-password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder={tAuth('confirmPasswordPlaceholder')}
+                    required
+                    minLength={8}
+                  />
+                  {confirmPassword && password !== confirmPassword && (
+                    <p className="text-xs text-red-500 mt-1">{tAuth('passwordsDoNotMatch')}</p>
+                  )}
+                </div>
               </div>
               
-              <div className="space-y-2">
+              {/* Phone spans both columns */}
+              <div className="col-span-2">
                 <Label htmlFor="phone">{tAuth('phone')}</Label>
                 <Input
                   id="phone"
                   type="tel"
+                  name="phone"
+                  autoComplete="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder={tAuth('phonePlaceholder')}
@@ -774,7 +994,7 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
 
       {/* Discount code section - matches SimpleMembershipCheckout */}
       <div className="pt-3 border-t">
-        {!showDiscountField ? (
+        {!showDiscountField && !discountValidation?.valid ? (
           <button
             type="button"
             onClick={() => setShowDiscountField(true)}
@@ -784,37 +1004,94 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
           </button>
         ) : (
           <div className="space-y-2">
-            <div className="flex gap-2">
-              <Input
-                id="discount"
-                value={discountCode}
-                onChange={(e) => setDiscountCode(e.target.value)}
-                placeholder={tCheckout('enterDiscountCode')}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    // TODO: Validate discount code
-                  }
-                }}
-              />
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  // TODO: Implement discount validation
-                  console.log('Validating discount:', discountCode);
-                }}
-                disabled={!discountCode.trim()}
-                size="sm"
-              >
-                {tCheckout('apply')}
-              </Button>
-            </div>
+            {(showDiscountField || discountValidation?.valid) && (
+              <>
+                <div className="flex gap-2">
+                  <Input
+                    id="discount"
+                    value={discountCode}
+                    onChange={(e) => setDiscountCode(e.target.value)}
+                    placeholder={tBooking('enterDiscountCode')}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        validateDiscountCode();
+                      }
+                    }}
+                    disabled={discountValidation?.valid}
+                  />
+                  {!discountValidation?.valid && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={validateDiscountCode}
+                      disabled={isValidatingDiscount || !discountCode.trim()}
+                      size="sm"
+                    >
+                      {isValidatingDiscount ? tBooking('validating') : tBooking('apply')}
+                    </Button>
+                  )}
+                </div>
+                
+                {discountValidation?.valid && (
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-sm text-green-600">
+                      <CheckCircle className="w-4 h-4" />
+                      {new Intl.NumberFormat('sv-SE', {
+                        style: 'currency',
+                        currency: plan.currency || 'SEK',
+                        minimumFractionDigits: 0,
+                      }).format(discountValidation.discount_amount)} {tCheckout('saved')}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDiscountCode('');
+                        setDiscountValidation(null);
+                        setShowDiscountField(false);
+                      }}
+                      className="text-xs text-gray-500 hover:underline"
+                    >
+                      {tCheckout('remove')}
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         )}
       </div>
+      
+      {/* Price summary when discount is applied */}
+      {discountValidation?.valid && (
+        <div className="space-y-1 text-sm">
+          <div className="flex justify-between">
+            <span className="text-gray-600">{tBooking('originalPrice')}</span>
+            <span className="line-through text-gray-400">{formatPrice(plan.price)}</span>
+          </div>
+          <div className="flex justify-between font-medium">
+            <span>{tBooking('total')}</span>
+            <span className="text-green-600">{formatPrice(finalPrice)}</span>
+          </div>
+        </div>
+      )}
+      
+      {/* Privacy Policy note */}
+      <p className="text-xs text-center text-gray-500 pt-2">
+        {tAuth('termsAgreement')}{' '}
+        <button
+          type="button"
+          onClick={() => setShowPrivacyPolicy(true)}
+          className="text-[var(--yoga-sage)] hover:underline"
+        >
+          {tAuth('privacyPolicy')}
+        </button>
+      </p>
+      </>
+      )}
     </div>
-  );
+    );
+  };
 
   // Note: Select type step was removed - we now show all allowed class types in the weekly calendar
 
@@ -1024,9 +1301,26 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
             <span className="font-medium">{totalScheduled} {t('classes')}</span>
           </div>
           
+          {discountValidation?.valid && (
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">{tBooking('discount')}</span>
+              <span className="text-green-600">-{new Intl.NumberFormat('sv-SE', {
+                style: 'currency',
+                currency: plan.currency || 'SEK',
+                minimumFractionDigits: 0,
+              }).format(discountValidation.discount_amount)}</span>
+            </div>
+          )}
+          
           <div className="flex justify-between pt-3 border-t">
             <span className="text-gray-600">{t('total')}</span>
-            <span className="font-medium text-lg">{plan.price} SEK</span>
+            <span className="font-medium text-lg">
+              {new Intl.NumberFormat('sv-SE', {
+                style: 'currency',
+                currency: plan.currency || 'SEK',
+                minimumFractionDigits: 0,
+              }).format(discountValidation?.valid ? discountValidation.final_amount : plan.price)}
+            </span>
           </div>
         </div>
 
@@ -1054,7 +1348,11 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
         if (needsPassword || isExistingUser) {
           return password.length > 0;
         }
-        return firstName.length > 0 && lastName.length > 0;
+        // New user needs all fields including matching passwords
+        return firstName.length > 0 && 
+               lastName.length > 0 && 
+               password.length >= 8 &&
+               password === confirmPassword;
       case 'schedule-week1':
         return selectedWeek1Sessions.length === sessionsPerWeek;
       case 'review-pattern':
@@ -1080,6 +1378,7 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
         break;
       case 'review-pattern':
         await applyPatternToAllWeeks();
+        // Navigation is handled inside applyPatternToAllWeeks based on conflicts
         break;
       case 'apply-pattern':
         setCurrentStep('confirm');
@@ -1102,7 +1401,13 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
         setCurrentStep('review-pattern');
         break;
       case 'confirm':
-        setCurrentStep('apply-pattern');
+        // Check if we skipped apply-pattern (no conflicts)
+        const hasConflicts = allWeekSchedules.some(week => week.conflicts.length > 0);
+        if (hasConflicts) {
+          setCurrentStep('apply-pattern');
+        } else {
+          setCurrentStep('review-pattern');
+        }
         break;
     }
   };
@@ -1112,26 +1417,33 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className={`${
           currentStep === 'auth' 
-            ? 'sm:max-w-md' // Narrow for auth step like SimpleMembershipCheckout
-            : 'sm:max-w-4xl lg:max-w-6xl' // Wide for scheduling steps
+            ? 'w-[95vw] sm:max-w-2xl lg:max-w-3xl' // Same width as SimpleMembershipCheckout
+            : 'w-[95vw] sm:max-w-4xl lg:max-w-6xl' // Wide for scheduling steps
         } max-h-[90vh] overflow-y-auto`}>
           <DialogHeader>
             <DialogTitle>{plan.name}</DialogTitle>
           </DialogHeader>
 
           <div className="space-y-6">
-            {/* Progress indicator */}
+            {/* Progress indicator - 4 main steps (apply-pattern only shows when conflicts) */}
             <div className="flex justify-between mb-4">
-              {['auth', 'schedule-week1', 'review-pattern', 'apply-pattern', 'confirm'].map((step, idx) => (
-                <div
-                  key={step}
-                  className={`h-2 flex-1 mx-1 rounded-full ${
-                    idx <= ['auth', 'schedule-week1', 'review-pattern', 'apply-pattern', 'confirm'].indexOf(currentStep)
-                      ? 'bg-[var(--yoga-sage)]'
-                      : 'bg-gray-200'
-                  }`}
-                />
-              ))}
+              {(() => {
+                const steps = ['auth', 'schedule-week1', 'review-pattern', 'confirm'];
+                const currentIndex = currentStep === 'apply-pattern' 
+                  ? 2.5  // Show between review-pattern and confirm
+                  : steps.indexOf(currentStep);
+                
+                return steps.map((step, idx) => (
+                  <div
+                    key={step}
+                    className={`h-2 flex-1 mx-1 rounded-full ${
+                      idx <= currentIndex
+                        ? 'bg-[var(--yoga-sage)]'
+                        : 'bg-gray-200'
+                    }`}
+                  />
+                ));
+              })()}
             </div>
 
             {/* Step content */}
@@ -1198,6 +1510,14 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
         <ForgotPasswordModal
           isOpen={showForgotPassword}
           onClose={() => setShowForgotPassword(false)}
+        />
+      )}
+      
+      {/* Privacy Policy Modal */}
+      {showPrivacyPolicy && (
+        <PrivacyPolicyModal
+          isOpen={showPrivacyPolicy}
+          onClose={() => setShowPrivacyPolicy(false)}
         />
       )}
     </>

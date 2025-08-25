@@ -36,22 +36,38 @@ axios.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
     if (error.response?.status === 401) {
-      // Clear auth data
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('member_token')
-        localStorage.removeItem('member_data')
-        localStorage.removeItem('session_expires_at')
-        
-        // Dispatch auth logout event
-        window.dispatchEvent(new Event('auth-logout'))
-        
-        // Redirect to login with return URL
-        const currentPath = window.location.pathname
-        const returnUrl = encodeURIComponent(currentPath)
-        
-        // Check if we're already on a login-related page to avoid redirect loops
-        if (!currentPath.includes('/schema') && !currentPath.includes('/login')) {
-          window.location.href = `/schema?sessionExpired=true&returnUrl=${returnUrl}`
+      // Skip interceptor for authentication endpoints
+      // These endpoints handle their own 401 errors
+      const authEndpoints = [
+        '/auth/login',
+        '/auth/signup',
+        '/auth/magic-link',
+        '/auth/reset-password',
+        '/auth/check-email'
+      ];
+      
+      const isAuthEndpoint = authEndpoints.some(endpoint => 
+        error.config?.url?.includes(endpoint)
+      );
+      
+      if (!isAuthEndpoint) {
+        // Only handle 401s from protected endpoints (session expired)
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('member_token')
+          localStorage.removeItem('member_data')
+          localStorage.removeItem('session_expires_at')
+          
+          // Dispatch auth logout event
+          window.dispatchEvent(new Event('auth-logout'))
+          
+          // Redirect to login with return URL
+          const currentPath = window.location.pathname
+          const returnUrl = encodeURIComponent(currentPath)
+          
+          // Check if we're already on a login-related page to avoid redirect loops
+          if (!currentPath.includes('/schema') && !currentPath.includes('/login')) {
+            window.location.href = `/schema?sessionExpired=true&returnUrl=${returnUrl}`
+          }
         }
       }
     }

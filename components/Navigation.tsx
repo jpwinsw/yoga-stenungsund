@@ -61,11 +61,14 @@ export default function Navigation() {
             <Link href="/" className="text-gray-700 hover:text-[var(--yoga-purple)] transition-colors font-medium text-[15px]">
               {t('home')}
             </Link>
-            <div className="relative">
+            <div 
+              className="relative"
+              onMouseEnter={() => setOpenDropdown('about')}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
               <button 
                 className="text-gray-700 hover:text-[var(--yoga-purple)] transition-colors flex items-center gap-1 font-medium text-[15px]"
                 onClick={() => setOpenDropdown(openDropdown === 'about' ? null : 'about')}
-                onMouseEnter={() => setOpenDropdown('about')}
               >
                 {t('about')}
                 <svg className={`w-4 h-4 transition-transform duration-300 ${openDropdown === 'about' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,7 +79,6 @@ export default function Navigation() {
                 className={`absolute left-0 mt-2 w-56 rounded-xl shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all duration-200 z-50 overflow-hidden ${
                   openDropdown === 'about' ? 'opacity-100 visible' : 'opacity-0 invisible'
                 }`}
-                onMouseLeave={() => setOpenDropdown(null)}
               >
                 <div className="py-2">
                   <Link 
@@ -121,11 +123,14 @@ export default function Navigation() {
             <Link href="/community" className="text-gray-700 hover:text-[var(--yoga-purple)] transition-colors font-medium text-[15px]">
               {t('community')}
             </Link>
-            <div className="relative">
+            <div 
+              className="relative"
+              onMouseEnter={() => setOpenDropdown('wellbeing')}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
               <button 
                 className="text-gray-700 hover:text-[var(--yoga-purple)] transition-colors flex items-center gap-1 font-medium text-[15px]"
                 onClick={() => setOpenDropdown(openDropdown === 'wellbeing' ? null : 'wellbeing')}
-                onMouseEnter={() => setOpenDropdown('wellbeing')}
               >
                 {t('wellbeing')}
                 <svg className={`w-4 h-4 transition-transform duration-300 ${openDropdown === 'wellbeing' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,7 +141,6 @@ export default function Navigation() {
                 className={`absolute left-0 mt-2 w-64 rounded-xl shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all duration-200 z-50 overflow-hidden ${
                   openDropdown === 'wellbeing' ? 'opacity-100 visible' : 'opacity-0 invisible'
                 }`}
-                onMouseLeave={() => setOpenDropdown(null)}
               >
                 <div className="py-2">
                   <Link 
@@ -191,11 +195,14 @@ export default function Navigation() {
                 </div>
               </div>
             </div>
-            <div className="relative">
+            <div 
+              className="relative"
+              onMouseEnter={() => setOpenDropdown('happenings')}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
               <button 
                 className="text-gray-700 hover:text-[var(--yoga-purple)] transition-colors flex items-center gap-1 font-medium text-[15px]"
                 onClick={() => setOpenDropdown(openDropdown === 'happenings' ? null : 'happenings')}
-                onMouseEnter={() => setOpenDropdown('happenings')}
               >
                 {t('happenings')}
                 <svg className={`w-4 h-4 transition-transform duration-300 ${openDropdown === 'happenings' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -206,7 +213,6 @@ export default function Navigation() {
                 className={`absolute left-0 mt-2 w-64 rounded-xl shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all duration-200 z-50 overflow-hidden ${
                   openDropdown === 'happenings' ? 'opacity-100 visible' : 'opacity-0 invisible'
                 }`}
-                onMouseLeave={() => setOpenDropdown(null)}
               >
                 <div className="py-2">
                   {happeningsEvents.map((event) => (

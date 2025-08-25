@@ -247,6 +247,7 @@
     "noClasses": "No classes",
     "full": "Full",
     "lowSpots": "Only {count} left!",
+    "spots": "spots",
     "spotsAvailable": "{count} spots",
     "readyToContinue": "Great choices! Click 'Next' to continue",
     "varietyTip": "Tip: Pick a variety of times to explore different classes and instructors",
@@ -285,6 +286,8 @@
     "welcomeBack": "Welcome back, {name}!",
     "enterPasswordToContinue": "We see you have an account. Please enter your password to continue.",
     "forgotPassword": "Forgot password?",
+    "accountExists": "Account already exists",
+    "accountExistsDescription": "An account with {email} already exists. Please enter your password to continue or use forgot password if you can't remember it.",
     "proceedWithPurchase": "We'll proceed with your purchase, {name}",
     "addReceiptDetailsBelow": "Add receipt details below if needed",
     "errors": {

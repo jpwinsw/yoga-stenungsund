@@ -163,11 +163,13 @@ export default function WeeklyScheduleSelector({
             value={selectionProgress} 
             className="h-2"
           />
-          {!isComplete && (
-            <p className="text-xs text-gray-500">
-              {t('selectMore', { count: needsMore })}
-            </p>
-          )}
+          <div className="h-5">  {/* Fixed height container */}
+            {!isComplete && (
+              <p className="text-xs text-gray-500">
+                {t('selectMore', { count: needsMore })}
+              </p>
+            )}
+          </div>
         </div>
       </div>
       
@@ -181,8 +183,104 @@ export default function WeeklyScheduleSelector({
         </Alert>
       )}
       
-      {/* Weekly calendar grid - always 7 columns for desktop modal */}
-      <div className="grid grid-cols-7 gap-2 lg:gap-3">
+      {/* Mobile: Grouped list view, Desktop: Weekly grid */}
+      <div className="block sm:hidden space-y-4">
+        {/* Mobile list view - group sessions by day */}
+        {weekDays.map((day, dayIndex) => {
+          const daySessions = getSessionsForDay(day)
+          if (daySessions.length === 0) return null
+          
+          const isToday = isSameDay(day, new Date())
+          const dayName = format(day, 'EEEE, MMM d', { locale: dateLocale })
+          
+          return (
+            <div key={dayIndex} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+              <div className={cn(
+                "px-4 py-2 border-b font-medium text-sm",
+                isToday ? "bg-[var(--yoga-sage)]/10" : "bg-gray-50"
+              )}>
+                {dayName}
+                {isToday && (
+                  <Badge className="ml-2 bg-[var(--yoga-sage)] text-white text-xs">
+                    {t('today')}
+                  </Badge>
+                )}
+              </div>
+              <div className="divide-y divide-gray-100">
+                {daySessions.map(session => {
+                  const isSelected = selectedSessions.includes(session.id)
+                  const isDisabled = !isSelected && selectedSessions.length >= requiredSessions
+                  const classConfig = getClassTypeConfig(session.title || session.service_template_name)
+                  const Icon = classConfig.icon
+                  const isFull = session.available_spots === 0
+                  
+                  return (
+                    <button
+                      key={session.id}
+                      onClick={() => !isFull && !isDisabled && handleSessionToggle(session.id)}
+                      disabled={isFull || isDisabled}
+                      className={cn(
+                        "w-full flex items-center gap-3 transition-all border-l-4",
+                        isSelected
+                          ? "bg-[var(--yoga-sage)]/10 border-[var(--yoga-sage)] pl-3 pr-3 py-2.5"
+                          : isFull
+                          ? "bg-gray-50 opacity-60 border-transparent pl-3 pr-3 py-2.5"
+                          : isDisabled
+                          ? "opacity-50 border-transparent pl-3 pr-3 py-2.5"
+                          : "hover:bg-gray-50 active:bg-gray-100 border-transparent pl-3 pr-3 py-2.5"
+                      )}
+                    >
+                      {/* Icon */}
+                      <div className={cn(
+                        "w-10 h-10 rounded-lg flex items-center justify-center shrink-0",
+                        `bg-gradient-to-br ${classConfig.color}`
+                      )}>
+                        <Icon className="w-5 h-5 text-white" />
+                      </div>
+                      
+                      {/* Content - horizontal layout */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-baseline justify-between gap-2">
+                          <div className="font-medium text-sm truncate flex-1">
+                            {session.title || session.service_template_name}
+                          </div>
+                          <div className="text-xs text-gray-500 shrink-0 tabular-nums">
+                            {format(new Date(session.start_time), 'HH:mm')}-{format(new Date(session.end_time), 'HH:mm')}
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between gap-2 mt-0.5">
+                          <div className="text-xs font-medium text-gray-600 truncate flex-1">
+                            {session.instructor_name || '—'}
+                          </div>
+                          <div className="text-xs shrink-0 tabular-nums min-w-[60px] text-right">
+                            {isFull ? (
+                              <span className="text-red-600 font-semibold">{t('full')}</span>
+                            ) : (
+                              <span className="text-gray-500">{session.available_spots} {t('spots')}</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Selection indicator */}
+                      <div className="shrink-0">
+                        {isSelected ? (
+                          <CheckCircle2 className="w-5 h-5 text-[var(--yoga-sage)]" />
+                        ) : (
+                          <div className="w-5 h-5 rounded-full border-2 border-gray-300" />
+                        )}
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+      
+      {/* Desktop grid view - hidden on mobile */}
+      <div className="hidden sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 lg:gap-3">
         {weekDays.map((day, dayIndex) => {
           const daySessions = getSessionsForDay(day)
           const isToday = isSameDay(day, new Date())
@@ -202,18 +300,18 @@ export default function WeeklyScheduleSelector({
             >
               {/* Day header */}
               <div className={cn(
-                "p-3 border-b",
+                "p-2 sm:p-3 border-b",
                 isToday 
                   ? "bg-gradient-to-r from-[var(--yoga-sage)]/10 to-[var(--yoga-cyan)]/10" 
                   : "bg-gray-50"
               )}>
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="font-semibold text-sm">{dayName}</div>
-                    <div className="text-xs text-gray-500">{dayDate}</div>
+                    <div className="font-semibold text-xs sm:text-sm">{dayName}</div>
+                    <div className="text-[10px] sm:text-xs text-gray-500">{dayDate}</div>
                   </div>
                   {isToday && (
-                    <Badge className="bg-[var(--yoga-sage)] text-white text-xs">
+                    <Badge className="bg-[var(--yoga-sage)] text-white text-[10px] sm:text-xs px-1 sm:px-2">
                       {t('today')}
                     </Badge>
                   )}
@@ -221,7 +319,7 @@ export default function WeeklyScheduleSelector({
               </div>
               
               {/* Sessions for the day */}
-              <div className="p-2 space-y-2 min-h-[300px] max-h-[500px] overflow-y-auto">
+              <div className="p-2 space-y-2 min-h-[150px] sm:min-h-[200px] lg:min-h-[300px] max-h-[300px] sm:max-h-[400px] lg:max-h-[500px] overflow-y-auto">
                 {daySessions.length === 0 ? (
                   <div className="text-center py-8 text-gray-400">
                     <Moon className="w-6 h-6 mx-auto mb-2 opacity-50" />
@@ -244,7 +342,7 @@ export default function WeeklyScheduleSelector({
                         whileHover={!isFull && !isDisabled ? { scale: 1.02 } : {}}
                         whileTap={!isFull && !isDisabled ? { scale: 0.98 } : {}}
                         className={cn(
-                          "w-full text-left p-3 rounded-lg transition-all relative overflow-hidden group",
+                          "w-full text-left p-2 sm:p-3 rounded-lg transition-all relative overflow-hidden group",
                           isSelected 
                             ? "bg-gradient-to-r from-[var(--yoga-sage)]/20 to-[var(--yoga-cyan)]/20 ring-2 ring-[var(--yoga-sage)]" 
                             : isFull
@@ -256,8 +354,8 @@ export default function WeeklyScheduleSelector({
                       >
                         {/* Selection indicator */}
                         {isSelected && (
-                          <div className="absolute top-2 right-2">
-                            <CheckCircle2 className="w-5 h-5 text-[var(--yoga-sage)]" />
+                          <div className="absolute top-1 right-1 sm:top-2 sm:right-2">
+                            <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--yoga-sage)]" />
                           </div>
                         )}
                         
@@ -269,26 +367,26 @@ export default function WeeklyScheduleSelector({
                         
                         {/* Content */}
                         <div className="relative z-10">
-                          <div className="flex items-center gap-2 mb-1">
+                          <div className="flex items-center gap-1 sm:gap-2 mb-1">
                             <div className={cn(
-                              "w-6 h-6 rounded-md flex items-center justify-center shrink-0",
+                              "w-5 h-5 sm:w-6 sm:h-6 rounded-md flex items-center justify-center shrink-0",
                               `bg-gradient-to-br ${classConfig.color}`
                             )}>
                               <Icon className="w-3 h-3 text-white" />
                             </div>
-                            <span className="font-medium text-xs line-clamp-1">
+                            <span className="font-medium text-[10px] sm:text-xs line-clamp-1">
                               {session.title || session.service_template_name}
                             </span>
                           </div>
                           
-                          <div className="space-y-1 text-xs text-gray-600">
+                          <div className="space-y-1 text-[10px] sm:text-xs text-gray-600">
                             <div className="flex items-center gap-1">
                               <Clock className="w-3 h-3" />
                               <span>{format(new Date(session.start_time), 'HH:mm')}</span>
                             </div>
                             
                             {session.instructor_name && (
-                              <div className="truncate text-xs">
+                              <div className="truncate text-[10px] sm:text-xs">
                                 {session.instructor_name}
                               </div>
                             )}
@@ -320,15 +418,17 @@ export default function WeeklyScheduleSelector({
         })}
       </div>
       
-      {/* Help text */}
-      <div className="text-center text-sm text-gray-500">
-        {isComplete ? (
-          <p className="text-green-600 font-medium">
-            ✓ {t('readyToContinue')}
-          </p>
-        ) : (
-          <p>{t('varietyTip')}</p>
-        )}
+      {/* Help text - fixed height to prevent jumping */}
+      <div className="h-10 flex items-center justify-center">
+        <div className="text-center text-sm text-gray-500">
+          {isComplete ? (
+            <p className="text-green-600 font-medium">
+              ✓ {t('readyToContinue')}
+            </p>
+          ) : (
+            <p>{t('varietyTip')}</p>
+          )}
+        </div>
       </div>
     </div>
   )

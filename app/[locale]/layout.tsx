@@ -7,6 +7,7 @@ import Navigation from '@/components/Navigation';
 import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/lib/contexts/AuthContext';
 import CookieConsentWrapper from '@/components/CookieConsentWrapper';
+import SiteOverlay from '@/components/SiteOverlay';
 import "./globals.css";
 
 const geistSans = Geist({
@@ -52,6 +53,7 @@ export default async function LocaleLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <SiteOverlay />
         <NextIntlClientProvider messages={messages}>
           <AuthProvider>
             <Navigation />
