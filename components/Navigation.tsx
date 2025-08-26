@@ -256,18 +256,21 @@ export default function Navigation() {
               </Link>
             </div>
             
-            {/* Mobile menu button */}
-            <button
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? (
-                <X className="h-6 w-6 text-gray-700" />
-              ) : (
-                <Menu className="h-6 w-6 text-gray-700" />
-              )}
-            </button>
+            {/* Mobile profile and menu buttons */}
+            <div className="flex items-center gap-2 lg:hidden">
+              <MemberMenu isMobileHeader={true} onCloseMobileMenu={() => setIsMobileMenuOpen(false)} />
+              <button
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="h-6 w-6 text-gray-700" />
+                ) : (
+                  <Menu className="h-6 w-6 text-gray-700" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -289,8 +292,7 @@ export default function Navigation() {
             >
               {t('book_class')}
             </Link>
-            <div className="flex items-center justify-between">
-              <MemberMenu />
+            <div className="flex justify-end">
               <LanguageSwitcher />
             </div>
           </div>

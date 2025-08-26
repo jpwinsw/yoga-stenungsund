@@ -88,9 +88,9 @@
     }
   },
   "trialOffer": {
-    "title": "Specialerbjudande för nya yogis",
-    "description": "Prova 3 klasser för endast 199 kr",
-    "details": "Gäller i 2 veckor från första klassen",
-    "cta": "Aktivera erbjudande"
+    "title": "Kom och prova yoga",
+    "description": "Hör av dig så hittar vi rätt klass för dig",
+    "details": "",
+    "cta": "Kontakta studion"
   }
 }

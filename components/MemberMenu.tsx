@@ -11,9 +11,11 @@ import SignupModal from './auth/SignupModal'
 interface MemberMenuProps {
   isOpen?: boolean;
   onToggle?: () => void;
+  onCloseMobileMenu?: () => void;
+  isMobileHeader?: boolean;
 }
 
-export default function MemberMenu({ isOpen, onToggle }: MemberMenuProps = {}) {
+export default function MemberMenu({ isOpen, onToggle, onCloseMobileMenu, isMobileHeader = false }: MemberMenuProps = {}) {
   const t = useTranslations('member')
   const { isAuthenticated, member, logout: authLogout, refreshAuth } = useAuth()
   const router = useRouter()
@@ -25,6 +27,7 @@ export default function MemberMenu({ isOpen, onToggle }: MemberMenuProps = {}) {
   const handleLogout = () => {
     authLogout()
     setShowMenu(false)
+    onCloseMobileMenu?.()
     // Redirect to home page after logout to ensure fresh page state
     router.push('/')
     // Force a refresh to ensure all components update
@@ -44,23 +47,33 @@ export default function MemberMenu({ isOpen, onToggle }: MemberMenuProps = {}) {
         <div className="relative">
           <button
             onClick={() => onToggle ? onToggle() : setShowMenu(!showMenu)}
-            className="text-gray-700 hover:text-[var(--yoga-sage)] transition-colors flex items-center gap-1 font-medium text-[15px]"
+            className={isMobileHeader 
+              ? "p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              : "text-gray-700 hover:text-[var(--yoga-sage)] transition-colors flex items-center gap-1 font-medium text-[15px]"
+            }
           >
-            <User className="w-4 h-4" />
-            <span className="hidden sm:inline">{member.first_name}</span>
-            <svg className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
+            <User className={isMobileHeader ? "h-6 w-6 text-gray-700" : "w-4 h-4"} />
+            {!isMobileHeader && (
+              <>
+                <span className="hidden sm:inline">{member.first_name}</span>
+                <svg className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </>
+            )}
           </button>
           
-          <div className={`absolute right-0 mt-2 w-48 rounded-xl shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all duration-200 z-50 overflow-hidden ${
+          <div className={`absolute ${isMobileHeader ? 'right-0 -mr-12' : 'right-0 lg:right-0 max-lg:right-auto max-lg:left-0'} mt-2 w-48 rounded-xl shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all duration-200 z-50 overflow-hidden ${
             isDropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
           }`}>
             <div className="py-2">
               <Link
                 href="/mina-bokningar"
                 className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[var(--yoga-cyan)]/10 hover:to-[var(--yoga-purple)]/10 hover:text-[var(--yoga-purple)] transition-all"
-                onClick={() => !onToggle && setShowMenu(false)}
+                onClick={() => {
+                  if (!onToggle) setShowMenu(false)
+                  onCloseMobileMenu?.()
+                }}
               >
                 <Calendar className="w-4 h-4" />
                 {t('myBookings')}
@@ -68,7 +81,10 @@ export default function MemberMenu({ isOpen, onToggle }: MemberMenuProps = {}) {
               <Link
                 href="/min-profil"
                 className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[var(--yoga-cyan)]/10 hover:to-[var(--yoga-purple)]/10 hover:text-[var(--yoga-purple)] transition-all"
-                onClick={() => !onToggle && setShowMenu(false)}
+                onClick={() => {
+                  if (!onToggle) setShowMenu(false)
+                  onCloseMobileMenu?.()
+                }}
               >
                 <User className="w-4 h-4" />
                 {t('myProfile')}
@@ -76,7 +92,10 @@ export default function MemberMenu({ isOpen, onToggle }: MemberMenuProps = {}) {
               <Link
                 href="/min-kvitton"
                 className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-[var(--yoga-cyan)]/10 hover:to-[var(--yoga-purple)]/10 hover:text-[var(--yoga-purple)] transition-all"
-                onClick={() => !onToggle && setShowMenu(false)}
+                onClick={() => {
+                  if (!onToggle) setShowMenu(false)
+                  onCloseMobileMenu?.()
+                }}
               >
                 <Receipt className="w-4 h-4" />
                 {t('myReceipts')}
@@ -98,21 +117,31 @@ export default function MemberMenu({ isOpen, onToggle }: MemberMenuProps = {}) {
 
   return (
     <>
-      <div className="flex items-center gap-2">
+      {isMobileHeader ? (
         <button
           onClick={() => setShowLoginModal(true)}
-          className="text-gray-700 hover:text-[var(--yoga-sage)] transition-colors font-medium text-[15px]"
+          className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          aria-label={t('login')}
         >
-          {t('login')}
+          <User className="h-6 w-6 text-gray-700" />
         </button>
-        <span className="text-gray-400">|</span>
-        <button
-          onClick={() => setShowSignupModal(true)}
-          className="text-gray-700 hover:text-[var(--yoga-sage)] transition-colors font-medium text-[15px]"
-        >
-          {t('signup')}
-        </button>
-      </div>
+      ) : (
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowLoginModal(true)}
+            className="text-gray-700 hover:text-[var(--yoga-sage)] transition-colors font-medium text-[15px]"
+          >
+            {t('login')}
+          </button>
+          <span className="text-gray-400">|</span>
+          <button
+            onClick={() => setShowSignupModal(true)}
+            className="text-gray-700 hover:text-[var(--yoga-sage)] transition-colors font-medium text-[15px]"
+          >
+            {t('signup')}
+          </button>
+        </div>
+      )}
 
       <LoginModal
         isOpen={showLoginModal}

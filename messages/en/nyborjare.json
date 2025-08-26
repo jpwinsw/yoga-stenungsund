@@ -88,9 +88,9 @@
     }
   },
   "trialOffer": {
-    "title": "Special offer for new yogis",
-    "description": "Try 3 classes for only 199 SEK",
-    "details": "Valid for 2 weeks from first class",
-    "cta": "Activate offer"
+    "title": "Come and try yoga",
+    "description": "Get in touch and we'll find the right class for you",
+    "details": "",
+    "cta": "Contact the studio"
   }
 }

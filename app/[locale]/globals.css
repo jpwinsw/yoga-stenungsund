@@ -150,6 +150,24 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Mobile-specific text color adjustments */
+@media (max-width: 768px) {
+  /* Make gray text darker on mobile to improve readability */
+  .text-gray-600 {
+    color: rgb(75 85 99); /* Equivalent to gray-700 */
+  }
+  
+  .text-gray-700 {
+    color: rgb(55 65 81); /* Equivalent to gray-800 */
+  }
+  
+  /* Disable antialiasing on mobile for better text clarity */
+  body {
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+  }
+}
+
 /* Typography utilities */
 .font-mono {
   font-family: var(--font-geist-mono), 'SF Mono', 'Monaco', 'Inconsolata', monospace;

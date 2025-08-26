@@ -392,7 +392,7 @@ export default function BeginnersClient() {
             <p className="text-lg opacity-90 mb-8">
               {t('trialOffer.details')}
             </p>
-            <Link href="/schema">
+            <Link href="/kontakt">
               <Button 
                 size="lg" 
                 variant="secondary"
