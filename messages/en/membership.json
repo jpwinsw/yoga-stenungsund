@@ -72,6 +72,7 @@
     "confirmCancel": "Are you sure you want to cancel your membership? This action cannot be undone.",
     "noCreditHistory": "No credit history available",
     "balance": "Balance",
+    "used": "used",
     "error": "Error",
     "success": "Success",
     "failedToLoadCredits": "Failed to load credit history",

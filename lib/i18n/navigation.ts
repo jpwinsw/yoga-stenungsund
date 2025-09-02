@@ -37,6 +37,10 @@ export const pathnames = {
     sv: '/nyborjare',
     en: '/beginners'
   },
+  '/klasser/[classSlug]': {
+    sv: '/klasser/[classSlug]',
+    en: '/classes/[classSlug]'
+  },
   '/happenings/[slug]': {
     sv: '/happenings/[slug]',
     en: '/happenings/[slug]'

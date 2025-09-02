@@ -36,9 +36,9 @@ export default function RecoveryCreditsCard({ isTermBased }: RecoveryCreditsCard
       setError(null);
       
       const allCredits = await braincore.getRecoveryCredits();
-      // Filter to only show recovery credits
+      // Filter to only show unused recovery credits
       const recoveryCredits = allCredits.filter(credit => 
-        credit.credit_type === 'recovery'
+        credit.credit_type === 'recovery' && !credit.used
       );
       
       setCredits(recoveryCredits);

@@ -543,14 +543,25 @@ class BraincoreClient {
     return response.data
   }
 
-  async createMembershipCheckout(planId: number, discountCode?: string): Promise<{
+  async createMembershipCheckout(
+    planId: number, 
+    discountCode?: string,
+    receiptDetails?: {
+      personal_number?: string
+      street_address?: string
+      postal_code?: string
+      city?: string
+      company_name?: string
+      vat_number?: string
+    }
+  ): Promise<{
     checkout_session_id: string
     checkout_url: string
     publishable_key: string
   }> {
     const currentUrl = window.location.origin
-    const successUrl = `${currentUrl}/medlemskap/tack`
-    const cancelUrl = `${currentUrl}/medlemskap`
+    const successUrl = `${currentUrl}/medlemskap/tack?session_id={CHECKOUT_SESSION_ID}`
+    const cancelUrl = `${currentUrl}/medlemskap?canceled=true`
     
     const response = await axios.post(
       `/api/braincore/membership/checkout`,
@@ -558,7 +569,8 @@ class BraincoreClient {
         plan_id: planId,
         success_url: successUrl,
         cancel_url: cancelUrl,
-        ...(discountCode && { discount_code: discountCode })
+        ...(discountCode && { discount_code: discountCode }),
+        ...(receiptDetails && { receipt_details: receiptDetails })
       },
       { headers: this.getHeaders() }
     )
@@ -590,6 +602,14 @@ class BraincoreClient {
     success_url: string
     cancel_url: string
     discount_code?: string
+    receipt_details?: {
+      personal_number?: string
+      street_address?: string
+      postal_code?: string
+      city?: string
+      company_name?: string
+      vat_number?: string
+    }
   }): Promise<{
     checkout_session_id: string
     checkout_url: string

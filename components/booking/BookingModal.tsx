@@ -905,7 +905,7 @@ export default function BookingModal({
                               onClick={() => {
                                 if (option.action === 'login') {
                                   setShowLoginModal(true)
-                                } else if (option.action === 'book_with_membership') {
+                                } else if (option.action === 'book_with_membership' || option.action === 'book_with_recovery_credit') {
                                   handleProceedToPayment()
                                 } else if (option.action === 'book_drop_in') {
                                   // For drop-in bookings, check if user is authenticated

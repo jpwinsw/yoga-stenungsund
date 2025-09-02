@@ -6,7 +6,9 @@ import { Link } from '@/lib/i18n/navigation'
 import { MembershipPlan } from '@/lib/types/braincore'
 import MembershipCard from '@/components/membership/MembershipCard'
 import TermMembershipCard from '@/components/membership/TermMembershipCard'
-import { Check, Sparkles } from 'lucide-react'
+import { Check, Sparkles, AlertCircle } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 
 interface MembershipsClientProps {
   plans: MembershipPlan[]
@@ -14,6 +16,8 @@ interface MembershipsClientProps {
 
 export default function MembershipsClient({ plans }: MembershipsClientProps) {
   const t = useTranslations('membership')
+  const searchParams = useSearchParams()
+  const canceled = searchParams?.get('canceled')
 
   // Sort plans by price
   const sortedPlans = [...plans].sort((a, b) => a.price - b.price)
@@ -31,6 +35,23 @@ export default function MembershipsClient({ plans }: MembershipsClientProps) {
           >
             <h1 className="text-5xl font-light text-gray-900 mb-6">{t('title')}</h1>
             <p className="text-xl text-gray-700">{t('description')}</p>
+            
+            {/* Show canceled payment message */}
+            {canceled && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="mt-6"
+              >
+                <Alert className="max-w-md mx-auto border-orange-200 bg-orange-50">
+                  <AlertCircle className="h-4 w-4 text-orange-600" />
+                  <AlertDescription className="text-orange-800">
+                    {t('paymentCanceled')}
+                  </AlertDescription>
+                </Alert>
+              </motion.div>
+            )}
           </motion.div>
         </div>
       </section>

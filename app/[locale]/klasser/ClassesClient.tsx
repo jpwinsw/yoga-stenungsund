@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { motion } from 'framer-motion'
 import { Clock, Users, Zap, Heart, Moon, Sun, ChevronRight, Wind, Flower2 } from 'lucide-react'
-import { Link } from '@/lib/i18n/navigation'
+import { Link, useRouter } from '@/lib/i18n/navigation'
 import { Button } from '@/components/ui/button'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
 import { cn } from '@/lib/utils/cn'
@@ -138,7 +138,8 @@ interface ClassesClientProps {
 }
 
 export default function ClassesClient({ initialServices, classInstructors }: ClassesClientProps) {
-  const t = useTranslations('classes')
+  const t = useTranslations('klasser')
+  const router = useRouter()
   
   return (
     <div className="min-h-screen bg-white">
@@ -183,31 +184,48 @@ export default function ClassesClient({ initialServices, classInstructors }: Cla
                 const intensity = getIntensity(service)
                 const instructors = getInstructorsForService(service, classInstructors)
                 
+                // Create URL-friendly slug from service name
+                const serviceSlug = service.name
+                  .toLowerCase()
+                  .replace(/[åä]/g, 'a')
+                  .replace(/ö/g, 'o')
+                  .replace(/[^a-z0-9\s-]/g, '')
+                  .replace(/\s+/g, '-')
+                  .replace(/-+/g, '-')
+                  .trim()
+                
                 return (
                   <motion.div
                     key={service.id}
                     variants={fadeInUp}
-                    className="group"
+                    className="group h-full relative"
+                    onClick={() => {
+                      // Navigate to detail page when clicking the card
+                      router.push({
+                        pathname: '/klasser/[classSlug]',
+                        params: { classSlug: serviceSlug }
+                      });
+                    }}
+                    style={{ cursor: 'pointer' }}
                   >
-                    <Link href="/schema" className="block h-full">
-                      <div className="h-full border border-gray-100 rounded-3xl p-8 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden group-hover:border-gray-200">
-                        {/* Subtle hover effect */}
-                        <div className="absolute inset-0 bg-gradient-to-b from-white to-[var(--yoga-cream)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="h-full border border-gray-100 rounded-3xl p-8 hover:shadow-xl hover:border-[var(--yoga-cyan)]/30 transition-all duration-300 relative overflow-hidden flex flex-col bg-white">
+                      {/* Enhanced hover effect */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-[var(--yoga-cream)]/20 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                         
                         {/* Icon with muted colors */}
                         <div className={cn(
-                          "w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-105",
+                          "w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 relative z-10",
                           config.bgColor
                         )}>
                           <Icon className={cn("w-8 h-8 transition-colors", config.iconColor)} />
                         </div>
                         
                         {/* Content */}
-                        <h3 className="text-2xl font-light mb-3">
+                        <h3 className="text-2xl font-light mb-3 relative z-10 group-hover:text-[var(--yoga-stone)] transition-colors">
                           {service.name}
                         </h3>
                         
-                        <p className="text-gray-600 mb-6 leading-relaxed">
+                        <p className="text-gray-600 mb-6 leading-relaxed relative z-10">
                           {service.description || ''}
                         </p>
                         
@@ -258,13 +276,28 @@ export default function ClassesClient({ initialServices, classInstructors }: Cla
                           </div>
                         )}
                       
-                      {/* View schedule link - subtle */}
-                      <div className="flex items-center text-[var(--yoga-stone)] group-hover:text-[var(--yoga-cyan)] transition-colors">
-                        <span className="text-sm font-medium">{t('viewSchedule')}</span>
-                        <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                      {/* Action buttons */}
+                      <div className="flex items-center justify-between pt-4 mt-auto border-t border-gray-100 relative z-20">
+                        <Link 
+                          href={{
+                            pathname: '/klasser/[classSlug]',
+                            params: { classSlug: serviceSlug }
+                          }}
+                          className="flex items-center text-[var(--yoga-stone)] hover:text-[var(--yoga-cyan)] transition-colors relative z-20"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <span className="text-sm font-medium">{t('readMore')}</span>
+                          <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                        <Link 
+                          href="/schema"
+                          className="text-sm font-medium text-gray-600 hover:text-[var(--yoga-stone)] transition-colors relative z-20"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {t('viewSchedule')}
+                        </Link>
                       </div>
                     </div>
-                  </Link>
                   </motion.div>
                 )
               })

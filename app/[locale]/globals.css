@@ -161,10 +161,47 @@ body {
     color: rgb(55 65 81); /* Equivalent to gray-800 */
   }
   
+  /* Fix muted text colors on mobile */
+  .text-muted-foreground {
+    color: rgb(55 65 81); /* Darker gray for better readability */
+  }
+  
   /* Disable antialiasing on mobile for better text clarity */
   body {
     -webkit-font-smoothing: auto;
     -moz-osx-font-smoothing: auto;
+  }
+  
+  /* Make input field text darker on mobile */
+  input,
+  textarea,
+  select {
+    color: rgb(31 41 55); /* gray-900 equivalent */
+    -webkit-font-smoothing: auto;
+    -webkit-text-fill-color: rgb(31 41 55); /* Override any webkit styles */
+  }
+  
+  /* Make placeholder text more visible on mobile */
+  input::placeholder,
+  textarea::placeholder {
+    color: rgb(107 114 128); /* gray-500 equivalent */
+    opacity: 1; /* Override default opacity */
+    -webkit-text-fill-color: rgb(107 114 128);
+  }
+  
+  /* Fix webkit autofill styles on mobile */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-text-fill-color: rgb(31 41 55) !important;
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    transition: background-color 5000s ease-in-out 0s;
   }
 }
 

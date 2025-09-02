@@ -141,10 +141,13 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
   const validateDiscountCode = async () => {
     if (!discountCode.trim()) {
       setDiscountValidation(null);
+      setError(null);
       return;
     }
     
     setIsValidatingDiscount(true);
+    setError(null); // Clear any previous errors
+    
     try {
       const response = await braincore.validateDiscountCode({
         code: discountCode,
@@ -159,10 +162,12 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
       } else {
         setError(response.message || tBooking('invalidDiscountCode'));
         setDiscountValidation(null);
+        // Keep the discount field visible so user can try again
       }
     } catch {
       setError(tBooking('invalidDiscountCode'));
       setDiscountValidation(null);
+      // Keep the discount field visible so user can try again
     } finally {
       setIsValidatingDiscount(false);
     }
@@ -649,6 +654,16 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
         return;
       }
       
+      // Prepare receipt details if provided
+      const receiptDetails = (personalNumber || streetAddress || companyName || vatNumber) ? {
+        personal_number: personalNumber,
+        street_address: streetAddress,
+        postal_code: postalCode,
+        city: city,
+        company_name: companyName,
+        vat_number: vatNumber
+      } : undefined;
+      
       // Create checkout session with temporary reservation and discount if applicable - same as SimpleMembershipCheckout
       const response = await braincore.createTermMembershipCheckout({
         plan_id: plan.id,
@@ -657,7 +672,8 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
         pre_booked_sessions: allSelectedSessions.filter(s => s !== null) as { session_id: number; date: Date; time: string; }[],
         discount_code: finalDiscountValidation?.valid ? discountCode : undefined,
         success_url: `${window.location.origin}/medlemskap/terminskort-tack`,
-        cancel_url: `${window.location.origin}/medlemskap`
+        cancel_url: `${window.location.origin}/medlemskap`,
+        receipt_details: receiptDetails
       });
       
       if (response.checkout_url) {
@@ -1010,7 +1026,13 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
                   <Input
                     id="discount"
                     value={discountCode}
-                    onChange={(e) => setDiscountCode(e.target.value)}
+                    onChange={(e) => {
+                      setDiscountCode(e.target.value);
+                      // Clear any previous validation errors when user types
+                      if (error && error.includes(tBooking('invalidDiscountCode'))) {
+                        setError(null);
+                      }
+                    }}
                     placeholder={tBooking('enterDiscountCode')}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
@@ -1018,7 +1040,7 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
                         validateDiscountCode();
                       }
                     }}
-                    disabled={discountValidation?.valid}
+                    disabled={discountValidation?.valid || isValidatingDiscount}
                   />
                   {!discountValidation?.valid && (
                     <Button

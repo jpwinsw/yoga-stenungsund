@@ -29,90 +29,109 @@ export default function HomeClient({ companySettings }: HomeClientProps) {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section - Refined and Minimal */}
-      <section className="relative min-h-[90vh] flex items-center">
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Subtle gradient */}
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-[var(--yoga-cream)]/30 to-white" />
-          
-          {/* Organic shape decoration */}
-          <motion.div
-            className="absolute -top-40 -right-40 w-[600px] h-[600px]"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-          >
-            <div className="w-full h-full rounded-full bg-gradient-to-br from-[var(--yoga-cyan)]/5 to-transparent blur-3xl" />
-          </motion.div>
-          
-          {/* Zen circle decoration */}
-          <motion.div
-            className="absolute bottom-20 left-20 w-32 h-32"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-          >
-            <div className="w-full h-full rounded-full border-2 border-[var(--yoga-stone)]" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-[var(--yoga-cyan)] rounded-full" />
-          </motion.div>
-        </div>
-        
+      {/* Hero Section - Clean and Modern */}
+      <section className="relative min-h-[85vh] flex items-center">
         <div className="container mx-auto px-6 lg:px-12">
-          <motion.div 
-            className="max-w-4xl"
-            variants={staggerContainer}
-            initial="initial"
-            animate="animate"
-          >
-            {/* Overline */}
-            <motion.p 
-              className="text-sm uppercase tracking-[0.2em] text-[var(--yoga-stone)] mb-6"
-              variants={fadeInUp}
-            >
-              {companyName}
-            </motion.p>
-            
-            {/* Main heading */}
-            <motion.h1 
-              className="text-5xl md:text-6xl lg:text-7xl font-light leading-[1.1] mb-8"
-              variants={fadeInUp}
-            >
-              <span className="text-gray-900">{heroTitle}</span>
-            </motion.h1>
-            
-            {/* Subheading */}
-            <motion.p 
-              className="text-xl md:text-2xl text-gray-600 mb-12 font-light max-w-2xl"
-              variants={fadeInUp}
-            >
-              {heroSubtitle}
-            </motion.p>
-            
-            {/* CTA Buttons */}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            {/* Left side - Content */}
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4"
-              variants={fadeInUp}
+              variants={staggerContainer}
+              initial="initial"
+              animate="animate"
             >
-              <Link href="/schema" className="inline-block">
-                <Button
-                  size="lg"
-                  className="px-8 py-4 text-base"
-                >
-                  {t('hero.cta')}
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </Link>
-              <Link href="/nyborjare" className="inline-block">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="px-8 py-4 text-base"
-                >
-                  {t('hero.trial')}
-                </Button>
-              </Link>
+              {/* Overline */}
+              <motion.p 
+                className="text-sm uppercase tracking-[0.2em] text-[var(--yoga-stone)] mb-4"
+                variants={fadeInUp}
+              >
+                {companyName}
+              </motion.p>
+              
+              {/* Main heading */}
+              <motion.h1 
+                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light leading-[1.1] mb-6"
+                variants={fadeInUp}
+              >
+                <span className="text-gray-900">{heroTitle}</span>
+              </motion.h1>
+              
+              {/* Subheading */}
+              <motion.p 
+                className="text-xl md:text-2xl text-gray-600 mb-10 font-light"
+                variants={fadeInUp}
+              >
+                {heroSubtitle}
+              </motion.p>
+              
+              {/* CTA Buttons */}
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-4"
+                variants={fadeInUp}
+              >
+                <Link href="/schema" className="inline-block">
+                  <Button
+                    size="lg"
+                    className="px-8 py-4 text-base"
+                  >
+                    {t('hero.cta')}
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </Link>
+                <Link href="/nyborjare" className="inline-block">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="px-8 py-4 text-base"
+                  >
+                    {t('hero.trial')}
+                  </Button>
+                </Link>
+              </motion.div>
             </motion.div>
-          </motion.div>
+            
+            {/* Right side - Image */}
+            <motion.div 
+              className="relative aspect-[4/5] lg:aspect-[3/4] lg:max-w-[500px] lg:ml-auto overflow-hidden"
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ 
+                duration: 1, 
+                ease: [0.25, 0.1, 0.25, 1],
+                delay: 0.3 
+              }}
+            >
+              <motion.div
+                className="relative w-full h-full"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+              >
+                <motion.img
+                  src="/start.png"
+                  alt="Yoga Stenungsund"
+                  className="w-full h-full object-cover"
+                  initial={{ scale: 1.15 }}
+                  animate={{ scale: 1.05 }}
+                  transition={{ 
+                    duration: 1.2,
+                    ease: [0.25, 0.1, 0.25, 1],
+                    delay: 0.4
+                  }}
+                />
+                
+                {/* Gradient fade edges */}
+                <div className="absolute inset-0 pointer-events-none">
+                  {/* Top fade */}
+                  <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white/40 to-transparent" />
+                  {/* Bottom fade */}
+                  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white/40 to-transparent" />
+                  {/* Left fade */}
+                  <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white/40 to-transparent" />
+                  {/* Right fade */}
+                  <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white/40 to-transparent" />
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
 

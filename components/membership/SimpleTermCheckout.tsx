@@ -128,10 +128,13 @@ export default function SimpleTermCheckout({ plan, isOpen, onClose }: SimpleTerm
   const validateDiscountCode = async () => {
     if (!discountCode.trim()) {
       setDiscountValidation(null);
+      setError(null);
       return;
     }
     
     setIsValidatingDiscount(true);
+    setError(null); // Clear any previous errors
+    
     try {
       const response = await braincore.validateDiscountCode({
         code: discountCode,
@@ -146,10 +149,12 @@ export default function SimpleTermCheckout({ plan, isOpen, onClose }: SimpleTerm
       } else {
         setError(response.message || tBooking('invalidDiscountCode'));
         setDiscountValidation(null);
+        // Keep the discount field visible so user can try again
       }
     } catch {
       setError(tBooking('invalidDiscountCode'));
       setDiscountValidation(null);
+      // Keep the discount field visible so user can try again
     } finally {
       setIsValidatingDiscount(false);
     }
@@ -652,7 +657,13 @@ export default function SimpleTermCheckout({ plan, isOpen, onClose }: SimpleTerm
                   <Input
                     id="discount"
                     value={discountCode}
-                    onChange={(e) => setDiscountCode(e.target.value)}
+                    onChange={(e) => {
+                      setDiscountCode(e.target.value);
+                      // Clear any previous validation errors when user types
+                      if (error && error.includes(tBooking('invalidDiscountCode'))) {
+                        setError(null);
+                      }
+                    }}
                     placeholder={tBooking('enterDiscountCode')}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
@@ -660,7 +671,7 @@ export default function SimpleTermCheckout({ plan, isOpen, onClose }: SimpleTerm
                         validateDiscountCode();
                       }
                     }}
-                    disabled={discountValidation?.valid}
+                    disabled={discountValidation?.valid || isValidatingDiscount}
                   />
                   {!discountValidation?.valid && (
                     <Button

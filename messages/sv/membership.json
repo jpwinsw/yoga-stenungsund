@@ -307,6 +307,7 @@
     "cancelSuccess": "Medlemskapet har avslutats",
     "cancelError": "Kunde inte avsluta medlemskapet",
     "noCreditHistory": "Ingen kredithistorik tillgänglig",
-    "balance": "Saldo"
+    "balance": "Saldo",
+    "used": "använd"
   }
 }

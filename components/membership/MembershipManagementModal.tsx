@@ -353,7 +353,7 @@ export default function MembershipManagementModal({
                         <div className="text-right">
                           <p className={`font-semibold ${
                             transaction.transaction_type === 'credit' 
-                              ? 'text-green-600' 
+                              ? 'text-green-600'
                               : 'text-red-600'
                           }`}>
                             {transaction.transaction_type === 'credit' ? '+' : '-'}

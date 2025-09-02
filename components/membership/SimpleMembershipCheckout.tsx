@@ -110,10 +110,13 @@ export default function SimpleMembershipCheckout({ plan, isOpen, onClose }: Simp
   const validateDiscountCode = async () => {
     if (!discountCode.trim()) {
       setDiscountValidation(null);
+      setError(null);
       return;
     }
     
     setIsValidatingDiscount(true);
+    setError(null); // Clear any previous errors
+    
     try {
       const response = await braincore.validateDiscountCode({
         code: discountCode,
@@ -128,10 +131,12 @@ export default function SimpleMembershipCheckout({ plan, isOpen, onClose }: Simp
       } else {
         setError(response.message || tBooking('invalidDiscountCode'));
         setDiscountValidation(null);
+        // Keep the discount field visible so user can try again
       }
     } catch {
       setError(tBooking('invalidDiscountCode'));
       setDiscountValidation(null);
+      // Keep the discount field visible so user can try again
     } finally {
       setIsValidatingDiscount(false);
     }
@@ -243,25 +248,24 @@ export default function SimpleMembershipCheckout({ plan, isOpen, onClose }: Simp
         }
       }
       
-      // Create checkout session with validated discount
+      // Prepare receipt details if provided
+      const receiptDetails = (personalNumber || streetAddress || companyName || vatNumber) ? {
+        personal_number: personalNumber,
+        street_address: streetAddress,
+        postal_code: postalCode,
+        city: city,
+        company_name: companyName,
+        vat_number: vatNumber
+      } : undefined;
+      
+      // Create checkout session with validated discount and receipt details
       const response = await braincore.createMembershipCheckout(
         plan.id,
-        finalDiscountValidation?.valid ? discountCode : undefined
+        finalDiscountValidation?.valid ? discountCode : undefined,
+        receiptDetails
       );
       
       if (response.checkout_url) {
-        // Store receipt details if provided
-        if (personalNumber || streetAddress || companyName || vatNumber) {
-          sessionStorage.setItem('receipt_details', JSON.stringify({
-            personal_number: personalNumber,
-            street_address: streetAddress,
-            postal_code: postalCode,
-            city: city,
-            company_name: companyName,
-            vat_number: vatNumber
-          }));
-        }
-        
         window.location.href = response.checkout_url;
       }
     } catch (err: unknown) {
@@ -617,7 +621,13 @@ export default function SimpleMembershipCheckout({ plan, isOpen, onClose }: Simp
                         <Input
                           id="discount"
                           value={discountCode}
-                          onChange={(e) => setDiscountCode(e.target.value)}
+                          onChange={(e) => {
+                            setDiscountCode(e.target.value);
+                            // Clear any previous validation errors when user types
+                            if (error && error.includes(tBooking('invalidDiscountCode'))) {
+                              setError(null);
+                            }
+                          }}
                           placeholder={tBooking('enterDiscountCode')}
                           onKeyDown={(e) => {
                             if (e.key === 'Enter') {
@@ -625,7 +635,7 @@ export default function SimpleMembershipCheckout({ plan, isOpen, onClose }: Simp
                               validateDiscountCode();
                             }
                           }}
-                          disabled={discountValidation?.valid}
+                          disabled={discountValidation?.valid || isValidatingDiscount}
                         />
                         {!discountValidation?.valid && (
                           <Button

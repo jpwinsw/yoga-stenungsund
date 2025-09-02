@@ -22,7 +22,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   // Load namespace messages with Swedish file names
   const namespaces = {
     schema: (await import(`./messages/${locale}/schema.json`)).default,
-    classes: (await import(`./messages/${locale}/klasser.json`)).default,
+    klasser: (await import(`./messages/${locale}/klasser.json`)).default,
     prices: (await import(`./messages/${locale}/priser.json`)).default,
     about: (await import(`./messages/${locale}/om-oss.json`)).default,
     contact: (await import(`./messages/${locale}/kontakt.json`)).default,
