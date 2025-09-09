@@ -155,7 +155,7 @@ class BraincoreClient {
     const contactId = member?.contact_id
     
     const response = await axios.get(
-      `/api/braincore/schedule?start_date=${startDate}&end_date=${endDate}${contactId ? `&contact_id=${contactId}` : ''}`,
+      `/api/braincore/schedule/?start_date=${startDate}&end_date=${endDate}${contactId ? `&contact_id=${contactId}` : ''}`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -163,7 +163,7 @@ class BraincoreClient {
 
   async getServices(ids?: number[]): Promise<Service[]> {
     // Use our API route to avoid CORS issues
-    let url = `/api/braincore/services`
+    let url = `/api/braincore/services/`
     if (ids && ids.length > 0) {
       url += `?ids=${ids.join(',')}`
     }
@@ -174,7 +174,7 @@ class BraincoreClient {
   async getInstructors(): Promise<Instructor[]> {
     // Use our API route to avoid CORS issues
     const response = await axios.get(
-      `/api/braincore/instructors`,
+      `/api/braincore/instructors/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -183,7 +183,7 @@ class BraincoreClient {
   async getMembershipPlans(): Promise<MembershipPlan[]> {
     // Use our API route to avoid CORS issues
     const response = await axios.get(
-      `/api/braincore/memberships`,
+      `/api/braincore/memberships/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -200,7 +200,7 @@ class BraincoreClient {
     
     // Use our API route to avoid CORS issues
     const response = await axios.get(
-      `/api/braincore/urbe/session/${sessionId}/booking-options?${params.toString()}`,
+      `/api/braincore/urbe/session/${sessionId}/booking-options/?${params.toString()}`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -217,7 +217,7 @@ class BraincoreClient {
   }): Promise<BookingResponse> {
     // Use our API route to avoid CORS issues
     const response = await axios.post(
-      `/api/braincore/bookings`,
+      `/api/braincore/bookings/`,
       data,
       { headers: this.getHeaders() }
     )
@@ -227,7 +227,7 @@ class BraincoreClient {
   async createGuestBooking(data: GuestBookingRequest): Promise<BookingResponse> {
     // Use our API route to avoid CORS issues
     const response = await axios.post(
-      `/api/braincore/guest-bookings`,
+      `/api/braincore/guest-bookings/`,
       data,
       { headers: this.getHeaders() }
     )
@@ -237,7 +237,7 @@ class BraincoreClient {
   async getMemberBookings(): Promise<MemberBooking[]> {
     // Use our API route to avoid CORS issues
     const response = await axios.get(
-      `/api/braincore/member/bookings`,
+      `/api/braincore/member/bookings/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -246,7 +246,7 @@ class BraincoreClient {
   async cancelBooking(bookingId: number): Promise<void> {
     // Use our API route to avoid CORS issues
     await axios.post(
-      `/api/braincore/member/bookings/${bookingId}/cancel`,
+      `/api/braincore/member/bookings/${bookingId}/cancel/`,
       {},
       { headers: this.getHeaders() }
     )
@@ -255,7 +255,7 @@ class BraincoreClient {
   async getMemberWaitlist(): Promise<MemberWaitlistEntry[]> {
     // Use our API route to avoid CORS issues
     const response = await axios.get(
-      `/api/braincore/member/waitlist`,
+      `/api/braincore/member/waitlist/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -263,7 +263,7 @@ class BraincoreClient {
 
   async getMemberProfile(): Promise<MemberProfile> {
     const response = await axios.get(
-      `/api/braincore/member/profile`,
+      `/api/braincore/member/profile/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -278,7 +278,7 @@ class BraincoreClient {
     country?: string
   }): Promise<MemberProfile> {
     const response = await axios.put(
-      `/api/braincore/member/profile`,
+      `/api/braincore/member/profile/`,
       data,
       { headers: this.getHeaders() }
     )
@@ -287,7 +287,7 @@ class BraincoreClient {
 
   async getMemberSubscriptions(): Promise<MemberSubscription[]> {
     const response = await axios.get(
-      `/api/braincore/member/subscriptions`,
+      `/api/braincore/member/subscriptions/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -295,7 +295,7 @@ class BraincoreClient {
 
   async leaveWaitlist(entryId: number): Promise<void> {
     await axios.post(
-      `/api/braincore/member/waitlist/${entryId}/leave`,
+      `/api/braincore/member/waitlist/${entryId}/leave/`,
       {},
       { headers: this.getHeaders() }
     )
@@ -317,7 +317,7 @@ class BraincoreClient {
   }> {
     // Use our API route to avoid CORS issues
     const response = await axios.post(
-      `/api/braincore/discount/validate`,
+      `/api/braincore/discount/validate/`,
       data,
       { headers: this.getHeaders() }
     )
@@ -349,7 +349,7 @@ class BraincoreClient {
       : this.getHeaders()
     
     const response = await axios.post(
-      `/api/braincore/payments/create-intent`,
+      `/api/braincore/payments/create-intent/`,
       data,
       { headers }
     )
@@ -361,7 +361,7 @@ class BraincoreClient {
     payment_method_id?: string
   }): Promise<{ success: boolean }> {
     const response = await axios.post(
-      `/api/braincore/payments/confirm`,
+      `/api/braincore/payments/confirm/`,
       data,
       { headers: this.getHeaders() }
     )
@@ -378,7 +378,7 @@ class BraincoreClient {
     error_message?: string
   }> {
     const response = await axios.get(
-      `/api/braincore/payments/status/${paymentIntentId}`,
+      `/api/braincore/payments/status/${paymentIntentId}/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -386,7 +386,7 @@ class BraincoreClient {
 
   async checkEmailExists(email: string): Promise<{ exists: boolean; has_password: boolean }> {
     const response = await axios.post(
-      `/api/braincore/auth/check-email`,
+      `/api/braincore/auth/check-email/`,
       {
         email,
         company_id: parseInt(process.env.NEXT_PUBLIC_COMPANY_ID || '5')
@@ -398,7 +398,7 @@ class BraincoreClient {
   async login(data: LoginRequest): Promise<LoginResponse> {
     // Use our API route to avoid CORS issues
     const response = await axios.post(
-      `/api/braincore/auth/login`,
+      `/api/braincore/auth/login/`,
       data,
       { headers: this.getHeaders() }
     )
@@ -427,7 +427,7 @@ class BraincoreClient {
   async signup(data: SignupRequest): Promise<Member> {
     // Use our API route to avoid CORS issues
     const response = await axios.post(
-      `/api/braincore/auth/signup`,
+      `/api/braincore/auth/signup/`,
       data,
       { headers: this.getHeaders() }
     )
@@ -490,7 +490,7 @@ class BraincoreClient {
     avatar_url?: string
   }): Promise<CommunityProfile> {
     const response = await axios.patch(
-      `/api/braincore/community/profile`,
+      `/api/braincore/community/profile/`,
       data,
       { headers: this.getHeaders() }
     )
@@ -499,7 +499,7 @@ class BraincoreClient {
 
   async getCommunityPosts(spaceId: number, page = 1): Promise<CommunityPostResponse> {
     const response = await axios.get(
-      `/api/braincore/community/spaces/${spaceId}/posts?page=${page}`,
+      `/api/braincore/community/spaces/${spaceId}/posts/?page=${page}`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -511,7 +511,7 @@ class BraincoreClient {
     post_type?: string
   }): Promise<{ id: number }> {
     const response = await axios.post(
-      `/api/braincore/community/spaces/${spaceId}/posts`,
+      `/api/braincore/community/spaces/${spaceId}/posts/`,
       data,
       { headers: this.getHeaders() }
     )
@@ -520,7 +520,7 @@ class BraincoreClient {
 
   async likeCommunityPost(spaceId: number, postId: number): Promise<void> {
     await axios.post(
-      `/api/braincore/community/spaces/${spaceId}/posts/${postId}/like`,
+      `/api/braincore/community/spaces/${spaceId}/posts/${postId}/like/`,
       {},
       { headers: this.getHeaders() }
     )
@@ -528,7 +528,7 @@ class BraincoreClient {
 
   async getPostComments(spaceId: number, postId: number): Promise<CommunityComment[]> {
     const response = await axios.get(
-      `/api/braincore/community/spaces/${spaceId}/posts/${postId}/comments`,
+      `/api/braincore/community/spaces/${spaceId}/posts/${postId}/comments/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -536,7 +536,7 @@ class BraincoreClient {
 
   async createComment(spaceId: number, postId: number, content: string): Promise<CommunityComment> {
     const response = await axios.post(
-      `/api/braincore/community/spaces/${spaceId}/posts/${postId}/comments`,
+      `/api/braincore/community/spaces/${spaceId}/posts/${postId}/comments/`,
       { content },
       { headers: this.getHeaders() }
     )
@@ -564,7 +564,7 @@ class BraincoreClient {
     const cancelUrl = `${currentUrl}/medlemskap?canceled=true`
     
     const response = await axios.post(
-      `/api/braincore/membership/checkout`,
+      `/api/braincore/membership/checkout/`,
       {
         plan_id: planId,
         success_url: successUrl,
@@ -584,7 +584,7 @@ class BraincoreClient {
   ): Promise<TermAvailability> {
     // Use our API route to avoid CORS issues
     const response = await axios.get(
-      `/api/braincore/term-availability/${planId}/${serviceTemplateId}?start_date=${encodeURIComponent(startDate)}`,
+      `/api/braincore/term-availability/${planId}/${serviceTemplateId}/?start_date=${encodeURIComponent(startDate)}`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -617,7 +617,7 @@ class BraincoreClient {
   }> {
     // Use our API route to avoid CORS issues
     const response = await axios.post(
-      `/api/braincore/term-checkout`,
+      `/api/braincore/term-checkout/`,
       data,
       { headers: this.getHeaders() }
     )
@@ -625,14 +625,12 @@ class BraincoreClient {
   }
 
   async cancelTermBooking(bookingId: number): Promise<{ success: boolean; message: string }> {
-    // Use our API route to avoid CORS issues  
-    // Note: Must include trailing slash due to Next.js trailingSlash config
+    // Use our API route to avoid CORS issues
     const response = await axios.post(
       `/api/braincore/member/term-bookings/${bookingId}/cancel/`,
       {},
       { 
-        headers: this.getHeaders(),
-        maxRedirects: 5 // Ensure axios follows redirects
+        headers: this.getHeaders()
       }
     )
     return response.data
@@ -641,7 +639,7 @@ class BraincoreClient {
   async getCreditHistory(): Promise<CreditHistoryEntry[]> {
     // Use our API route to avoid CORS issues
     const response = await axios.get(
-      `/api/braincore/member/credits/history`,
+      `/api/braincore/member/credits/history/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -650,7 +648,7 @@ class BraincoreClient {
   async getCreditDetails(): Promise<MemberCreditDetails> {
     // Use our API route to get comprehensive credit breakdown
     const response = await axios.get(
-      `/api/braincore/member/credits/details`,
+      `/api/braincore/member/credits/details/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -659,7 +657,7 @@ class BraincoreClient {
   async pauseSubscription(subscriptionId: number): Promise<SubscriptionActionResponse> {
     // Use our API route to avoid CORS issues
     const response = await axios.post(
-      `/api/braincore/member/subscriptions/${subscriptionId}/pause`,
+      `/api/braincore/member/subscriptions/${subscriptionId}/pause/`,
       {},
       { headers: this.getHeaders() }
     )
@@ -669,7 +667,7 @@ class BraincoreClient {
   async resumeSubscription(subscriptionId: number): Promise<SubscriptionActionResponse> {
     // Use our API route to avoid CORS issues
     const response = await axios.post(
-      `/api/braincore/member/subscriptions/${subscriptionId}/resume`,
+      `/api/braincore/member/subscriptions/${subscriptionId}/resume/`,
       {},
       { headers: this.getHeaders() }
     )
@@ -679,7 +677,7 @@ class BraincoreClient {
   async cancelSubscription(subscriptionId: number): Promise<SubscriptionActionResponse> {
     // Use our API route to avoid CORS issues
     const response = await axios.post(
-      `/api/braincore/member/subscriptions/${subscriptionId}/cancel`,
+      `/api/braincore/member/subscriptions/${subscriptionId}/cancel/`,
       {},
       { headers: this.getHeaders() }
     )
@@ -697,7 +695,7 @@ class BraincoreClient {
 
   async getMemberBookingReceipts(): Promise<BookingReceipt[]> {
     const response = await axios.get(
-      `/api/braincore/member/receipts/bookings`,
+      `/api/braincore/member/receipts/bookings/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -705,7 +703,7 @@ class BraincoreClient {
 
   async getMemberSubscriptionReceipts(): Promise<SubscriptionReceipt[]> {
     const response = await axios.get(
-      `/api/braincore/member/receipts/subscriptions`,
+      `/api/braincore/member/receipts/subscriptions/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -713,7 +711,7 @@ class BraincoreClient {
 
   async getReceiptsSummary(): Promise<ReceiptsSummary> {
     const response = await axios.get(
-      `/api/braincore/member/receipts/summary`,
+      `/api/braincore/member/receipts/summary/`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -744,7 +742,7 @@ class BraincoreClient {
     }>
   }> {
     const response = await axios.post(
-      '/api/braincore/pattern-booking',
+      '/api/braincore/pattern-booking/',
       data,
       { headers: this.getHeaders() }
     )
@@ -757,7 +755,7 @@ class BraincoreClient {
     endDate: string
   ): Promise<ScheduleSession[]> {
     const response = await axios.get(
-      `/api/braincore/pattern-booking?template_ids=${templateIds.join(',')}&start_date=${startDate}&end_date=${endDate}`,
+      `/api/braincore/pattern-booking/?template_ids=${templateIds.join(',')}&start_date=${startDate}&end_date=${endDate}`,
       { headers: this.getHeaders() }
     )
     return response.data
@@ -765,7 +763,7 @@ class BraincoreClient {
 
   async downloadReceiptPDF(documentNumber: string): Promise<Blob> {
     const response = await axios.get(
-      `/api/braincore/member/receipts/download/${documentNumber}`,
+      `/api/braincore/member/receipts/download/${documentNumber}/`,
       { 
         headers: this.getHeaders(),
         responseType: 'blob'
