@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import { toast } from '@/components/ui/use-toast'
 import { braincore } from '@/lib/api/braincore'
-import type { CreditHistoryEntry } from '@/lib/types/braincore'
+import type { CreditHistoryEntry, MemberCreditDetails } from '@/lib/types/braincore'
 import RecoveryCreditsCard from './RecoveryCreditsCard'
 import { 
   AlertCircle, 
@@ -75,22 +75,28 @@ export default function MembershipManagementModal({
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('overview')
   const [creditHistory, setCreditHistory] = useState<CreditHistoryEntry[]>([])
+  const [creditDetails, setCreditDetails] = useState<MemberCreditDetails | null>(null)
   const [loadingCredits, setLoadingCredits] = useState(false)
 
   useEffect(() => {
     const loadCredits = async () => {
       try {
         setLoadingCredits(true)
-        const history = await braincore.getCreditHistory()
+        // Fetch both credit history and credit details in parallel
+        const [history, details] = await Promise.all([
+          braincore.getCreditHistory(),
+          braincore.getCreditDetails()
+        ])
         setCreditHistory(history)
+        setCreditDetails(details)
       } catch (error) {
-        console.error('Failed to fetch credit history:', error)
+        console.error('Failed to fetch credit data:', error)
       } finally {
         setLoadingCredits(false)
       }
     }
 
-    if (isOpen && activeTab === 'credits') {
+    if (isOpen && (activeTab === 'credits' || activeTab === 'overview')) {
       loadCredits()
     }
   }, [isOpen, activeTab])
@@ -263,11 +269,11 @@ export default function MembershipManagementModal({
                     </div>
                   )}
 
-                  {subscription.current_credits !== undefined && (
+                  {(creditDetails?.available_credits !== undefined || subscription.current_credits !== undefined) && (
                     <div>
                       <p className="text-sm text-gray-600">{t('fields.creditsRemaining')}</p>
                       <p className="font-medium text-lg text-[var(--yoga-sage)]">
-                        {subscription.current_credits}
+                        {creditDetails?.available_credits ?? subscription.current_credits ?? 0}
                       </p>
                     </div>
                   )}
@@ -301,29 +307,62 @@ export default function MembershipManagementModal({
               {/* Recovery Credits for Term Memberships */}
               {isTermBased && (
                 <RecoveryCreditsCard 
-                  subscriptionId={subscription.subscription_id}
+                  creditDetails={creditDetails}
                   isTermBased={true}
-                  planType={subscription.plan_type}
                 />
               )}
             </TabsContent>
 
             <TabsContent value="credits" className="mt-4 min-h-[400px]">
-              {/* Show current credit balance for punch cards and credit-based memberships */}
-              {(subscription.plan_type === 'punch_card' || subscription.plan_type === 'credits') && (
+              {/* Show comprehensive credit breakdown */}
+              {creditDetails && creditDetails.available_credits > 0 && (
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="text-sm font-medium text-blue-900">{t('fields.creditsRemaining')}</p>
-                      <p className="text-3xl font-bold text-blue-600">{subscription.current_credits || 0}</p>
+                      <p className="text-3xl font-bold text-blue-600">{creditDetails.available_credits}</p>
+                      {creditDetails.expiring_soon_credits > 0 && (
+                        <p className="text-xs text-orange-600 mt-1">
+                          {creditDetails.expiring_soon_credits} expiring soon
+                        </p>
+                      )}
                     </div>
-                    {subscription.credits_used_this_period !== undefined && (
+                    {creditDetails.total_credits !== creditDetails.available_credits && (
                       <div className="text-right">
-                        <p className="text-sm font-medium text-blue-900">{t('fields.creditsUsed')}</p>
-                        <p className="text-2xl font-semibold text-blue-600">{subscription.credits_used_this_period}</p>
+                        <p className="text-sm font-medium text-blue-900">Total Credits</p>
+                        <p className="text-2xl font-semibold text-blue-600">{creditDetails.total_credits}</p>
+                        {creditDetails.expired_credits > 0 && (
+                          <p className="text-xs text-red-600">{creditDetails.expired_credits} expired</p>
+                        )}
                       </div>
                     )}
                   </div>
+                  
+                  {/* Credit breakdown by type and expiry */}
+                  {creditDetails.credit_breakdown.length > 0 && (
+                    <div className="mt-4 pt-4 border-t border-blue-200">
+                      <p className="text-xs font-medium text-blue-900 mb-2">Credit Breakdown:</p>
+                      <div className="space-y-1">
+                        {creditDetails.credit_breakdown.map((breakdown, idx) => (
+                          <div key={idx} className="flex justify-between text-xs">
+                            <span className={breakdown.is_expired ? 'text-gray-500 line-through' : 'text-blue-700'}>
+                              {breakdown.credits} {breakdown.credit_type} credit(s)
+                              {breakdown.days_until_expiry !== null && !breakdown.is_expired && (
+                                <span className="text-orange-600 ml-1">
+                                  ({breakdown.days_until_expiry}d)
+                                </span>
+                              )}
+                            </span>
+                            {breakdown.expiry_date && (
+                              <span className="text-gray-500">
+                                {format(new Date(breakdown.expiry_date), 'MMM d', { locale: dateLocale })}
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 

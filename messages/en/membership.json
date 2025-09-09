@@ -93,6 +93,7 @@
     "fromClass": "From {className} on {date}",
     "expiresOn": "Expires: {date}",
     "credit": "credit",
+    "recoveryCredit": "Recovery Credit",
     "info": {
       "title": "About Recovery Credits",
       "description": "Use these credits to book any available class"

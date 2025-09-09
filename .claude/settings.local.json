@@ -33,7 +33,8 @@
       "Read(//Users/jwindzer/Dropbox/Ocean Group JW/Mollösunds Wärdshus/wards/**)",
       "Read(//Users/jwindzer/Dropbox/Ocean Group JW/Mollösunds Wärdshus/wards/**)",
       "Read(//Users/jwindzer/Dropbox/Ocean Group JW/Mollösunds Wärdshus/wards/**)",
-      "Read(//Users/jwindzer/Dropbox/Ocean Group JW/Mollösunds Wärdshus/wards/**)"
+      "Read(//Users/jwindzer/Dropbox/Ocean Group JW/Mollösunds Wärdshus/wards/**)",
+      "Bash(npx eslint:*)"
     ],
     "deny": []
   }

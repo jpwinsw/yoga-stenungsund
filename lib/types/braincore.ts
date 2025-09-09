@@ -401,6 +401,28 @@ export interface RecoveryCredit {
   created_at: string
 }
 
+// Credit Details
+export interface CreditBreakdown {
+  expiry_date: string | null
+  credits: number
+  is_expired: boolean
+  days_until_expiry: number | null
+  credit_type: string
+  description: string | null
+}
+
+export interface MemberCreditDetails {
+  contact_id: number
+  member_email: string
+  total_credits: number
+  available_credits: number
+  expired_credits: number
+  expiring_soon_credits: number
+  credit_breakdown: CreditBreakdown[]
+  earliest_expiry: string | null
+  latest_expiry: string | null
+}
+
 // Credit History Entry
 export interface CreditHistoryEntry {
   transaction_id: number  // Changed from 'id' to match backend response

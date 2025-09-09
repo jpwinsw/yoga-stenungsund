@@ -6,7 +6,7 @@ import { Link } from '@/lib/i18n/navigation'
 import { braincore } from '@/lib/api/braincore'
 import { useAuth } from '@/lib/contexts/AuthContext'
 import AuthGuard from '@/components/auth/AuthGuard'
-import type { MemberSubscription as BrainCoreMemberSubscription, BookingReceipt } from '@/lib/types/braincore'
+import type { MemberSubscription as BrainCoreMemberSubscription, BookingReceipt, MemberCreditDetails } from '@/lib/types/braincore'
 import MembershipManagementModal from '@/components/membership/MembershipManagementModal'
 import { 
   Calendar, 
@@ -70,6 +70,7 @@ export default function MyBookingsPage() {
   const [waitlistEntries, setWaitlistEntries] = useState<WaitlistEntry[]>([])
   const [subscriptions, setSubscriptions] = useState<BrainCoreMemberSubscription[]>([])
   const [bookingReceipts, setBookingReceipts] = useState<BookingReceipt[]>([])
+  const [creditDetails, setCreditDetails] = useState<MemberCreditDetails | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past' | 'cancelled' | 'waitlist'>('upcoming')
@@ -82,16 +83,18 @@ export default function MyBookingsPage() {
     try {
       setLoading(true)
       setError(null)
-      const [bookingsResponse, waitlistResponse, subscriptionsResponse, receiptsResponse] = await Promise.all([
+      const [bookingsResponse, waitlistResponse, subscriptionsResponse, receiptsResponse, creditResponse] = await Promise.all([
         braincore.getMemberBookings(),
         braincore.getMemberWaitlist(),
         braincore.getMemberSubscriptions(),
-        braincore.getMemberBookingReceipts().catch(() => []) // Fail silently if receipts not available
+        braincore.getMemberBookingReceipts().catch(() => []), // Fail silently if receipts not available
+        braincore.getCreditDetails().catch(() => null) // Fail silently if credits not available
       ])
       setBookings(bookingsResponse)
       setWaitlistEntries(waitlistResponse)
       setSubscriptions(subscriptionsResponse)
       setBookingReceipts(receiptsResponse)
+      setCreditDetails(creditResponse)
     } catch (err) {
       console.error('Failed to fetch bookings:', err)
       setError(t('error'))
@@ -223,19 +226,26 @@ export default function MyBookingsPage() {
     
     switch (activeTab) {
       case 'upcoming':
-        return bookings.filter(b => 
-          new Date(b.session_start) > now && 
-          b.status !== 'cancelled'
-        )
+        return bookings
+          .filter(b => 
+            new Date(b.session_start) > now && 
+            b.status !== 'cancelled'
+          )
+          .sort((a, b) => new Date(a.session_start).getTime() - new Date(b.session_start).getTime()) // Upcoming: soonest first
       case 'past':
-        return bookings.filter(b => 
-          new Date(b.session_start) <= now && 
-          b.status !== 'cancelled'
-        )
+        return bookings
+          .filter(b => 
+            new Date(b.session_start) <= now && 
+            b.status !== 'cancelled'
+          )
+          .sort((a, b) => new Date(b.session_start).getTime() - new Date(a.session_start).getTime()) // Past: most recent first
       case 'cancelled':
-        return bookings.filter(b => b.status === 'cancelled')
+        return bookings
+          .filter(b => b.status === 'cancelled')
+          .sort((a, b) => new Date(b.session_start).getTime() - new Date(a.session_start).getTime()) // Cancelled: most recent first
       case 'waitlist':
         return waitlistEntries
+          .sort((a, b) => a.position - b.position) // Waitlist: by position
       default:
         return []
     }
@@ -300,10 +310,10 @@ export default function MyBookingsPage() {
                   <p className="text-sm text-gray-500">{t('membership.activeStatus')}</p>
                 </div>
               </div>
-              {activeSubscription.current_credits !== undefined && (
+              {(creditDetails?.available_credits !== undefined || activeSubscription.current_credits !== undefined) && (
                 <div className="text-right">
                   <p className="text-2xl font-bold text-[var(--yoga-cyan)]">
-                    {activeSubscription.current_credits}
+                    {creditDetails?.available_credits ?? activeSubscription.current_credits ?? 0}
                   </p>
                   <p className="text-sm text-gray-500">{t('membership.creditsRemaining')}</p>
                 </div>

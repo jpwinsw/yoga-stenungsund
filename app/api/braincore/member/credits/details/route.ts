@@ -18,8 +18,9 @@ export async function GET(request: NextRequest) {
       'Authorization': authHeader
     }
     
+    // Fetch credit details directly from member portal endpoint
     const response = await fetch(
-      `${BRAINCORE_API}/urbe/member-portal/recovery-credits`,
+      `${BRAINCORE_API}/urbe/member-portal/credits/details`,
       {
         method: 'GET',
         headers
@@ -30,16 +31,16 @@ export async function GET(request: NextRequest) {
     
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.detail || 'Failed to fetch recovery credits' },
+        { error: data.detail || 'Failed to fetch credit details' },
         { status: response.status }
       )
     }
     
     return NextResponse.json(data)
   } catch (error) {
-    console.error('Fetch recovery credits error:', error)
+    console.error('Fetch credit details error:', error)
     return NextResponse.json(
-      { error: 'Failed to fetch recovery credits' },
+      { error: 'Failed to fetch credit details' },
       { status: 500 }
     )
   }

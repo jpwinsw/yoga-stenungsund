@@ -21,8 +21,8 @@ import type {
   CommunityPostResponse,
   CommunityComment,
   TermAvailability,
-  RecoveryCredit,
   CreditHistoryEntry,
+  MemberCreditDetails,
   SubscriptionActionResponse,
   BookingReceipt,
   SubscriptionReceipt,
@@ -624,15 +624,6 @@ class BraincoreClient {
     return response.data
   }
 
-  async getRecoveryCredits(): Promise<RecoveryCredit[]> {
-    // Use our API route to avoid CORS issues
-    const response = await axios.get(
-      `/api/braincore/member/recovery-credits`,
-      { headers: this.getHeaders() }
-    )
-    return response.data
-  }
-
   async cancelTermBooking(bookingId: number): Promise<{ success: boolean; message: string }> {
     // Use our API route to avoid CORS issues  
     // Note: Must include trailing slash due to Next.js trailingSlash config
@@ -651,6 +642,15 @@ class BraincoreClient {
     // Use our API route to avoid CORS issues
     const response = await axios.get(
       `/api/braincore/member/credits/history`,
+      { headers: this.getHeaders() }
+    )
+    return response.data
+  }
+
+  async getCreditDetails(): Promise<MemberCreditDetails> {
+    // Use our API route to get comprehensive credit breakdown
+    const response = await axios.get(
+      `/api/braincore/member/credits/details`,
       { headers: this.getHeaders() }
     )
     return response.data

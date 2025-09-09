@@ -40,6 +40,9 @@
     },
     "message": "Message",
     "messagePlaceholder": "Write your message here...",
-    "send": "Send Message"
+    "send": "Send Message",
+    "sending": "Sending...",
+    "successMessage": "Your message has been sent! We'll get back to you as soon as possible.",
+    "errorMessage": "Failed to send message. Please try again later."
   }
 }

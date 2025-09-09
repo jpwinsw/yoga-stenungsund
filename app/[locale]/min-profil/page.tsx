@@ -6,7 +6,7 @@ import { Link } from '@/lib/i18n/navigation'
 import { braincore } from '@/lib/api/braincore'
 import { useAuth } from '@/lib/contexts/AuthContext'
 import AuthGuard from '@/components/auth/AuthGuard'
-import type { MemberProfile, MemberSubscription } from '@/lib/types/braincore'
+import type { MemberProfile, MemberSubscription, MemberCreditDetails } from '@/lib/types/braincore'
 import MembershipManagementModal from '@/components/membership/MembershipManagementModal'
 import { 
   User, 
@@ -29,6 +29,7 @@ export default function MyProfilePage() {
   const [error, setError] = useState<string | null>(null)
   const [profile, setProfile] = useState<MemberProfile | null>(null)
   const [subscriptions, setSubscriptions] = useState<MemberSubscription[]>([])
+  const [creditDetails, setCreditDetails] = useState<MemberCreditDetails | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [editForm, setEditForm] = useState({
     first_name: '',
@@ -47,14 +48,16 @@ export default function MyProfilePage() {
       setLoading(true)
       setError(null)
       
-      // Fetch profile and subscriptions in parallel
-      const [profileData, subscriptionsData] = await Promise.all([
+      // Fetch profile, subscriptions, and credit details in parallel
+      const [profileData, subscriptionsData, creditData] = await Promise.all([
         braincore.getMemberProfile(),
-        braincore.getMemberSubscriptions()
+        braincore.getMemberSubscriptions(),
+        braincore.getCreditDetails().catch(() => null) // Don't fail if credits can't be fetched
       ])
       
       setProfile(profileData)
       setSubscriptions(subscriptionsData)
+      setCreditDetails(creditData)
       
       // Initialize edit form with current data
       setEditForm({
@@ -360,14 +363,14 @@ export default function MyProfilePage() {
                   </span>
                 </div>
 
-                {activeSubscription.current_credits !== undefined && (
+                {(creditDetails?.available_credits !== undefined || activeSubscription.current_credits !== undefined) && (
                   <div>
                     <p className="text-sm text-gray-500">{t('membership.credits')}</p>
                     <p className="font-semibold text-2xl text-[var(--yoga-cyan)]">
-                      {activeSubscription.current_credits}
-                      {activeSubscription.credits_used_this_period !== undefined && (
+                      {creditDetails?.available_credits ?? activeSubscription.current_credits ?? 0}
+                      {creditDetails?.total_credits !== creditDetails?.available_credits && creditDetails && (
                         <span className="text-sm text-gray-500 font-normal ml-2">
-                          ({activeSubscription.credits_used_this_period} {t('membership.creditsUsed')})
+                          ({creditDetails.total_credits - creditDetails.available_credits} {t('membership.creditsUsed')})
                         </span>
                       )}
                     </p>

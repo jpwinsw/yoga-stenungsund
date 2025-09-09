@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSchedule } from '@/lib/hooks/use-braincore'
+import { useAuth } from '@/lib/contexts/AuthContext'
 import { getWeekDates, getWeekDays, formatDate, formatTime, isSameDay } from '@/lib/utils/date'
 import { cn } from '@/lib/utils/cn'
 import { 
@@ -40,6 +41,7 @@ interface ViewProps {
   weekDays: Date[]
   getSessionsForDay: (day: Date) => ScheduleSession[]
   handleBookingClick: (session: ScheduleSession) => void
+  isAuthenticated: boolean
 }
 
 // Class type configuration with icons and colors
@@ -71,10 +73,10 @@ function getClassTypeConfig(className: string) {
   return typeKey ? classTypes[typeKey] : classTypes['Vinyasa Flow']
 }
 
-function getTimeOfDayGreeting(hour: number) {
-  if (hour < 12) return { text: 'Morning Practice', icon: Sun }
-  if (hour < 17) return { text: 'Afternoon Flow', icon: Sun }
-  return { text: 'Evening Relaxation', icon: Moon }
+function getTimeOfDayGreeting(hour: number, t: (key: string) => string) {
+  if (hour < 12) return { text: t('timeOfDay.morningPractice'), icon: Sun }
+  if (hour < 17) return { text: t('timeOfDay.afternoonFlow'), icon: Sun }
+  return { text: t('timeOfDay.eveningRelaxation'), icon: Moon }
 }
 
 export default function ScheduleClientV2({ 
@@ -83,6 +85,7 @@ export default function ScheduleClientV2({
   classFilter 
 }: ScheduleClientV2Props) {
   const t = useTranslations('schema')
+  const { isAuthenticated } = useAuth()
   const [currentWeek, setCurrentWeek] = useState(new Date())
   const [selectedSession, setSelectedSession] = useState<ScheduleSession | null>(null)
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false)
@@ -264,6 +267,7 @@ export default function ScheduleClientV2({
               weekDays={weekDays}
               getSessionsForDay={getSessionsForDay}
               handleBookingClick={handleBookingClick}
+              isAuthenticated={isAuthenticated}
             />
           )}
           {viewMode === 'list' && (
@@ -271,6 +275,7 @@ export default function ScheduleClientV2({
               weekDays={weekDays}
               getSessionsForDay={getSessionsForDay}
               handleBookingClick={handleBookingClick}
+              isAuthenticated={isAuthenticated}
             />
           )}
           {viewMode === 'timeline' && (
@@ -278,6 +283,7 @@ export default function ScheduleClientV2({
               weekDays={weekDays}
               getSessionsForDay={getSessionsForDay}
               handleBookingClick={handleBookingClick}
+              isAuthenticated={isAuthenticated}
             />
           )}
         </AnimatePresence>
@@ -290,34 +296,37 @@ export default function ScheduleClientV2({
 function SessionCard({ 
   session, 
   onBookingClick,
-  variant = 'default'
+  variant = 'default',
+  isAuthenticated
 }: { 
   session: ScheduleSession
   onBookingClick: (session: ScheduleSession) => void
   variant?: 'default' | 'compact' | 'timeline'
+  isAuthenticated: boolean
 }) {
   const t = useTranslations('schema')
   const classConfig = getClassTypeConfig(session.title || session.service_template_name)
   const Icon = classConfig.icon
   const startTime = new Date(session.start_time)
-  const timeOfDay = getTimeOfDayGreeting(startTime.getHours())
+  const timeOfDay = getTimeOfDayGreeting(startTime.getHours(), t)
   
   const isFullyBooked = session.status === 'full' || session.available_spots === 0
   const isCancelled = session.status === 'cancelled'
   const isBooked = session.user_booked || false
-  const spotsPercentage = ((session.capacity - session.available_spots) / session.capacity) * 100
+  const isPastSession = startTime < new Date()
 
   if (variant === 'compact') {
     return (
       <motion.div
-        onClick={() => !isCancelled && onBookingClick(session)}
+        onClick={() => !isCancelled && !isPastSession && onBookingClick(session)}
         className={cn(
-          "relative p-4 rounded-xl transition-all cursor-pointer group overflow-hidden bg-white",
-          isCancelled && "opacity-50",
-          !isCancelled && "hover:shadow-lg"
+          "relative p-4 rounded-xl transition-all group overflow-hidden bg-white",
+          (isCancelled || isPastSession) && "opacity-50",
+          (!isCancelled && !isPastSession) && "cursor-pointer hover:shadow-lg",
+          isPastSession && "cursor-not-allowed"
         )}
-        whileHover={{ scale: !isCancelled ? 1.03 : 1 }}
-        whileTap={{ scale: !isCancelled ? 0.98 : 1 }}
+        whileHover={{ scale: (!isCancelled && !isPastSession) ? 1.03 : 1 }}
+        whileTap={{ scale: (!isCancelled && !isPastSession) ? 0.98 : 1 }}
       >
         {/* Background gradient */}
         <div className={cn(
@@ -353,7 +362,9 @@ function SessionCard({
           
           {/* Status indicator */}
           <div className="space-y-2">
-            {isCancelled ? (
+            {isPastSession ? (
+              <span className="text-xs text-gray-500 font-medium">{t('past')}</span>
+            ) : isCancelled ? (
               <span className="text-xs text-red-600 font-medium">{t('cancelled')}</span>
             ) : isBooked ? (
               <div className="flex items-center gap-1">
@@ -364,13 +375,13 @@ function SessionCard({
                 </div>
                 <span className="text-xs text-green-600 font-medium">{t('booked')}</span>
               </div>
-            ) : isFullyBooked ? (
+            ) : isAuthenticated && isFullyBooked ? (
               <span className="text-xs text-orange-600 font-medium">{t('fullyBooked')}</span>
-            ) : (
+            ) : isAuthenticated ? (
               <>
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-gray-500">
-                    {session.available_spots} {t('spotsAvailable')}
+                    {t('spotsAvailable')}
                   </span>
                 </div>
                 <motion.div 
@@ -381,7 +392,7 @@ function SessionCard({
                   {t('bookClass')} →
                 </motion.div>
               </>
-            )}
+            ) : null}
           </div>
         </div>
       </motion.div>
@@ -391,19 +402,22 @@ function SessionCard({
   if (variant === 'timeline') {
     return (
       <motion.div
-        onClick={() => !isCancelled && onBookingClick(session)}
+        onClick={() => !isCancelled && !isPastSession && onBookingClick(session)}
         className={cn(
-          "relative overflow-hidden rounded-xl transition-all cursor-pointer group h-full min-h-[60px]",
-          isCancelled && "opacity-50"
+          "relative overflow-hidden rounded-xl transition-all group h-full min-h-[60px]",
+          (isCancelled || isPastSession) && "opacity-50",
+          (!isCancelled && !isPastSession) && "cursor-pointer",
+          isPastSession && "cursor-not-allowed"
         )}
-        whileHover={{ scale: !isCancelled ? 1.02 : 1 }}
+        whileHover={{ scale: (!isCancelled && !isPastSession) ? 1.02 : 1 }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
       >
         {/* Background Gradient */}
         <div className={cn(
-          "absolute inset-0 opacity-90",
+          "absolute inset-0",
+          isPastSession ? "opacity-30" : "opacity-90",
           `bg-gradient-to-br ${classConfig.color}`
         )} />
         
@@ -426,16 +440,16 @@ function SessionCard({
           </div>
           
           {/* Status */}
-          {!isCancelled && (
+          {isPastSession ? (
+            <div className="text-xs text-white/60 mt-2">{t('past')}</div>
+          ) : isAuthenticated && !isCancelled ? (
             <div className="flex items-center justify-between text-xs mt-2">
-              <span className="opacity-90">{session.available_spots} spots</span>
+              <span className="opacity-90">{t('spotsAvailable')}</span>
               {isBooked && (
                 <span className="bg-white/20 px-2 py-1 rounded-full">✓</span>
               )}
             </div>
-          )}
-          
-          {isCancelled && (
+          ) : (
             <div className="text-xs text-red-200 mt-2">{t('cancelled')}</div>
           )}
         </div>
@@ -445,19 +459,22 @@ function SessionCard({
 
   return (
     <motion.div
-      onClick={() => !isCancelled && onBookingClick(session)}
+      onClick={() => !isCancelled && !isPastSession && onBookingClick(session)}
       className={cn(
-        "relative overflow-hidden rounded-2xl transition-all cursor-pointer group",
-        isCancelled && "opacity-50"
+        "relative overflow-hidden rounded-2xl transition-all group",
+        (isCancelled || isPastSession) && "opacity-50",
+        (!isCancelled && !isPastSession) && "cursor-pointer",
+        isPastSession && "cursor-not-allowed"
       )}
-      whileHover={{ scale: !isCancelled ? 1.02 : 1 }}
+      whileHover={{ scale: (!isCancelled && !isPastSession) ? 1.02 : 1 }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
     >
       {/* Background Gradient */}
       <div className={cn(
-        "absolute inset-0 opacity-90",
+        "absolute inset-0",
+        isPastSession ? "opacity-30" : "opacity-90",
         `bg-gradient-to-br ${classConfig.color}`
       )} />
       
@@ -483,7 +500,12 @@ function SessionCard({
               </p>
             </div>
           </div>
-          {isCancelled && (
+          {isPastSession && (
+            <Badge className="bg-gray-500/20 text-white border-0">
+              {t('past')}
+            </Badge>
+          )}
+          {isCancelled && !isPastSession && (
             <Badge variant="destructive" className="bg-red-500/20 text-white border-0">
               {t('cancelled')}
             </Badge>
@@ -509,29 +531,21 @@ function SessionCard({
         </div>
         
         {/* Capacity Bar */}
-        {!isCancelled && (
+        {isAuthenticated && !isCancelled && !isPastSession && (
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span>{session.bookings} / {session.capacity} {t('participants')}</span>
+              <span>{t('spotsAvailable')}</span>
               {isBooked && (
                 <Badge className="bg-white/20 text-white border-0">
                   ✓ {t('booked')}
                 </Badge>
               )}
             </div>
-            <div className="w-full h-2 bg-white/20 rounded-full overflow-hidden">
-              <motion.div 
-                className="h-full bg-white/60"
-                initial={{ width: 0 }}
-                animate={{ width: `${spotsPercentage}%` }}
-                transition={{ duration: 1, ease: "easeOut" }}
-              />
-            </div>
           </div>
         )}
         
         {/* Hover Action */}
-        {!isCancelled && !isBooked && (
+        {!isCancelled && !isPastSession && !isBooked && (
           <motion.div
             className="absolute inset-x-0 bottom-0 bg-black/20 backdrop-blur p-4 translate-y-full group-hover:translate-y-0 transition-transform"
           >
@@ -549,7 +563,7 @@ function SessionCard({
 }
 
 // Grid View Component
-function GridView({ weekDays, getSessionsForDay, handleBookingClick }: ViewProps) {
+function GridView({ weekDays, getSessionsForDay, handleBookingClick, isAuthenticated }: ViewProps) {
   return (
     <motion.div 
       className="grid grid-cols-1 md:grid-cols-7 gap-4"
@@ -619,6 +633,7 @@ function GridView({ weekDays, getSessionsForDay, handleBookingClick }: ViewProps
                     session={session} 
                     onBookingClick={handleBookingClick}
                     variant="compact"
+                    isAuthenticated={isAuthenticated}
                   />
                 ))
               )}
@@ -631,7 +646,7 @@ function GridView({ weekDays, getSessionsForDay, handleBookingClick }: ViewProps
 }
 
 // List View Component
-function ListView({ weekDays, getSessionsForDay, handleBookingClick }: ViewProps) {
+function ListView({ weekDays, getSessionsForDay, handleBookingClick, isAuthenticated }: ViewProps) {
   return (
     <motion.div 
       className="space-y-6"
@@ -672,6 +687,7 @@ function ListView({ weekDays, getSessionsForDay, handleBookingClick }: ViewProps
                   key={session.id} 
                   session={session} 
                   onBookingClick={handleBookingClick}
+                  isAuthenticated={isAuthenticated}
                 />
               ))}
             </div>
@@ -683,7 +699,7 @@ function ListView({ weekDays, getSessionsForDay, handleBookingClick }: ViewProps
 }
 
 // Timeline View Component
-function TimelineView({ weekDays, getSessionsForDay, handleBookingClick }: ViewProps) {
+function TimelineView({ weekDays, getSessionsForDay, handleBookingClick, isAuthenticated }: ViewProps) {
   return (
     <motion.div 
       className="overflow-x-auto pb-4"
@@ -730,6 +746,7 @@ function TimelineView({ weekDays, getSessionsForDay, handleBookingClick }: ViewP
                             session={session} 
                             onBookingClick={handleBookingClick}
                             variant="timeline"
+                            isAuthenticated={isAuthenticated}
                           />
                         </div>
                       )

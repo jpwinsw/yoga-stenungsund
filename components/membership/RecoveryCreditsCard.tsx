@@ -1,13 +1,11 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react';
+import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
-import { braincore } from '@/lib/api/braincore';
-import type { RecoveryCredit } from '@/lib/types/braincore';
+import type { MemberCreditDetails } from '@/lib/types/braincore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import { RefreshCw, Clock, Info } from 'lucide-react';
 import { format } from 'date-fns';
 import { sv, enUS } from 'date-fns/locale';
@@ -16,56 +14,41 @@ import { Link } from '@/lib/i18n/navigation';
 
 
 interface RecoveryCreditsCardProps {
-  subscriptionId?: number;
+  creditDetails: MemberCreditDetails | null;
   isTermBased?: boolean;
-  planType?: string;
 }
 
-export default function RecoveryCreditsCard({ isTermBased }: RecoveryCreditsCardProps) {
+export default function RecoveryCreditsCard({ creditDetails, isTermBased }: RecoveryCreditsCardProps) {
   const t = useTranslations('membership.recoveryCredits');
   const locale = useLocale();
   const dateLocale = locale === 'sv' ? sv : enUS;
   
-  const [credits, setCredits] = useState<RecoveryCredit[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // Extract recovery credits from creditDetails
+  const recoveryCredits = useMemo(() => {
+    if (!creditDetails) return [];
+    
+    return creditDetails.credit_breakdown
+      .filter(credit => 
+        credit.credit_type === 'recovery' && 
+        !credit.is_expired &&
+        credit.credits > 0
+      )
+      .map((credit, index) => ({
+        id: index,
+        amount: credit.credits,
+        expires_at: credit.expiry_date || '',
+        days_until_expiry: credit.days_until_expiry,
+        description: credit.description
+      }));
+  }, [creditDetails]);
 
-  const fetchRecoveryCredits = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      const allCredits = await braincore.getRecoveryCredits();
-      // Filter to only show unused recovery credits
-      const recoveryCredits = allCredits.filter(credit => 
-        credit.credit_type === 'recovery' && !credit.used
-      );
-      
-      setCredits(recoveryCredits);
-    } catch (err) {
-      console.error('Failed to fetch recovery credits:', err);
-      setError(t('error'));
-    } finally {
-      setLoading(false);
-    }
-  }, [t]);
-
-  useEffect(() => {
-    if (isTermBased) {
-      fetchRecoveryCredits();
-    } else {
-      setLoading(false);
-    }
-  }, [isTermBased, fetchRecoveryCredits]);
-
-  if (!isTermBased) {
+  if (!isTermBased || !creditDetails) {
     return null;
   }
 
-  const totalCredits = credits.reduce((sum, credit) => sum + credit.amount, 0);
-  const expiringCredits = credits.filter(credit => {
-    const daysUntilExpiry = Math.floor((new Date(credit.expires_at).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-    return daysUntilExpiry <= 7 && daysUntilExpiry > 0;
+  const totalCredits = recoveryCredits.reduce((sum, credit) => sum + credit.amount, 0);
+  const expiringCredits = recoveryCredits.filter(credit => {
+    return credit.days_until_expiry !== null && credit.days_until_expiry <= 7 && credit.days_until_expiry > 0;
   });
 
   return (
@@ -84,14 +67,7 @@ export default function RecoveryCreditsCard({ isTermBased }: RecoveryCreditsCard
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {loading ? (
-          <div className="space-y-3">
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-3/4" />
-          </div>
-        ) : error ? (
-          <div className="text-red-600 text-sm">{error}</div>
-        ) : totalCredits === 0 ? (
+        {totalCredits === 0 ? (
           <div className="text-center py-4">
             <p className="text-gray-500 text-sm mb-2">{t('noCredits')}</p>
             <p className="text-xs text-gray-400">{t('howToGet')}</p>
@@ -118,16 +94,18 @@ export default function RecoveryCreditsCard({ isTermBased }: RecoveryCreditsCard
 
             {/* Credit List */}
             <div className="space-y-2 max-h-48 overflow-y-auto">
-              {credits.map((credit) => (
+              {recoveryCredits.map((credit) => (
                 <div key={credit.id} className="border rounded-lg p-3">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
-                      <p className="text-sm font-medium">{credit.source || t('recoveryCredit')}</p>
-                      <p className="text-xs text-gray-400 mt-1">
-                        {t('expiresOn', {
-                          date: format(new Date(credit.expires_at), 'PPP', { locale: dateLocale })
-                        })}
-                      </p>
+                      <p className="text-sm font-medium">{credit.description || t('recoveryCredit')}</p>
+                      {credit.expires_at && (
+                        <p className="text-xs text-gray-400 mt-1">
+                          {t('expiresOn', {
+                            date: format(new Date(credit.expires_at), 'PPP', { locale: dateLocale })
+                          })}
+                        </p>
+                      )}
                     </div>
                     <Badge variant="outline" className="text-xs">
                       {credit.amount} {t('credit')}

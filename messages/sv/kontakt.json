@@ -40,6 +40,9 @@
     },
     "message": "Meddelande",
     "messagePlaceholder": "Skriv ditt meddelande här...",
-    "send": "Skicka meddelande"
+    "send": "Skicka meddelande",
+    "sending": "Skickar...",
+    "successMessage": "Ditt meddelande har skickats! Vi återkommer så snart som möjligt.",
+    "errorMessage": "Det gick inte att skicka meddelandet. Försök igen senare."
   }
 }

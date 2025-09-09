@@ -25,6 +25,12 @@
   "joinWaitlist": "Ställ på väntelistan",
   "booked": "Bokad",
   "participants": "deltagare",
+  "past": "Genomförd",
+  "timeOfDay": {
+    "morningPractice": "Morgonträning",
+    "afternoonFlow": "Eftermiddagsyoga",
+    "eveningRelaxation": "Kvällsavslappning"
+  },
   "booking": {
     "title": "Boka klass",
     "close": "Stäng",

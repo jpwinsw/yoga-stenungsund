@@ -25,6 +25,12 @@
   "joinWaitlist": "Join waitlist",
   "booked": "Booked",
   "participants": "participants",
+  "past": "Past",
+  "timeOfDay": {
+    "morningPractice": "Morning Practice",
+    "afternoonFlow": "Afternoon Flow",
+    "eveningRelaxation": "Evening Relaxation"
+  },
   "booking": {
     "title": "Book Class",
     "close": "Close",

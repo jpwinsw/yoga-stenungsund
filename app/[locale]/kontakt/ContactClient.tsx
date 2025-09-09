@@ -6,6 +6,8 @@ import { FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
 import { Card } from '@/components/ui/card'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 interface ContactClientProps {
   companySettings?: {
@@ -38,6 +40,14 @@ interface ContactClientProps {
 
 export default function ContactClient({ companySettings }: ContactClientProps) {
   const t = useTranslations('contact')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  })
   
   // Use company settings or fallback values
   const contact = companySettings?.contact || {}
@@ -54,6 +64,51 @@ export default function ContactClient({ companySettings }: ContactClientProps) {
   const mapQuery = encodeURIComponent(`${address}, ${zipCode} ${city}, Sweden`)
   const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''
   const mapEmbedUrl = `https://www.google.com/maps/embed/v1/place?key=${googleMapsApiKey}&q=${mapQuery}&zoom=15`
+  
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    
+    try {
+      // Use the backend API URL - company ID 5 for Yoga Stenungsund
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://backend.braincore.se'
+      const response = await fetch(`${apiUrl}/api/v1/public/urbe/contact/5`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+      
+      if (!response.ok) {
+        throw new Error('Failed to send message')
+      }
+      
+      await response.json()
+      
+      // Show success message
+      toast.success(t('form.successMessage') || 'Your message has been sent successfully!')
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      })
+    } catch (error) {
+      console.error('Error sending message:', error)
+      toast.error(t('form.errorMessage') || 'Failed to send message. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-[var(--yoga-cream)]/30">
@@ -220,7 +275,7 @@ export default function ContactClient({ companySettings }: ContactClientProps) {
               <Card className="p-8 h-full">
                 <h2 className="text-2xl font-light mb-8">{t('sendMessage')}</h2>
                 
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit}>
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium mb-2">
                       {t('form.name')}
@@ -229,8 +284,11 @@ export default function ContactClient({ companySettings }: ContactClientProps) {
                       type="text"
                       id="name"
                       name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--yoga-cyan)] focus:border-transparent"
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--yoga-cyan)] focus:border-transparent disabled:opacity-50"
                       placeholder={t('form.namePlaceholder')}
                     />
                   </div>
@@ -243,8 +301,11 @@ export default function ContactClient({ companySettings }: ContactClientProps) {
                       type="email"
                       id="email"
                       name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--yoga-cyan)] focus:border-transparent"
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--yoga-cyan)] focus:border-transparent disabled:opacity-50"
                       placeholder={t('form.emailPlaceholder')}
                     />
                   </div>
@@ -257,7 +318,10 @@ export default function ContactClient({ companySettings }: ContactClientProps) {
                       type="tel"
                       id="phone"
                       name="phone"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--yoga-cyan)] focus:border-transparent"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--yoga-cyan)] focus:border-transparent disabled:opacity-50"
                       placeholder={t('form.phonePlaceholder')}
                     />
                   </div>
@@ -269,7 +333,10 @@ export default function ContactClient({ companySettings }: ContactClientProps) {
                     <select
                       id="subject"
                       name="subject"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--yoga-cyan)] focus:border-transparent"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--yoga-cyan)] focus:border-transparent disabled:opacity-50"
                     >
                       <option value="">{t('form.selectSubject')}</option>
                       <option value="general">{t('form.subjects.general')}</option>
@@ -288,17 +355,21 @@ export default function ContactClient({ companySettings }: ContactClientProps) {
                       id="message"
                       name="message"
                       rows={6}
+                      value={formData.message}
+                      onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--yoga-cyan)] focus:border-transparent resize-none"
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--yoga-cyan)] focus:border-transparent resize-none disabled:opacity-50"
                       placeholder={t('form.messagePlaceholder')}
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-3 px-6 text-white bg-[var(--yoga-cyan)] rounded-lg hover:bg-[var(--yoga-cyan)]/90 transition-colors"
+                    disabled={isSubmitting}
+                    className="w-full py-3 px-6 text-white bg-[var(--yoga-cyan)] rounded-lg hover:bg-[var(--yoga-cyan)]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {t('form.send')}
+                    {isSubmitting ? t('form.sending') || 'Sending...' : t('form.send')}
                   </button>
                 </form>
               </Card>
