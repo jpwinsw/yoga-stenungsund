@@ -16,7 +16,19 @@ export async function POST(request: NextRequest) {
     }
 
     // Build request body with required fields
-    const requestBody: any = {
+    const requestBody: {
+      success_url: string
+      cancel_url: string
+      discount_code?: string
+      receipt_details?: {
+        personal_number?: string
+        street_address?: string
+        postal_code?: string
+        city?: string
+        company_name?: string
+        vat_number?: string
+      }
+    } = {
       success_url: body.success_url,
       cancel_url: body.cancel_url
     }
