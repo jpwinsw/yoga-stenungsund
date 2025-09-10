@@ -15,22 +15,26 @@ export async function POST(request: NextRequest) {
       headers['Authorization'] = authHeader
     }
 
-    // Build query parameters
-    const queryParams = new URLSearchParams({
+    // Build request body with required fields
+    const requestBody: any = {
       success_url: body.success_url,
       cancel_url: body.cancel_url
-    })
+    }
     
     if (body.discount_code) {
-      queryParams.append('discount_code', body.discount_code)
+      requestBody.discount_code = body.discount_code
+    }
+    
+    if (body.receipt_details) {
+      requestBody.receipt_details = body.receipt_details
     }
 
     const response = await fetch(
-      `${BRAINCORE_API}/urbe/membership-checkout/checkout/${body.plan_id}?${queryParams.toString()}`,
+      `${BRAINCORE_API}/urbe/membership-checkout/checkout/${body.plan_id}`,
       {
         method: 'POST',
         headers,
-        body: JSON.stringify({}),
+        body: JSON.stringify(requestBody),
       }
     )
 
