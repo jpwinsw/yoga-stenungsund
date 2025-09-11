@@ -378,6 +378,7 @@ export interface TermAvailability {
   term_start: string
   term_end: string
   total_weeks: number
+  effective_weeks?: number
   sessions_per_week: number
   total_required_sessions: number
   available_slots_by_week: Record<string, Array<{
