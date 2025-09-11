@@ -166,9 +166,18 @@ export default function MyBookingsPage() {
       if (useTermCancellation) {
         fetchBookings()
       }
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Failed to cancel booking:', err)
-      alert(t('actions.cancelError'))
+      
+      // Check if it's a 24-hour cancellation restriction error
+      const error = err as { response?: { data?: { error?: string } } }
+      const errorMessage = error.response?.data?.error
+      
+      if (errorMessage?.includes('24 hours')) {
+        alert(t('actions.cancelError24Hours'))
+      } else {
+        alert(t('actions.cancelError'))
+      }
     } finally {
       setCancellingId(null)
     }

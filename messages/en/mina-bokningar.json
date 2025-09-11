@@ -28,6 +28,7 @@
     "cancelSuccess": "Booking cancelled successfully",
     "cancelSuccessWithCredit": "Booking cancelled successfully. You've received a recovery credit that you can use to book another class.",
     "cancelError": "Failed to cancel booking. Please try again.",
+    "cancelError24Hours": "You cannot cancel within 24 hours of the session start time.",
     "leaveWaitlist": "Leave waitlist",
     "leaving": "Leaving...",
     "confirmLeaveWaitlist": "Are you sure you want to leave this waitlist?",

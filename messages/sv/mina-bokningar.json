@@ -28,6 +28,7 @@
     "cancelSuccess": "Bokningen har avbokats",
     "cancelSuccessWithCredit": "Bokningen har avbokats. Du har fått en återhämtningskredit som du kan använda för att boka ett annat pass.",
     "cancelError": "Kunde inte avboka. Försök igen.",
+    "cancelError24Hours": "Du kan inte avboka inom 24 timmar före passets starttid.",
     "leaveWaitlist": "Lämna väntelistan",
     "leaving": "Lämnar...",
     "confirmLeaveWaitlist": "Är du säker på att du vill lämna denna väntelista?",
