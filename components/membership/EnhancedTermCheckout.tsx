@@ -125,6 +125,7 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
     term_start: string;
     term_end: string;
     total_weeks: number;
+    effective_weeks?: number;
     sessions_per_week: number;
     total_required_sessions: number;
   } | null>(null);
@@ -305,6 +306,7 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
         term_start: termData.term_start,
         term_end: termData.term_end,
         total_weeks: termData.total_weeks,
+        effective_weeks: termData.effective_weeks,
         sessions_per_week: termData.sessions_per_week,
         total_required_sessions: termData.total_required_sessions
       });
@@ -468,7 +470,9 @@ export default function EnhancedTermCheckout({ plan, isOpen, onClose }: Enhanced
       );
       
       // Now organize sessions by week and apply pattern
-      for (let week = 2; week <= termInfo.total_weeks; week++) {
+      // Use effective_weeks if available (for mid-term purchases), otherwise total_weeks
+      const weeksToSchedule = termInfo.effective_weeks || termInfo.total_weeks;
+      for (let week = 2; week <= weeksToSchedule; week++) {
         const weekStart = addWeeks(termStartDate, week - 1);
         const weekEnd = addWeeks(weekStart, 1);
         

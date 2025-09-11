@@ -113,6 +113,7 @@
     "apply": "Apply",
     "validating": "Validating...",
     "discountApplied": "Discount Applied!",
+    "discount": "Discount",
     "discountAmount": "Discount",
     "finalAmount": "Final Price",
     "invalidDiscountCode": "Invalid discount code",

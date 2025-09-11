@@ -85,6 +85,7 @@
     "apply": "Använd",
     "validating": "Validerar...",
     "discountApplied": "Rabatt tillämpas!",
+    "discount": "Rabatt",
     "discountAmount": "Rabatt",
     "finalAmount": "Slutpris",
     "invalidDiscountCode": "Ogiltig rabattkod",
